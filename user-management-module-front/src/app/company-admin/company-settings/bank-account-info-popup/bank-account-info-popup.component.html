@@ -1,0 +1,187 @@
+<mat-card style="border:solid rgb(224, 217, 217) 2px;">
+    <div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+        <mat-card-header *ngIf="!fromAgreement">
+            <mat-card-title style="padding-bottom: 10px;">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.addAccountInfo}}
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content style="margin-top: 20px;">
+
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="!(isHandset$ | async)">
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.bankName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [readonly]="!otherBankAccount" type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="bankName" matInput placeholder="" [(ngModel)]="bankAccountInfo.bankName">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.branchName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [readonly]="!otherBankAccount" type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="branchName" matInput placeholder="" [(ngModel)]="bankAccountInfo.branchName">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.accountNumber}} </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [readonly]="!otherBankAccount" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="accountNumber" [(ngModel)]="bankAccountInfo.accountNumber">
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.accountName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [readonly]="!otherBankAccount" type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="accountName" matInput placeholder="" [(ngModel)]="bankAccountInfo.accountName">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <!-- <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.businessType}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" *ngFor="let catagory of catagoryList,index as i" fxLayoutAlign="start center">
+                        <input [readonly]="!otherBankAccount" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id={{catagory.name}} [(ngModel)]="catagory.isCheck" class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [value]="catagory.name" (change)="onCheckboxChange($event)" />
+                        <label for="check"> {{catagory.label}}</label>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div> -->
+
+
+                <div fxLayout="row" *ngIf="!(isHandset$ | async) && !fromAgreement">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center start">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+
+                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center center">
+                        <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.close}}</button>
+                    </div>
+                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center center">
+                        <button id="save" mat-raised-button color="primary" type="submit" (click)="addAccount()">{{uiLabels.addBtn}}</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div fxLayout="column" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="(isHandset$ | async)">
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.bankName}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input [readonly]="!otherBankAccount" type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="bankName" matInput placeholder="" [(ngModel)]="bankAccountInfo.bankName">
+                </div>
+
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.branchName}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input [readonly]="!otherBankAccount" type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="branchName" matInput placeholder="" [(ngModel)]="bankAccountInfo.branchName">
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.accountNumber}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input [readonly]="!otherBankAccount" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="accountNumber" [(ngModel)]="bankAccountInfo.accountNumber">
+
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.accountName}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input [readonly]="!otherBankAccount" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="accountName" matInput placeholder="" [(ngModel)]="bankAccountInfo.accountName">
+
+                </div>
+
+                <!-- <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.businessType}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxLayout="column" fxFlex="90 1 auto" fxLayoutAlign="start start">
+                    <div *ngFor="let catagory of catagoryList,index as i" fxLayoutAlign="start center">
+                        <input [readonly]="!otherBankAccount" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id={{catagory.name}} [(ngModel)]="catagory.isCheck" class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [value]="catagory.name" (change)="onCheckboxChange($event)" />
+                        <label for="check"> {{catagory.label}}</label>
+                    </div>
+                </div> -->
+
+                <div fxLayout="column" *ngIf="(isHandset$ | async) && !fromAgreement" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+                    <div fxLayout="row" fxLayoutAlign="center center" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                        <div fxFlex="0 0 80px" fxLayoutAlign="center center">
+                            <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.close}}</button>
+                        </div>
+                        <div fxFlex="0 0 80px" fxLayoutAlign="center center">
+                            <button id="save" mat-raised-button color="primary" type="submit" (click)="addAccount()">{{uiLabels.addBtn}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </mat-card-content>
+    </div>
+</mat-card>

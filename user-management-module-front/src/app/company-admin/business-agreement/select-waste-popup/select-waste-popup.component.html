@@ -1,0 +1,338 @@
+<div *ngIf="viewContent">
+
+    <div>
+        <div fxLayout="row">
+            <mat-toolbar style="background-color: rgb(221, 221, 221);">
+                <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+                    <span *ngIf="isSystemAdmin">
+                        <app-lang-def-button [componentCode]="componentCode">
+                        </app-lang-def-button>
+                    </span>
+                    {{uiLabels.wasteListHeader}}
+                </mat-label>
+                <div fxLayoutAlign="end center" style="margin-right: 40px;">
+                    <button id="addBranchBtn" mat-raised-button color="primary" (click)="addSelectedWasteTransportInfo()">{{uiLabels.addWasteButton}}</button>
+                </div>
+            </mat-toolbar>
+            <mat-divider>
+            </mat-divider>
+        </div>
+
+        <mat-card class="column" style="margin: 5px; border: 1px solid grey;border-radius: 10px;">
+            <h3>{{uiLabels.disposeLocationFormHead}}</h3>
+            <div class="three-section-list-row">
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        {{uiLabels.wasteCollectLocation}}
+                    </div>
+                    <div class="list-section-separator">
+
+                    </div>
+                    <div class="list-section-value">
+                        <input id="" mask="000-0000" placeholder="〒333-0001" (input)="setAddressFromZipCodeData(pickZipCode,'pickAddress')" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" matInput [(ngModel)]="pickZipCode">
+                    </div>
+                </div>
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        {{uiLabels.companyAddress}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        <input id="" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" matInput [(ngModel)]="pickAddress">
+                    </div>
+                </div>
+
+                <div class="list-action-section" *ngIf="!(isHandset$ | async)">
+                    <div class="list-action-section-label">
+
+                    </div>
+
+                    <div class="list-action-section-separator">
+
+                    </div>
+
+                    <div class="list-action-section-value">
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- drop location -->
+
+            <div class="three-section-list-row">
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        {{uiLabels.wasteDropLocation}}
+                    </div>
+                    <div class="list-section-separator">
+
+                    </div>
+
+                    <div class="list-section-value">
+                        <input id="" mask="000-0000" placeholder="〒333-0001" (input)="setAddressFromZipCodeData(dropZipCode,'dropAddress')" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" matInput [(ngModel)]="dropZipCode">
+                    </div>
+                </div>
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        {{uiLabels.companyAddress}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        <input id="" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" matInput [(ngModel)]="dropAddress">
+                    </div>
+                </div>
+
+                <div class="list-action-section" *ngIf="!(isHandset$ | async)">
+                    <div class="list-action-section-label">
+
+                    </div>
+
+                    <div class="list-action-section-separator">
+
+                    </div>
+
+                    <div class="list-action-section-value">
+
+                    </div>
+                </div>
+
+            </div>
+        </mat-card>
+
+
+        <!-- <div style="padding: 20px 0px 20px 0px; margin: 10px 0px 10px 0px; background-color:rgb(241, 240, 240) ;">
+            <div class="two-section-list-row" style="font-size: 18px;font-weight: 500;">
+
+                <div class="list-value-section-one">
+                    <div class="list-section-label">
+                        {{uiLabels.wasteTitle}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value" style="font-weight: 550;">
+                        {{selectedItem.wasteTitle}}
+                    </div>
+                </div>
+
+                <div class="list-value-section-two">
+                    <div class="list-section-label">
+                        {{uiLabels.wasteUnit}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value" style="font-weight: 550;">
+                        {{selectedItem.unit}}
+                    </div>
+                </div>
+
+            </div>
+        </div> -->
+
+        <!-- <div fxLayout="row">
+            <mat-toolbar style="background-color: rgb(221, 221, 221);margin-bottom: 10px;">
+                <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.wasteListHeader}}</mat-label>
+            </mat-toolbar>
+            <mat-divider>
+            </mat-divider>
+        </div> -->
+
+
+        <div>
+            <mat-accordion *ngFor="let item of wasteList">
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header class="two-section-list-row" style="padding: 5px 25px 5px 0px;background-color: rgb(227, 236, 236);">
+
+                        <div class="list-value-section-one">
+                            <div class="list-section-label">
+                                {{uiLabels.wasteCategory}}
+                            </div>
+                            <div class="list-section-separator">
+                                :
+                            </div>
+
+                            <div class="list-section-value">
+                                {{item.categoryTitle}}
+                            </div>
+                        </div>
+
+                        <div class="list-value-section-two" *ngIf="!(isHandset$ | async)">
+                            <div class="list-section-label">
+
+                            </div>
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value">
+
+                            </div>
+                        </div>
+
+                    </mat-expansion-panel-header>
+
+                    <mat-expansion-panel *ngFor="let type of item.dxrWasteTypeDef">
+                        <mat-expansion-panel-header class="two-section-list-row" style="padding: 5px 25px 5px 0px;background-color: rgb(245, 248, 248);">
+
+                            <div class="list-value-section-one">
+                                <div class="list-section-label">
+                                    {{uiLabels.wasteType}}
+                                </div>
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+
+                                <div class="list-section-value">
+                                    {{type.wasteTypeTitle}}
+                                </div>
+                            </div>
+
+                            <div class="list-value-section-two" *ngIf="!(isHandset$ | async)">
+                                <div class="list-section-label">
+
+                                </div>
+                                <div class="list-section-separator">
+
+                                </div>
+                                <div class="list-section-value">
+
+                                </div>
+                            </div>
+
+                        </mat-expansion-panel-header>
+
+                        <div *ngFor="let wasteItem of type.dxrWasteItemDef" style="margin-top: 7px;">
+
+                            <div style="display: flex;flex-direction: row;padding: 5px 25px 5px 25px;background-color: rgb(250, 250, 250);">
+                                <div>
+                                    <mat-checkbox color="primary" [(ngModel)]="wasteItem.isSelected"></mat-checkbox>
+                                    <!-- <mat-icon *ngIf="wasteItem.wasteDefId==selectedItem.wasteDefId" color="primary">check_box</mat-icon>
+                                        <mat-icon *ngIf="wasteItem.wasteDefId!=selectedItem.wasteDefId" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon> -->
+                                </div>
+                                <div style="flex: 1;">
+                                    <div class="three-section-list-row">
+                                        <div class="list-value-section">
+                                            <div class="list-section-label">
+                                                {{uiLabels.wasteTitle}}
+                                            </div>
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{wasteItem.wasteTitle}}
+
+                                            </div>
+                                        </div>
+
+                                        <div class="list-value-section">
+                                            <div class="list-section-label">
+                                                {{uiLabels.wasteUnit}}
+                                            </div>
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{wasteItem.unit}}
+                                            </div>
+                                        </div>
+
+                                        <div class="list-value-section">
+                                            <div class="list-section-label">
+                                                {{uiLabels.transportPrice}}
+                                            </div>
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                <input id="" type="number" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" matInput [(ngModel)]="wasteItem.price">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- price -->
+
+                            <!-- <div class="three-section-list-row">
+
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.transportPrice}}
+                                        </div>
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            <input id="" type="number" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" matInput [(ngModel)]="wasteItem.price">
+                                        </div>
+                                    </div>
+
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+
+                                        </div>
+                                        <div class="list-section-separator">
+
+                                        </div>
+
+                                        <div class="list-section-value">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="list-action-section" *ngIf="!(isHandset$ | async)">
+                                        <div class="list-action-section-label">
+
+                                        </div>
+
+                                        <div class="list-action-section-separator">
+
+                                        </div>
+
+                                        <div class="list-action-section-value">
+
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                        </div>
+
+
+                    </mat-expansion-panel>
+
+
+                </mat-expansion-panel>
+
+
+
+            </mat-accordion>
+
+        </div>
+    </div>
+
+    <div fxLayout="row">
+
+        <mat-toolbar style="background-color: rgb(255, 255, 255);padding-right: 50px;" fxLayoutAlign="end center">
+            <button id="" mat-raised-button color="accent" style="width: 100px;" mat-dialog-close>{{uiLabels.closeButton}}</button>
+        </mat-toolbar>
+    </div>
+
+</div>

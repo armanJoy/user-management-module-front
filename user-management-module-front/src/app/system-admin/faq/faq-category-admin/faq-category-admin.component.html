@@ -1,0 +1,20 @@
+<div fxLayout="column">
+    <div fxLayout="row">
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.listHeader}}
+            </mat-label>
+            <div fxLayoutAlign="end center">
+                <button id="addFaqTypeBtn" mat-raised-button class="simple-button" (click)="openCategoryAddDialog()">{{uiLabels.addButton}}</button>
+            </div>
+        </mat-toolbar>
+        <mat-divider>
+        </mat-divider>
+    </div>
+
+    <app-faq-category [faqTypes]="faqTypes" [selectTab]="selectTab" [isAdmin]="true" [editFaqType]="openCategoryAddDialog"></app-faq-category>
+</div>

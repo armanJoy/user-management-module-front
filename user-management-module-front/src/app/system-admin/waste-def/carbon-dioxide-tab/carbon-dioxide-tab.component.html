@@ -1,0 +1,503 @@
+<div class="three-section-list-row" style="background-color: rgb(199, 198, 197);;height: 50px;">
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    <div class="list-value-section">
+        <div class="list-section-label">
+            <mat-label>{{uiLabels.wasteItem}}</mat-label>
+        </div>
+        <div class="list-section-separator">
+            :
+        </div>
+
+        <div class="list-section-value">
+            {{wasteItemInfo.wasteTitle}}
+        </div>
+    </div>
+    <div class="list-value-section">
+        <div class="list-section-label">
+            <mat-label>{{uiLabels.measureUnit}}</mat-label>
+        </div>
+        <div class="list-section-separator">
+            :
+        </div>
+
+        <div class="list-section-value">
+            {{wasteItemInfo.unitDef}}
+        </div>
+    </div>
+    <div class="list-value-section">
+        <div class="list-section-label">
+
+        </div>
+        <div class="list-section-separator">
+
+        </div>
+
+        <div class="list-section-value">
+
+        </div>
+    </div>
+</div>
+<mat-card>
+    <mat-accordion multi>
+        <mat-expansion-panel style="margin-top: 10px;">
+            <mat-expansion-panel-header style="height: 100%;padding: 7px;background-color:rgb(220, 240, 240);">
+                <div style="flex:1">
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value" style="font-weight: 500;">
+                                {{uiLabels.dumpingMethodeList}}
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value">
+
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value">
+                                <button mat-raised-button color="primary" style="width: 140px;" (click)=" onClickAddMethodeBtn(dumpingOperationMethodeInfo)">{{uiLabels.addMethodeBtn}}</button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </mat-expansion-panel-header>
+            <div style="font-weight: 500; margin-top: 20px;">
+                <label>{{uiLabels.selectMethodeFromList}}</label>
+            </div>
+
+            <div *ngFor="let item of methodeList.dumperOperationMethodeList">
+
+                <div class="list-item">
+
+                    <div class="three-section-list-row">
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-checkbox [(ngModel)]="item.isCheck" style="padding-right: 15px;"></mat-checkbox>
+                                {{uiLabels.methodeName}}
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                {{item.methodeTitle}}
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                {{uiLabels.emissionQuantity}}
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                {{item.emissionQuantityPerUnit}}
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <!-- <div class="list-section-label">
+                                Co2 Emission
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                {{item.co2EmissionVolume}}
+                            </div> -->
+
+                        </div>
+                        <button mat-raised-button class="list-button" (click)=" onClickAddMethodeBtn(item)">{{uiLabels.editBtn}}</button>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+            <mat-card-actions align="end" style="padding-right: 20px;margin-left: 20px;">
+                <button style="width: 120px;" mat-raised-button color="primary" (click)="onClickAddDumpingMethodeBtn()">{{uiLabels.addBtn}}</button>
+            </mat-card-actions>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-card>
+<mat-card>
+    <mat-accordion multi>
+        <mat-expansion-panel style="margin-top: 10px;">
+            <mat-expansion-panel-header style="height: 100%;padding: 7px;background-color: rgb(235, 235, 235);height: 50px;">
+                <div style="flex:1">
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value" style="font-weight: 500;">
+                                {{uiLabels.projessingMethodeList}}
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value">
+
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value">
+                                <button style="width: 140px;" mat-raised-button color="primary" (click)=" onClickAddMethodeBtn(processingOperationMethodeInfo)">{{uiLabels.addMethodeBtn}}</button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </mat-expansion-panel-header>
+            <div style="font-weight: 500; margin-top: 20px;">
+                <label>{{uiLabels.selectMethodeFromList}}</label>
+            </div>
+            <div *ngFor="let item of methodeList.processingOperationMethodeList">
+
+                <div class="list-item">
+
+                    <div class="three-section-list-row">
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-checkbox [(ngModel)]="item.isCheck" style="padding-right: 15px;"></mat-checkbox>
+                                {{uiLabels.methodeName}}
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                {{item.methodeTitle}}
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                {{uiLabels.emissionQuantity}}
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                {{item.emissionQuantityPerUnit}}
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <!-- <div class="list-section-label">
+                                Co2 Emission
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                {{item.co2EmissionVolume}}
+                            </div> -->
+
+                        </div>
+                        <button mat-raised-button class="list-button" (click)=" onClickAddMethodeBtn(item)">{{uiLabels.editBtn}}</button>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+            <mat-card-actions align="end" style="padding-right: 20px;margin-left: 20px;">
+                <button style="width: 120px;" mat-raised-button color="primary" (click)=" onClickAddProcessingMethodeBtn()">{{uiLabels.addBtn}}</button>
+            </mat-card-actions>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-card>
+<mat-card>
+    <label>{{uiLabels.filterBy}}: </label>
+    <mat-radio-group [(ngModel)]="filter" style="margin-top: 20px;margin-left: 10px;">
+        <mat-radio-button value="001" style="margin-right: 10px;">{{uiLabels.dumpingMethode}}</mat-radio-button>
+        <mat-radio-button value="002">{{uiLabels.processingMethode}}</mat-radio-button>
+    </mat-radio-group>
+    <div *ngIf="filter=='001'">
+
+        <div class="three-section-list-row" style="margin-bottom: 10px;margin-top: 20px; background-color: rgb(235, 235, 235);height: 40px;">
+            <div class="list-value-section">
+                <div class="list-section-label">
+                    {{uiLabels.dumpingMethode}}
+                </div>
+
+                <div class="list-section-separator">
+
+                </div>
+                <div class="list-section-value">
+
+                </div>
+
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+
+                </div>
+
+                <div class="list-section-separator">
+
+                </div>
+                <div class="list-section-value">
+
+                </div>
+
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+
+                </div>
+
+                <div class="list-section-separator">
+
+                </div>
+                <div class="list-section-value">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div *ngFor="let item of wasteItemInfo.dumperCo2EmissionMethodeList">
+            <div class="list-item" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(241, 240, 240)' : ''}" (click)="selectListItem(item)">
+
+                <div style="display: flex;flex-direction: row;">
+                    <div>
+                        <mat-icon *ngIf="wasteItemInfo.dumperCo2EmissionDefaultMethodeId==item.methodeId" color="primary">check_box</mat-icon>
+                        <mat-icon *ngIf="wasteItemInfo.dumperCo2EmissionDefaultMethodeId!=item.methodeId" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+                    </div>
+                    <div style="flex: 1;">
+
+                        <div class="three-section-list-row">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.methodeName}}
+                                    <!-- Methode Name -->
+                                </div>
+
+                                <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.methodeTitle}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.emissionQuantity}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.emissionQuantityPerUnit}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <!-- Co2 Emission -->
+                                </div>
+
+                                <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                                    <!-- : -->
+                                </div>
+                                <div class="list-section-value">
+                                    <!-- {{item.co2EmissionVolume}} -->
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="filter=='002'">
+
+        <div class="three-section-list-row" style="margin-bottom: 10px;margin-top: 20px;background-color: rgb(235, 235, 235);height: 40px;">
+            <div class="list-value-section">
+                <div class="list-section-label">
+                    {{uiLabels.processingMethode}}
+                </div>
+
+                <div class="list-section-separator">
+
+                </div>
+                <div class="list-section-value">
+
+                </div>
+
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+
+                </div>
+
+                <div class="list-section-separator">
+
+                </div>
+                <div class="list-section-value">
+
+                </div>
+
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+
+                </div>
+
+                <div class="list-section-separator">
+
+                </div>
+                <div class="list-section-value">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div *ngFor="let item of wasteItemInfo.processorCo2EmissionMethodeList">
+            <div class="list-item" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(241, 240, 240)' : ''}" (click)="selectListItem(item)">
+
+                <div style="display: flex;flex-direction: row;">
+                    <div>
+                        <mat-icon *ngIf="wasteItemInfo.processorCo2EmissionDefaultMethodeId==item.methodeId" color="primary">check_box</mat-icon>
+                        <mat-icon *ngIf="wasteItemInfo.processorCo2EmissionDefaultMethodeId!=item.methodeId" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+                    </div>
+                    <div style="flex: 1;">
+
+                        <div class="three-section-list-row">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.methodeName}}
+                                </div>
+
+                                <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.methodeTitle}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.emissionQuantity}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.emissionQuantityPerUnit}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <!-- Co2 Emission -->
+                                </div>
+
+                                <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                                    <!-- : -->
+                                </div>
+                                <div class="list-section-value">
+                                    <!-- {{item.co2EmissionVolume}} -->
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</mat-card>

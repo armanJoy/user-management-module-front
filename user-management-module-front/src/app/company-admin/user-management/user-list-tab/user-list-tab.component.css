@@ -1,0 +1,13 @@
+.my-class{
+      width: 100px!important;
+      min-width: unset!important;
+}
+body>div>div {
+  flex-grow: 1;
+  width: 33%;
+  height: 100px;
+}
+.list-view{
+overflow: hidden;
+position: relative
+}

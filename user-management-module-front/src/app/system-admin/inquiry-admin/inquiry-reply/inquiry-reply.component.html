@@ -1,0 +1,27 @@
+<mat-dialog-content>
+    <mat-card *ngIf="viewComponent" style="border:solid rgb(224, 217, 217) 2px;">
+        <mat-card-header>
+            <mat-card-title style="padding-bottom: 10px;">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.replypopupTitle}}
+            </mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div fxLayout="row">
+
+                <div fxFlex="100 1 auto">
+                    <textarea [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" name="reply" id="replyTextField" type="text" matInput placeholder="メッセージを送信する" [(ngModel)]="responsedInquiry.response" cols="50" rows="10"></textarea>
+                </div>
+            </div>
+
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.close}}</button>
+            <button id="send" mat-raised-button color="primary" type="submit" [mat-dialog-close]="responsedInquiry">{{uiLabels.send}}</button>
+        </mat-card-actions>
+    </mat-card>
+</mat-dialog-content>

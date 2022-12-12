@@ -1,0 +1,135 @@
+<div *ngIf="viewComponent" style="overflow-y: hidden;">
+
+    <!-- Top Header Start -->
+    <div *ngIf="!fromProject" fxLayout="row">
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.listHeader}}
+            </mat-label>
+            <div *ngIf="!fromProject" fxFlex="0 1 auto" style="padding-right: 100px;" fxLayoutAlign="center end">
+                <button id="companyInvitation" mat-raised-button class="list-button-medium" style="padding: 0px 5px;" type="click" (click)="updateLedger(checkedManifesto)">{{uiLabels.ledgerUpdate}}</button>
+            </div>
+            <div *ngIf="!fromProject" fxFlex="0 1 auto" style="padding-right: 100px;" fxLayoutAlign="center end">
+                <button mat-raised-button class="list-button-medium" id="createManifesto" (click)="createManifesto(manualManifesto, true)">
+                    {{uiLabels.createManifesto}}
+                </button>
+            </div>
+            <!-- <div fxLayout="row" fxLayoutAlign="center center">
+
+                <button mat-raised-button class="list-button-medium" id="createManifesto" (click)="createManifesto(selectedManifesto)">
+                    {{uiLabels.createManifesto}}
+                </button>
+
+            </div> -->
+        </mat-toolbar>
+        <mat-divider>
+        </mat-divider>
+    </div>
+    <!-- Top Header End -->
+
+    <!-- Date Time Wise Filter Start -->
+    <div *ngIf="!fromProject" class="three-section-list-row">
+        <div class="list-value-section">
+            <div class="list-section-label">
+                <mat-label>{{uiLabels.from}}</mat-label>
+            </div>
+
+            <div class="list-section-separator">
+                :
+            </div>
+            <div class="list-section-value">
+                <app-date-time-input id="startDate" [modelObject]="searchDate" [modelDateAttributeName]="'startDate'"></app-date-time-input>
+
+            </div>
+
+        </div>
+        <div class="list-value-section">
+            <div class="list-section-label">
+                <mat-label>{{uiLabels.to}}</mat-label>
+            </div>
+
+            <div class="list-section-separator">
+                :
+            </div>
+            <div class="list-section-value">
+                <app-date-time-input id="endDate" [modelObject]="searchDate" [modelDateAttributeName]="'endDate'"></app-date-time-input>
+
+            </div>
+
+        </div>
+
+        <div class="list-value-section">
+            <div class="list-section-label">
+
+            </div>
+
+            <div class="list-section-separator">
+
+            </div>
+            <div class="list-section-value">
+                <button mat-raised-button class="list-button-medium" (click)="searchValidDate()">
+                    <mat-icon>search</mat-icon>{{uiLabels.showList}}
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div *ngIf="!fromProject" class="three-section-list-row">
+
+        <div class="list-value-section">
+            <div class="list-section-label">
+
+            </div>
+
+            <div class="list-section-separator">
+
+            </div>
+            <div class="list-section-value">
+                <div>
+                    <mat-label *ngIf="validation" style="color: red;">{{uiLabels.wrongDateRangeMessage}}</mat-label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Date Time Wise Filter End -->
+
+    <!-- Manifesto Status Filter Start -->
+    <div *ngIf="!fromProject" fxLayout="row wrap" style="padding-top: 30px;padding-bottom: 20px;">
+        <div fxLayout="row" fxFlex="80 1 auto" [style]="(isHandset$ | async) ? 'padding-top:10px;' : 'padding-top:0px;'">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>
+
+                    {{uiLabels.filter}}
+                </mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start">
+
+                <mat-radio-group color="primary" aria-label="Select an option" class="radio-group" [(ngModel)]="manifestFilter.selectedIndex" (ngModelChange)="searchByText()">
+                    <mat-radio-button id="inProgressRadioButton" value={{OperationFilter}} style="margin-right: 20px;">{{uiLabels.inOperation}}</mat-radio-button>
+                    <mat-radio-button id="completedRadioButton" value={{complatedFilter}}>{{uiLabels.completed}}</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manifesto Status Filter End -->
+
+    <!-- Manifesto View For In Operation Project Start -->
+    <app-search-pagination *ngIf="fromProject" (searchByText)="searchByText()"></app-search-pagination>
+
+    <app-manifesto-list-directive [selectedManifesto]="checkedManifesto" [manifestoInfoList]="manifestoInfoList" [fromProject]="fromProject" [projectProcessDef]="projectProcessDef" [projectViewPopupOpen]="projectViewPopupOpen" [tabChangeForCopyProject]="tabChangeForCopyProject" [tabChangeForEditProject]="tabChangeForEditProject" [viewSchedulePopupOpen]="viewSchedulePopupOpen" [redirectToCreateSchedule]="redirectToCreateSchedule" [redirectToProcessCompletion]="redirectToProcessCompletion" [generateReport]="generateReport" [createManifesto]="createManifesto"></app-manifesto-list-directive>
+
+    <!-- Manifesto View For In Operation Project End -->
+
+</div>

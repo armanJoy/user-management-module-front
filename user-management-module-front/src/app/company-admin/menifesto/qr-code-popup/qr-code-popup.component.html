@@ -1,0 +1,19 @@
+<div class="column">
+    <mat-toolbar class="row">
+        <div class="column" style="display: flex;flex: 1;">
+            <span style="margin-right:10px;">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>{{uiLabels.pageHeader}}
+            </span>
+        </div>
+        <div style="margin-right: 25px;display: flex;flex: 1;justify-content: flex-end;align-items: flex-end;">
+            <button mat-raised-button color="accent" mat-dialog-close="">
+                {{uiLabels.closeButton}}
+            </button>
+        </div>
+    </mat-toolbar>
+
+    <div class="row center">
+        <ngx-qrcode [value]="createdCode"></ngx-qrcode>
+    </div>
+</div>

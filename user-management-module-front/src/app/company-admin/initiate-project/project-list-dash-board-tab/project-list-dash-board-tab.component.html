@@ -1,0 +1,532 @@
+<mat-card>
+    <mat-card-title>
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.title}}
+            </mat-label>
+
+            <div fxLayoutAlign="end center" style="margin-right: 40px;">
+                <button id="" mat-raised-button color="primary" (click)="tabChangeForCreateNewProject(newProjectInfo)">{{uiLabels.createProjectBtn}}</button>
+            </div>
+        </mat-toolbar>
+
+    </mat-card-title>
+
+    <div class="filter-section">
+
+        <!-- <div>{{uiLabels.filterLabel}} : </div> -->
+
+        <mat-select id="" *ngIf="!hideProjectOperationFilterDropdown" [(ngModel)]="selectedOperationFilter" placeholder={{selectedOperationFilter.operationTitle}} style="width: 150px; font-size: 15px; color: white;border: 1px solid gainsboro;padding: 3px;">
+            <div *ngFor="let item of filterItems">
+                <mat-option [value]="item" id={{item}}>
+                    {{item.operationTitle}}
+                </mat-option>
+            </div>
+        </mat-select>
+
+        <mat-radio-group *ngFor="let eachFilter of selectedOperationFilter.statusList" [(ngModel)]="statusFilterModel" (ngModelChange)="searchByText()" style="margin-top: 20px;margin-left: 10px;margin-bottom: 10px;">
+            <mat-radio-button style="margin-right: 10px;" value={{eachFilter.statusId}}>{{eachFilter.statusTitle}}</mat-radio-button>
+        </mat-radio-group>
+
+        <div style="display: flex; flex:1; justify-content: flex-end;align-items: center;" fxLayoutGap="20px" *ngIf="statusFilterModel==inOperationFilterId">
+            <button *ngIf="showLoadButton()" mat-raised-button class="list-button-medium" (click)="redirectToMobileApp( loadOp)">
+                {{uiLabels.loadMenuWeb}}
+            </button>
+
+            <button *ngIf="showUnloadButton()" mat-raised-button class="list-button-medium" (click)="redirectToMobileApp( unloadOp)">
+                {{uiLabels.unloadMenuWeb}}
+            </button>
+        </div>
+
+        <!-- <div *ngFor="let eachFilter of selectedOperationFilter.statusList">
+            <input [(ngModel)]="eachFilter.isSelected" [value]="eachFilter" class="checkboxInput" (ngModelChange)="searchByText()" style="width: 15px;margin-right: 5px;" type="checkbox" name="check" />
+            <label for="check"> {{eachFilter.statusTitle}}</label>
+        </div> -->
+
+    </div>
+
+</mat-card>
+
+<div *ngIf="!showLoadOpDirective() && !showUnloadOpDirective() && !showTripConfirmationDashboardDirective()">
+    <app-search-pagination (searchByText)="searchByText()" [showProgressBar]="showProgressBar"></app-search-pagination>
+
+    <mat-accordion style="width: 100%;" multi>
+
+        <div *ngFor="let project of projectList | projectFilter: selectedOperationFilter.statusList ">
+            <mat-expansion-panel #panel [ngStyle]="{'background-color': selectedItem==project ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;" [expanded]="project.isOpen" (click)="getProjectBasicInfo($event, project)">
+
+                <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);">
+                    <!-- (click)="getProjectBasicInfo($event, project.projectInfoId, panel)" -->
+                    <div style="flex:1">
+
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.projectTitle}} </mat-label>
+                                </div>
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{project.projectTitle}}</mat-label>
+                                </div>
+                            </div>
+
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.projectDuration}} </mat-label>
+                                </div>
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{project.projectStartDate.substring(0,10)}} to {{project.projectEndDate.substring(0,10)}}
+                                </div>
+                            </div>
+
+                            <!-- <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.status}} </mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{project.status.statusName}}</mat-label>
+                                </div>
+                            </div> -->
+
+
+
+                        </div>
+
+                    </div>
+
+                </mat-expansion-panel-header>
+
+                <div class="list-item-without-hover" *ngIf="project.isBasicInfoFetched">
+                    <!-- Desktop View  -->
+                    <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="!(isHandset$ | async)">
+
+                        <div fxLayout="row" fxLayoutAlign="start start">
+
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>{{uiLabels.projectTitle}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+                                    <mat-label style="cursor: pointer;" (click)="projectViewPopupOpen(project)">{{project.projectTitle}}</mat-label>
+                                </div>
+                            </div>
+
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>{{uiLabels.projectCreationDate}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+                                    <mat-label>{{project.projectCreationDate.substring(0,10)}}</mat-label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="start start">
+
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>{{uiLabels.projectStartDate}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+                                    <mat-label>{{project.projectStartDate.substring(0,10)}}</mat-label>
+                                </div>
+                            </div>
+
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>{{uiLabels.projectEndDate}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+                                    <mat-label>{{project.projectEndDate.substring(0,10)}}</mat-label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="start start">
+
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>{{uiLabels.oparatingBranch}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+                                    <mat-label>{{project.operatingOfficeName}}</mat-label>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div fxLayout="row">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.wasteItem}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <mat-chip-list *ngFor="let waste of project.wasteProcessInfo" style="margin-right: 5px;">
+                                <mat-chip>{{waste.wasteItemName}}</mat-chip>
+                            </mat-chip-list>
+                            <div fxFlex="90 1 auto">
+                                &nbsp;
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" style="display: flex;flex: 1;justify-content: strat;align-items: start;">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.businessPartner}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxLayout="column" fxLayout-align="start start" style="display: flex;flex: 1;">
+                                <div style="display: flex;flex-direction: column;flex-wrap: wrap; flex: 1;">
+                                    <div fxLayout="row" style="padding-bottom: 15px;" *ngIf="canViewCompany(project.transporterPartner.companyInfoId, project.agreementInfo)">
+
+                                        <div style="display: flex;flex: 1;" fxLayout="row" fxLayoutAlign="start center">
+                                            <mat-label style="margin-right: 5px;">{{project.transporterPartner.companyName}}<span *ngIf="project.companyId==project.transporterPartner.companyInfoId"> {{uiLabels.initiator}}</span></mat-label>
+                                            <mat-chip *ngIf="project.transporterPartner.assignRoles==dumperCompanyTitle">{{uiLabels.dumper}}</mat-chip>
+                                            <mat-chip *ngIf="project.transporterPartner.assignRoles==transporterCompanyTitle">{{uiLabels.transporter}}</mat-chip>
+                                            <mat-chip *ngIf="project.transporterPartner.assignRoles==processorCompanyTitle">{{uiLabels.processor}}</mat-chip>
+                                            <mat-chip *ngIf="project.transporterPartner.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+                                        </div>
+
+                                    </div>
+
+                                    <div fxLayout="row" style="padding-bottom: 15px;" *ngIf="canViewCompany(project.dumperPartner.companyInfoId, project.agreementInfo)">
+
+                                        <div style="display: flex;flex: 1;" fxLayout="row" fxLayoutAlign="start center">
+                                            <mat-label style="margin-right: 15px;">{{project.dumperPartner.companyName}}<span *ngIf="project.companyId==project.dumperPartner.companyInfoId"> {{uiLabels.initiator}}</span></mat-label>
+                                            <mat-chip *ngIf="project.dumperPartner.assignRoles==dumperCompanyTitle">{{uiLabels.dumper}}</mat-chip>
+                                            <mat-chip *ngIf="project.dumperPartner.assignRoles==transporterCompanyTitle">{{uiLabels.transporter}}</mat-chip>
+                                            <mat-chip *ngIf="project.dumperPartner.assignRoles==processorCompanyTitle">{{uiLabels.processor}}</mat-chip>
+
+                                            <mat-chip *ngIf="project.dumperPartner.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+                                        </div>
+
+                                    </div>
+
+                                    <div fxLayout="row" style="padding-bottom: 15px;" *ngIf="canViewCompany(project.processorPartner.companyInfoId, project.agreementInfo)">
+
+                                        <div style="display: flex;flex: 1;" fxLayout="row" fxLayoutAlign="start center">
+                                            <mat-label style="margin-right: 15px;">{{project.processorPartner.companyName}}<span *ngIf="project.companyId==project.processorPartner.companyInfoId"> {{uiLabels.initiator}}</span></mat-label>
+                                            <mat-chip *ngIf="project.processorPartner.assignRoles==dumperCompanyTitle">{{uiLabels.dumper}}</mat-chip>
+                                            <mat-chip *ngIf="project.processorPartner.assignRoles==transporterCompanyTitle">{{uiLabels.transporter}}</mat-chip>
+                                            <mat-chip *ngIf="project.processorPartner.assignRoles==processorCompanyTitle">{{uiLabels.processor}}</mat-chip>
+
+                                            <mat-chip *ngIf="project.processorPartner.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div fxLayout="column" style="display: flex;flex: 1;justify-content: flex-start;align-items: flex-end;">
+                                <div style="display: flex;flex-direction: column;flex-wrap: wrap; flex: 1;justify-content: center;align-items: flex-end;">
+
+                                    <div style="display: flex;justify-content: flex-end;align-items: center;flex-wrap: wrap;">
+                                        <div *ngIf="project.status.statusId=='statusProjectCompleted'" class="list-section-value" style=" margin-right: 25px;">
+                                            <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="projectViewPopupOpen(project)">{{uiLabels.viewBtn}}</button>
+                                        </div>
+
+                                        <div class="list-section-value" style="margin-right: 25px;" *ngIf="canViewAddMissingPartner(project)">
+
+                                            <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="tabChangeForEditProject(project, addMissingPartnerProcess)">
+                                                {{uiLabels.addPrefix}}&nbsp;{{uiLabels[project.missingRole]}}
+                                            </button>
+
+                                        </div>
+
+                                        <div class="list-section-value" *ngFor="let eachProcess of project.processsList">
+                                            <button *ngIf="eachProcess.processId=='editProcess' || eachProcess.processId=='removeProcess'" mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;margin-right: 25px;" (click)="tabChangeForEditProject(project,eachProcess)">{{eachProcess.processTitle}}</button>
+
+                                        </div>
+
+                                        <div class="list-section-value" style=" margin-right: 25px;" *ngIf="companyId==project.companyId">
+                                            <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="tabChangeForCopyProject(project)">{{uiLabels.copyBtn}}</button>
+                                        </div>
+
+                                    </div>
+
+                                    <div style="display: flex;justify-content: flex-end;align-items: center;flex-wrap: wrap;">
+
+
+                                        <div class="list-section-value" *ngFor="let eachProcess of project.processsList">
+
+                                            <button *ngIf="(!project.missingRole && project.status.statusId=='statusWaitingForAproval') && eachProcess.processId!='editProcess' && eachProcess.processId!='removeProcess' " mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;margin-right: 25px;" (click)="tabChangeForEditProject(project,eachProcess)">{{eachProcess.processTitle}}</button>
+
+                                        </div>
+
+                                        <div *ngIf="project.isTransporter" class="list-section-value" style=" margin-right: 25px;">
+
+                                            <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="redirectToCreateSchedule(project)">
+                                                {{uiLabels.createScheduleButton}}
+                                            </button>
+
+                                        </div>
+
+                                        <div *ngIf="((project.dumperPartner && project.dumperPartner.assignRoles==processorCompanyTitle && project.dumperPartner.companyInfoId==companyId) || (project.transporterPartner && project.transporterPartner.assignRoles==processorCompanyTitle && project.transporterPartner.companyInfoId==companyId) || (project.processorPartner && project.processorPartner.assignRoles==processorCompanyTitle && project.processorPartner.companyInfoId==companyId) ) && project.status.statusId=='statusProjectInUse'" class="list-section-value" style=" margin-right: 25px;">
+
+                                            <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="redirectToProcessCompletion()">
+                                                {{uiLabels.processCompletion}}
+                                            </button>
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Mobile View -->
+
+                    <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="(isHandset$ | async)">
+                        <div fxLayout="row wrap">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.projectTitle}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label (click)="projectViewPopupOpen(project)">{{project.projectTitle}}</mat-label>
+                            </div>
+                        </div>
+                        <div fxLayout="row wrap">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.projectCreationDate}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{project.projectCreationDate.substring(0,10)}}</mat-label>
+                            </div>
+                        </div>
+                        <div fxLayout="row wrap">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.projectStartDate}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{project.projectStartDate.substring(0,10)}}</mat-label>
+                            </div>
+                        </div>
+                        <div fxLayout="row wrap">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.projectEndDate}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{project.projectEndDate.substring(0,10)}}</mat-label>
+                            </div>
+                        </div>
+                        <div fxLayout="row wrap">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.oparatingBranch}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{project.operatingOfficeName}}</mat-label>
+                            </div>
+
+                        </div>
+                        <div fxLayout="row wrap">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.staus}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{project.status.statusName}}</mat-label>
+                            </div>
+
+                        </div>
+                        <div fxLayout="row wrap">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.wasteItem}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <mat-chip-list *ngFor="let waste of project.wasteProcessInfo" style="margin-right: 5px;">
+                                <mat-chip>{{waste.wasteItemName}}</mat-chip>
+                            </mat-chip-list>
+                            <div fxFlex="90 1 auto">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div fxLayout="row wrap" *ngIf="project.transporterPartner && project.transporterPartner.companyInfoId">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.businessPartner}} </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <mat-chip-list fxFlex="1 1 auto">
+                                <mat-chip *ngIf="project.transporterPartner.assignRoles==dumperCompanyTitle">{{uiLabels.dumper}}</mat-chip>
+                                <mat-chip *ngIf="project.transporterPartner.assignRoles==transporterCompanyTitle">{{uiLabels.transporter}}</mat-chip>
+                                <mat-chip *ngIf="project.transporterPartner.assignRoles==processorCompanyTitle">{{uiLabels.processor}}</mat-chip>
+                            </mat-chip-list>
+                            <div fxFlex="1 1 auto" fxLayoutAlign="centar start">
+                                <mat-label>{{project.transporterPartner.companyName}}<span *ngIf="project.companyId==project.transporterPartner.companyInfoId"> {{uiLabels.initiator}}</span></mat-label>
+                            </div>
+
+                        </div>
+                        <div fxLayout="row wrap" *ngIf="project.dumperPartner && project.dumperPartner.companyInfoId">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>&nbsp; </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                            <mat-chip-list>
+                                <mat-chip *ngIf="project.dumperPartner.assignRoles==dumperCompanyTitle">{{uiLabels.dumper}}</mat-chip>
+                                <mat-chip *ngIf="project.dumperPartner.assignRoles==transporterCompanyTitle">{{uiLabels.transporter}}</mat-chip>
+                                <mat-chip *ngIf="project.dumperPartner.assignRoles==processorCompanyTitle">{{uiLabels.processor}}</mat-chip>
+                            </mat-chip-list>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{project.dumperPartner.companyName}}<span *ngIf="project.companyId==project.dumperPartner.companyInfoId"> {{uiLabels.initiator}}</span></mat-label>
+                            </div>
+
+                        </div>
+                        <div fxLayout="row wrap" *ngIf="project.processorPartner && project.processorPartner.companyInfoId">
+                            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>&nbsp; </mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                            <mat-chip-list>
+                                <mat-chip *ngIf="project.processorPartner.assignRoles==dumperCompanyTitle">{{uiLabels.dumper}}</mat-chip>
+                                <mat-chip *ngIf="project.processorPartner.assignRoles==transporterCompanyTitle">{{uiLabels.transporter}}</mat-chip>
+                                <mat-chip *ngIf="project.processorPartner.assignRoles==processorCompanyTitle">{{uiLabels.processor}}</mat-chip>
+                            </mat-chip-list>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{project.processorPartner.companyName}}<span *ngIf="project.companyId==project.processorPartner.companyInfoId"> {{uiLabels.initiator}}</span></mat-label>
+                            </div>
+
+                        </div>
+                        <div fxLayout="row wrap" fxLayoutAlign="start start">
+                            <div class="list-section-value" style="margin-right: 25px;" *ngIf="project.missingRole && project.status.statusId=='statusWaitingForAproval'">
+
+                                <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="viewSchedulePopupOpen(project)">
+                                    Add {{uiLabels[project.missingRole]}}
+                                </button>
+
+                            </div>
+
+                            <div class="list-section-value" *ngFor="let eachProcess of project.processsList">
+                                <button *ngIf="eachProcess.processId=='editProcess' || eachProcess.processId=='removeProcess' || (!project.missingRole && project.status.statusId!='statusWaitingForAproval')" mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;margin-right: 25px;" (click)="tabChangeForEditProject(project,eachProcess)">{{eachProcess.processTitle}}</button>
+
+                            </div>
+
+                            <div class="list-section-value" style=" margin-right: 25px;" *ngIf="companyId==project.companyId">
+                                <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="tabChangeForCopyProject(project)">{{uiLabels.copyBtn}}</button>
+                            </div>
+
+                            <div class="list-section-value" *ngFor="let eachProcess of project.processsList">
+
+                                <button *ngIf="eachProcess.processId!='editProcess' && eachProcess.processId!='removeProcess' " mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;margin-right: 25px;" (click)="tabChangeForEditProject(project,eachProcess)">{{eachProcess.processTitle}}</button>
+
+                            </div>
+
+
+                            <div *ngIf="project.status.statusId=='statusProjectCompleted'" class="list-section-value" style=" margin-right: 25px;">
+                                <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="projectViewPopupOpen(project)">{{uiLabels.viewBtn}}</button>
+                            </div>
+
+                            <div *ngIf="project.isTransporter" class="list-section-value" style=" margin-right: 25px;">
+
+                                <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="redirectToCreateSchedule(project)">
+                                    {{uiLabels.createScheduleButton}}
+                                </button>
+
+                            </div>
+
+                            <div *ngIf=" (project.dumperPartner.assignRoles==processorCompanyTitle && project.dumperPartner.companyInfoId==companyId||project.transporterPartner.assignRoles==processorCompanyTitle && project.transporterPartner.companyInfoId==companyId||project.processorPartner.assignRoles==processorCompanyTitle && project.processorPartner.companyInfoId==companyId ) && project.status.statusId=='statusProjectInUse'" class="list-section-value" style=" margin-right: 25px;">
+
+                                <button mat-raised-button class="list-button-light project-action-btn" style="margin-top: 15px;" (click)="redirectToProcessCompletion()">
+                                    {{uiLabels.processCompletion}}
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Project's Manifesto List -->
+
+                    <div id="manifestoList" *ngIf="project.manifestoList &&  project.manifestoList.length>0">
+                        <div class="column" style="padding: 15px;background-color:rgb(235,235,235);margin-top: 15px;font-size: 17px;font-weight: 550;">
+                            <div>
+                                <mat-label>{{uiLabels.manifestoListHeader}}</mat-label>
+                            </div>
+                        </div>
+
+                        <app-manifesto-list-directive [manifestoInfoList]="project.manifestoList" [projectName]="project.projectTitle" [fromProject]="true"></app-manifesto-list-directive>
+                    </div>
+
+                </div>
+
+            </mat-expansion-panel>
+        </div>
+    </mat-accordion>
+    <mat-label *ngIf="projectList.length<pageSize" style="padding: 10px;">{{dataEndsLabel}}</mat-label>
+</div>
+
+<app-load-operation *ngIf="showLoadOpDirective()"></app-load-operation>
+
+<app-unload-operation *ngIf="showUnloadOpDirective()"></app-unload-operation>
+
+<app-trip-confirm-dashboard *ngIf="showTripConfirmationDashboardDirective()"></app-trip-confirm-dashboard>
+
+<div *ngIf="statusFilterModel==inOperationFilterId && false" style="width: 100%;">
+    <app-menifesto-tab [fromProject]="true" [projectProcessDef]="projectProcessDef" [projectViewPopupOpen]="projectViewPopupOpen" [tabChangeForCopyProject]="tabChangeForCopyProject" [tabChangeForEditProject]="tabChangeForEditProject" [viewSchedulePopupOpen]="viewSchedulePopupOpen" [redirectToCreateSchedule]="redirectToCreateSchedule" [redirectToProcessCompletion]="redirectToProcessCompletion"></app-menifesto-tab>
+</div>

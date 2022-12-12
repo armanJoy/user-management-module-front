@@ -1,0 +1,35 @@
+<div *ngIf="viewComponent && !fromProject">
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    <app-menifesto-menu *ngIf="menifestoTabView" [checkedManifesto]="checkedManifesto" [manifestoInfoList]="manifestoInfoList" [selectTab]="selectTab" [selectedManifesto]="manualManifesto" [searchDate]="searchDate" [changeTab]="changeTab" [manifestFilter]="manifestFilter"></app-menifesto-menu>
+
+    <app-manualmenifesto-tab *ngIf="addMenifestoTabView" [agreementList]="agreementList" [manifestoInfoList]="manifestoInfoList" [manualManifesto]="manualManifesto" [switchToMenifestoList]="switchToMenifestoList">
+
+    </app-manualmenifesto-tab>
+    <app-form-processing-tab *ngIf="formProcessingTabView" [changeTab]="changeTab" [selectedManifestoList]="selectedManifestoList" [listOfTable]="listOfTable" [switchToMenifestoList]="switchToMenifestoList">
+
+    </app-form-processing-tab>
+
+
+    <!-- <mat-tab-group [selectedIndex]="selectedIndex" (focusChange)="indexChange($event.index)">
+
+        <mat-tab label={{uiLabels.manifestoListTab}}>
+            <app-menifesto-menu [checkedManifesto]="checkedManifesto" [manifestoInfoList]="manifestoInfoList" [selectTab]="selectTab" [selectedManifesto]="manualManifesto" [searchDate]="searchDate" [changeTab]="changeTab" [manifestFilter]="manifestFilter"></app-menifesto-menu>
+        </mat-tab>
+
+        <mat-tab label={{uiLabels.manualManifestoTab}}>
+            <app-manualmenifesto-tab [agreementList]="agreementList" [manifestoInfoList]="manifestoInfoList" [manualManifesto]="manualManifesto"></app-manualmenifesto-tab>
+        </mat-tab>
+        <mat-tab label={{uiLabels.formProcessing}}>
+            <app-form-processing-tab [changeTab]="changeTab" [selectedManifestoList]="selectedManifestoList" [listOfTable]="listOfTable"></app-form-processing-tab>
+        </mat-tab>
+
+    </mat-tab-group> -->
+
+</div>
+
+<div *ngIf="viewComponent && fromProject">
+    <app-menifesto-menu [checkedManifesto]="checkedManifesto" [manifestoInfoList]="manifestoInfoList" [selectTab]="selectTab" [selectedManifesto]="manualManifesto" [searchDate]="searchDate" [changeTab]="changeTab" [manifestFilter]="manifestFilter" [fromProject]="true" [projectProcessDef]="projectProcessDef" [projectViewPopupOpen]="projectViewPopupOpen" [tabChangeForCopyProject]="tabChangeForCopyProject" [tabChangeForEditProject]="tabChangeForEditProject" [viewSchedulePopupOpen]="viewSchedulePopupOpen" [redirectToCreateSchedule]="redirectToCreateSchedule" [redirectToProcessCompletion]="redirectToProcessCompletion"></app-menifesto-menu>
+</div>

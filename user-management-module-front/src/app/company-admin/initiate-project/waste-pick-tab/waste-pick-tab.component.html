@@ -1,0 +1,224 @@
+<mat-card>
+
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+
+    </span>
+    <mat-toolbar>
+
+        <div class="list-value-section" style="display: flex;flex: 1;justify-content: flex-end;align-items: center;" fxLayoutGap="20px">
+            <div class="list-section-label">
+                <button mat-raised-button color="primary" (click)="tabChangeToPrevious()">{{uiLabels.backBtn}}</button>
+            </div>
+            <div class="list-section-separator">
+
+            </div>
+
+            <div class="list-section-value">
+                <button mat-raised-button color="primary" *ngIf="agreementData.projectInfo!=null" (click)="onClick(false)">{{uiLabels.saveBtn}}</button>
+            </div>
+
+            <div class="list-section-value">
+                <button mat-raised-button color="primary" id="saveAgreementBtn" *ngIf="agreementData.projectInfo==null" (click)="saveAgreementForMenifesto()">{{uiLabels.saveBtn}}</button>
+            </div>
+        </div>
+
+    </mat-toolbar>
+
+    <div *ngFor="let eachAgreement of agreement">
+        <div class="list-item" style="font-weight: 500;background-color: rgb(241, 241, 241);">
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        {{uiLabels.agreementTitle}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        {{eachAgreement.agreementTitle}}
+                    </div>
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        {{uiLabels.agreementValidDate}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        {{eachAgreement.agreementValidDate}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngFor="let eachAgreement of agreement">
+
+        <div *ngFor="let item of wasteCollectionList,index as i">
+
+            <div #wastePanel class="list-item" *ngIf="item.agreementId==eachAgreement.agreementId">
+
+                <div class="three-section-list-row">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            <!-- (ngModelChange)="onWasteCheck(item, wastePanel, $event)" -->
+                            <mat-checkbox [(ngModel)]="item.isCheck" id="check{{i}}" style="padding-right: 15px;" (click)="updateSelectionForManifestoWaste(item, $event)"></mat-checkbox>
+                            {{uiLabels.wasteItem}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.wasteItemName}}
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.pickLocation}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.pickAddress}}
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.dropLocation}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.dropAddress}}
+                        </div>
+
+                    </div>
+
+                </div>
+                <div *ngIf="((agreementData.projectInfo && agreementData.projectInfo.projectInfoId!='') || agreementData.projectInfo!=null) && item.isCheck">
+                    <div *ngFor="let dispose of filterDisposeList(item.wasteCollectionId), index as j">
+                        <div class="list-item-without-hover">
+                            <div class="three-section-list-row" style="margin-bottom: 10px;">
+                                <div class="list-value-section">
+                                    <div class="list-section-label" style="width: 160px;">
+                                        {{uiLabels.pickQuantity}}({{item.unit}})
+                                    </div>
+
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        <input type="number" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" id='jobTitle' [(ngModel)]="dispose.quantity">
+                                    </div>
+
+                                </div>
+
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        {{uiLabels.transportDistance}}
+                                    </div>
+
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value" style="justify-content: flex-start;align-items: center;">
+                                        <span> <input type="number" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" id='jobTitle' [(ngModel)]="dispose.transportDistance"> </span>
+                                        <div style="margin-left: 5px;"> km</div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="three-section-list-row">
+
+                                <div class="list-value-section">
+                                    <div class="list-section-label" style="width: 180px;">
+                                        {{uiLabels.from}}
+                                    </div>
+
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value" style="justify-content: center;align-items: flex-start;">
+                                        <div style="display: flex;justify-content: center;align-items: center;">
+                                            <app-date-time-input [modelObject]="dispose" [modelDateAttributeName]="'fromDate'"></app-date-time-input>
+                                            <span>&nbsp; ~ &nbsp;</span>
+                                            <app-date-time-input [modelObject]="dispose" [modelDateAttributeName]="'toDate'"></app-date-time-input>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+
+                                    </div>
+
+                                    <div class="list-section-separator">
+
+                                    </div>
+                                    <div class="list-section-value">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="three-section-list-row" *ngFor="let item of selectedAgreementInvoiceWasteList">
+
+                                <div class="list-value-section" *ngIf="item.wasteDefId==dispose.wasteItemId && item.pickZipCode==dispose.pickZipCode && item.dropZipCode==dispose.dropZipCode && item.operationType==trasportInvoice && projectInfo.initialAgreementId && item.agreementId!=projectInfo.initialAgreementId">
+                                    <div class="list-section-label">
+                                        {{uiLabels.transportPrice}}
+                                    </div>
+
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        <input type="number" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" id='jobTitle' [(ngModel)]="item.price">
+                                    </div>
+
+                                </div>
+
+                                <div class="list-value-section" *ngIf="item.wasteDefId==dispose.wasteItemId && item.pickZipCode==dispose.pickZipCode && item.dropZipCode==dispose.dropZipCode && item.operationType==processInvoice && projectInfo.initialAgreementId && item.agreementId!=projectInfo.initialAgreementId">
+                                    <div class="list-section-label">
+                                        {{uiLabels.processingPrice}}
+                                    </div>
+
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        <input type="number" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" id='jobTitle' [(ngModel)]="item.price">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</mat-card>

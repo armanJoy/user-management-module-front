@@ -1,0 +1,17 @@
+<span *ngIf="isSystemAdmin">
+    <app-lang-def-button [componentCode]="componentCode">
+    </app-lang-def-button>
+</span>
+<mat-tab-group [selectedIndex]="selectedIndex" (focusChange)="indexChange($event.index)" *ngIf="viewComponent">
+
+    <mat-tab label={{uiLabels.wasteRequestListTab}}>
+        <app-waste-request-list-tab [selectTab]="selectTab" [wasteRequestList]="wasteRequestList" [selectedWaste]="selectedWaste"></app-waste-request-list-tab>
+    </mat-tab>
+    <mat-tab label={{uiLabels.requestResponseTab}}>
+        <app-request-response-tab [selectTab]="selectTab" [wasteRequestList]="wasteRequestList" [selectedWaste]="selectedWaste"></app-request-response-tab>
+    </mat-tab>
+    <mat-tab label={{uiLabels.createWasteTab}}>
+        <app-create-waste-tab [selectTab]="selectTab" [selectedWaste]="selectedWaste"></app-create-waste-tab>
+    </mat-tab>
+
+</mat-tab-group>

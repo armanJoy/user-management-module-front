@@ -1,0 +1,23 @@
+.filter-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 7px;
+}
+
+.filter-section div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 7px;
+}
+
+.partner-approval-icon {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.project-action-btn{
+    width: 170px;
+}

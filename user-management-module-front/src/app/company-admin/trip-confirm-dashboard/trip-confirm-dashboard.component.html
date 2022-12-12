@@ -1,0 +1,31 @@
+<div>
+    <mat-toolbar class="header">
+        <mat-label>
+            <span *ngIf="isSystemAdmin" style="margin-right:10px;">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>
+            {{uiLabels.pageHeader}}
+        </mat-label>
+    </mat-toolbar>
+    <div class="col form">
+        <div class="three-section-list-row">
+            <div class="list-value-section">
+                <div class="list-section-label flex-15">
+                    {{uiLabels.dateLabel}}
+                </div>
+                <div class="list-section-separator">
+                    :
+                </div>
+
+                <div class="list-section-value" style="justify-content: flex-start;align-items: center;">
+                    <app-date-time-input [modelObject]="tripDate" [modelDateAttributeName]="'date'"></app-date-time-input>
+                    <button mat-raised-button class="list-button-light" style="margin-left: 30px;" (click)="getCompanyTripPlan(tripDate.date)">{{uiLabels.loadTripList}}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <app-trip-list-directive [isTripConfirmation]="true" [driverTripPlan]="driverTripPlan" [loadPick]="loadPick" [loadConfirmPicks]="loadConfirmPicks" [unloadConfirmPicks]="unloadConfirmPicks" [confirmPickLoad]="confirmPickLoad"></app-trip-list-directive>
+</div>

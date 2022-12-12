@@ -1,0 +1,146 @@
+<span *ngIf="isSystemAdmin">
+    <app-lang-def-button [componentCode]="componentCode">
+    </app-lang-def-button>
+</span>
+<mat-dialog-content style="height: 500px;">
+    <mat-card>
+        <mat-card-content>
+
+            <div *ngIf="isViewMode">
+
+                <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="!(isHandset$ | async)">
+                    <div fxLayout="row">
+                        <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                            <mat-label>
+                                <span *ngIf="isSystemAdmin">
+                                    <app-lang-def-button [componentCode]="componentCode">
+                                    </app-lang-def-button>
+                                </span>
+                                {{uiLabels.userName}}
+                            </mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="start start">
+
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label>{{selectedUser.name}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="start start">
+
+                        </div>
+                        <div fxFlex="0 1 50px" fxLayout="column" fxLayoutAlign="start start">
+                            <mat-label>{{uiLabels.email}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="start start">
+
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label>{{selectedUser.email}}</mat-label>
+
+
+                        </div>
+                        <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="start start">
+
+                        </div>
+                        <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                            <mat-label>{{uiLabels.contactNo}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="start start">
+
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label>{{selectedUser.contactNo}}</mat-label>
+
+
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="end end">
+                            <button id="viewAccessBtn" mat-raised-button color="primary" (click)="changeTabForAddRoleOfSelectedUser(updateRoleWiseMenuAccess)">
+                                {{uiLabels.viewAccessBtn}}
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="(isHandset$ | async)">
+                    <div>
+                        <u>
+
+                            <mat-label>{{uiLabels.userName}}</mat-label>
+                        </u>
+                    </div>
+                    <div>
+                        <mat-label>{{selectedUser.name}}</mat-label>
+                    </div>
+                    <div style="padding-top: 10px;">
+                        <u>
+                            <mat-label>{{uiLabels.email}}</mat-label>
+                        </u>
+
+                    </div>
+                    <div>
+                        <mat-label>{{selectedUser.email}}</mat-label>
+                    </div>
+                    <div style="padding-top: 10px;">
+                        <u>
+                            <mat-label>{{uiLabels.contactNo}}</mat-label>
+                        </u>
+
+                    </div>
+                    <div>
+                        <mat-label>{{selectedUser.contactNo}}</mat-label>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="end end">
+                        <button id="viewAccessBtn" mat-raised-button color="primary" (click)="changeTabForAddRoleOfSelectedUser(updateRoleWiseMenuAccess)">
+                            {{uiLabels.viewAccessBtn}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+
+
+    <mat-card>
+        <div fxLayout="row">
+            <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="start end">
+
+                <mat-label>{{uiLabels.selectRole}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="start center">
+
+                <mat-label>:</mat-label>
+            </div>
+            <div fxLayout="column" fxFlex="90 1 auto" fxLayoutAlign="start start" *ngIf="!(isHandset$ | async)">
+                <div *ngFor="let catagory of DxrRoleForSelectedUser,index as i" fxLayoutAlign="start center">
+
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id={{catagory.roleName}} [(ngModel)]="catagory.isCheck" class="checkboxInput" style="width: 10px;" type="checkbox" name="check" [value]="catagory.roleDefId" (change)="onCheckboxChange($event)" />
+                    <label for="check"> {{catagory.roleName}}</label>
+
+
+                </div>
+            </div>
+            <div fxLayout="column" fxFlex="90 1 auto" fxLayoutAlign="start start" *ngIf="(isHandset$ | async)">
+                <div fxLayout="row" *ngFor="let catagory of DxrRoleForSelectedUser,index as i" fxLayoutAlign="start center">
+                    <div>
+                        <input id={{catagory.roleName}} [(ngModel)]="catagory.isCheck" class="checkboxInput" style="width: 10px;" type="checkbox" name="check" [value]="catagory.roleDefId" (change)="onCheckboxChange($event)" />
+                    </div>
+                    <div>
+                        <label for="check"> {{catagory.roleName}}</label>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </mat-card>
+
+
+</mat-dialog-content>

@@ -1,0 +1,13 @@
+mat-expansion-panel-header {
+    background-color: rgb(208, 244, 247);
+
+}
+
+mat-expansion-panel-header:hover {
+    background-color: rgb(208, 244, 247);
+
+}
+
+mat-card-actions{
+    margin-right: 15px;
+}

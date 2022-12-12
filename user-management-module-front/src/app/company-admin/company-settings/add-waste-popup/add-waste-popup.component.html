@@ -1,0 +1,145 @@
+<div fxLayout="row">
+    <mat-toolbar style="background-color: rgb(235, 235, 235);">
+        <mat-label fxLayoutAlign="center center" fxFlex="1 1 100%">
+            <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>
+            {{uiLabels.selectFromList}}
+        </mat-label>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+</div>
+
+<mat-card style="border:solid rgb(224, 217, 217) 2px;">
+    <mat-card-content *ngFor="let item of dxrWasteViewList,index as i" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;box-shadow: none;">
+        <div fxLayout="row" id={{item.categoryTitle}} fxLayoutAlign="center start" style="padding-bottom: 15px;background-color: rgb(219, 224, 224);padding-top: 15px;">
+            <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteCategory}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+                <mat-label>{{item.categoryTitle}}</mat-label>
+            </div>
+        </div>
+        <mat-accordion style="width: 100%;" multi>
+
+            <mat-expansion-panel *ngFor="let  dxrWaste of item.dxrWasteTypeDef, index as j" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;" [expanded]="dxrWaste.dxrWasteItemDef && dxrWaste.dxrWasteItemDef.length>0">
+                <mat-expansion-panel-header style="background-color: rgb(245, 248, 248);">
+                    <div fxLayout="row" id="typeHeader{{i}}{{j}}" fxLayoutAlign="center start" fxFlex="1 1 100%">
+                        <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.wasteType}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label>{{dxrWaste.wasteTypeTitle}}</mat-label>
+                        </div>
+                    </div>
+                </mat-expansion-panel-header>
+
+                <div *ngFor="let waste of dxrWaste.dxrWasteItemDef, index as k" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;">
+
+                    <div fxLayout="row wrap" fxFlex *ngIf="!(isHandset$ | async)" class="itemStyle">
+                        <div fxLayout="row" fxLayoutAlign="center start" fxFlex="1 1 35%">
+                            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label id="wasteTitle{{i}}{{j}}{{k}}">{{uiLabels.wasteItem}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{waste.wasteItem}}</mat-label>
+                            </div>
+                        </div>
+
+
+                        <div fxLayout="row" fxLayoutAlign="center start" fxFlex="1 1 35%">
+                            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.unitDef}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{waste.unitDef}}</mat-label>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="center start" fxFlex="1 1 20%">
+                            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-checkbox id="waste{{i}}{{j}}{{k}}" [(ngModel)]="waste.isSelect">{{uiLabels.select}}</mat-checkbox>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div fxLayout="column" fxFlex *ngIf="(isHandset$ | async)" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" class="itemStyle">
+
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-checkbox id={{waste.wasteId+i}} [(ngModel)]="waste.isSelect"></mat-checkbox>
+                            </div>
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.wasteItem}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{waste.wasteItem}}</mat-label>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutGap="10px">
+
+                            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.unitDef}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="90 1 auto">
+                                <mat-label>{{waste.unitDef}}</mat-label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-card-content>
+
+    <div fxLayout="row" *ngIf="!(isHandset$ | async)" [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+        <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center start">
+            <mat-label>&nbsp;</mat-label>
+        </div>
+        <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+            <mat-label>&nbsp;</mat-label>
+        </div>
+
+        <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="center end">
+            <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.close}}</button>
+        </div>
+        <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="center end">
+            <button id="save" mat-raised-button color="primary" type="submit" (click)="updateComWasteList()">{{uiLabels.addBtn}}</button>
+        </div>
+
+    </div>
+    <div fxLayout="column" *ngIf="(isHandset$ | async)" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+        <div fxLayout="row" fxLayoutAlign="center center" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+            <div fxFlex="0 1 80px" fxLayoutAlign="center center">
+                <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.close}}</button>
+            </div>
+            <div fxFlex="0 1 80px" fxLayoutAlign="center center">
+                <button id="save" mat-raised-button color="primary" type="submit" (click)="updateComWasteList()">{{uiLabels.addBtn}}</button>
+            </div>
+        </div>
+    </div>
+
+</mat-card>

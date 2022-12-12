@@ -1,0 +1,194 @@
+<mat-card>
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    <div class="three-section-list-row">
+        <div class="list-value-section">
+            <div class="list-section-label">
+                {{uiLabels.from}}
+                <!-- {{uiLabels.month}} -->
+            </div>
+
+            <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                :
+            </div>
+            <div class="list-section-value">
+                <!-- {{selectedMonth}} -->{{startDate}}
+            </div>
+
+        </div>
+        <div class="list-value-section">
+            <div class="list-section-label">
+                <!-- {{uiLabels.year}} --> {{uiLabels.to}}
+            </div>
+
+            <div class="list-section-separator">
+                :
+            </div>
+            <div class="list-section-value">
+                <!-- {{selectedYear}} --> {{endDate}}
+            </div>
+
+        </div>
+        <div class="list-value-section">
+            <div class="list-section-label">
+                {{uiLabels.totalCO2Value}}
+            </div>
+
+            <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                :
+            </div>
+            <div class="list-section-value">
+                {{projectWiseCO2Emission.transporterCo2Emission| number:'1.0-6'}} gm
+            </div>
+            <!-- <button mat-raised-button color="primary" (click)="onClickSaveBtn()">
+                {{uiLabels.saveBtn}}
+            </button> -->
+
+        </div>
+    </div>
+    <!-- <mat-accordion style="width: 100%;" multi>
+        <mat-expansion-panel *ngFor="let vehicleData of  transporterMonthWiseCompanyVehicleFuelConsumption,index as j" [ngStyle]="{'background-color': selectedItem==vehicleData ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;">
+            <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);">
+                <div style="flex:1">
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                {{uiLabels.month}}
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                <mat-label>{{vehicleData.month}}</mat-label>
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                {{uiLabels.year}}
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                <mat-label>{{vehicleData.year}}</mat-label>
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value">
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </mat-expansion-panel-header>
+            <div class="list-item" *ngFor="let item of vehicleData.vehicleFuelConsumptionInfo,index as i">
+                <div class="three-section-list-row">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+
+                            {{uiLabels.vehicleName}}
+                        </div>
+
+                        <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.vehicleName}}
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.licenseNo}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.vehicleLicenseNo}}
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.fuelType}}
+                        </div>
+
+                        <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.gasolineInfo.gasolineTypeName}}
+                        </div>
+
+                    </div>
+                </div>
+                <div class="three-section-list-row">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+
+                            {{uiLabels.CO2Emission}}
+                        </div>
+
+                        <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.gasolineInfo.co2EmissionUnit | number:'1.0-6'}} gm / {{item.gasolineInfo.co2FuelUnit}} {{item.gasolineInfo.unit}}
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.fuelConsumption}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            <input type="number" [(ngModel)]="item.fuelConsumption" (ngModelChange)="prepareCo2CalculatedData($event,i,j)">
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.calculatedC02}}
+                        </div>
+
+                        <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.calculatedCo2Emission}}gm
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion> -->
+
+
+</mat-card>

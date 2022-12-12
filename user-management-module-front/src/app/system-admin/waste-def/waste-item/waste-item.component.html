@@ -1,0 +1,46 @@
+<div fxLayout="row">
+    <mat-toolbar style="background-color: rgb(235, 235, 235);">
+        <!-- 
+        <div fxLayoutAlign="start center" fxLayout="column" fxFlex="0 0 120px">
+            <mat-label>{{uiLabels.wasteType}} :</mat-label>
+        </div>
+        <div fxLayoutAlign="center start" fxLayout="column" fxFlex="0 0 70%">
+            <mat-label>{{selectedWasteType?.wasteTypeTitle}}</mat-label>
+        </div> -->
+        <mat-label fxFlex="1 1 85%" fxLayoutAlign="start start">
+            <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>
+            {{uiLabels.wasteType}} : {{selectedWasteType?.wasteTypeTitle}}
+        </mat-label>
+        <div fxLayoutAlign="center end">
+            <button id="addWasteItemBtn" mat-raised-button class="simple-button" (click)="openAddWasteDialog()">{{uiLabels.addButton}}</button>
+        </div>
+
+    </mat-toolbar>
+    <mat-divider>
+    </mat-divider>
+</div>
+
+<div id="faqTypeList" *ngFor="let eachWaste of wasteItemList, index as i" class="common-list-item simple-list" [ngStyle]="{'background-color': selectedItem==eachWaste ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(eachWaste)">
+    <div fxLayout="row">
+        <div fxFlex="1 1 40%" fxLayout="column" fxLayoutAlign="center start">
+            <mat-label>{{uiLabels.wasteItemTitle}} : {{eachWaste.wasteTitle}}</mat-label>
+        </div>
+
+        <!-- <div fxFlex="1 1 45%" fxLayout="column" fxLayoutAlign="center start">
+            <mat-label>{{eachWaste.wasteTitle}}</mat-label>
+        </div> -->
+        <div fxFlex="1 1 30%" fxLayoutAlign="start center">
+            <mat-label>{{uiLabels.wasteUnit}} : {{eachWaste.unitDef}}</mat-label>
+        </div>
+        <div fxFlex="1 1 30%" fxLayoutAlign="center center" fxLayoutGap="15px">
+            <button id="{{eachWaste.wasteId + 'Edit'}}" mat-raised-button class="simple-button" (click)="openAddWasteDialog(eachWaste)">{{uiLabels.editBtn}}</button>
+
+            <button mat-raised-button class="simple-button" style="margin-right: 10px;" (click)="switchToWasteCoefficientUpdateTab(3, eachWaste)">{{uiLabels.updateCoefficientButton}}</button>
+            <button id="{{'removeItem'+i}}" mat-raised-button class="simple-button" (click)="removeItem(eachWaste.wasteId)">{{uiLabels.removeButton}}</button>
+        </div>
+    </div>
+
+</div>

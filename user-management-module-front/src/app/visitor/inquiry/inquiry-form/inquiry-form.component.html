@@ -1,0 +1,177 @@
+<mat-card *ngIf="viewComponent">
+    <div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+        <mat-card-header style="padding-bottom: 20px;">
+            <mat-card-title style="padding-bottom: 10px;">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.inquiryFormTitle}}
+
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                <div fxLayout="row">
+                    <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.companyName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="abcd123" matInput placeholder="排出株式会社" [(ngModel)]="inquiry.companyName">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.personName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="personName" matInput placeholder="山田太郎" [(ngModel)]="inquiry.personName">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.contactNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="contactNo" mask="00-0000-0000" matInput placeholder="03-2222-2222" [(ngModel)]="inquiry.contactNo">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.emailAddress}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="emailAddress" matInput placeholder="adamitsu-mi@abc.co.jp" [(ngModel)]="inquiry.emailAddress">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.inquiryTitle}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="inquiryTitle" matInput placeholder="導入方法について" [(ngModel)]="inquiry.inquiryTitle">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="start end">
+                        <mat-label>{{uiLabels.inquiryDetail}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="start center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <textarea [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="inquiryDetail" matInput placeholder="利用開始するまでどのような手順になりますか。" [(ngModel)]="inquiry.inquiryDetail" cols="30" rows="10"></textarea>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row ">
+                    <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlignment="start start" fxFlex="90 1 auto">
+                        <!-- <div fxLayout="row">
+                            <div style="padding-right: 10px;">
+                                <mat-checkbox id="isHuman" [(ngModel)]="inquiry.isHuman" name="humanVarification"></mat-checkbox>
+                            </div>
+                            <div>{{uiLabels.humanVarification}}</div>
+                        </div> -->
+                        <div fxLayout="row">
+                            <div style="padding-right: 10px;">
+                                <mat-checkbox id="agreed" [color]="'primary'" [(ngModel)]="inquiry.isAgreed" name="isCheckedTermsofUse"></mat-checkbox>
+                            </div>
+                            <div>
+                                <a id="openTermsAndCondition" (click)="openTermsAndCondition()"><u>{{uiLabels.agreedTerms}}</u></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row" style="padding-top: 15px;">
+                    <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayoutGap="30px" style="padding-left: 200px;" *ngIf="!(isHandset$ | async)">
+                        <button style="width: 100px;" id="submitButton" mat-raised-button color="primary" (click)="saveInquiry()" type="submit">{{uiLabels.submit}}</button>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayoutGap="30px" *ngIf="(isHandset$ | async)">
+                        <button style="width: 100px;" id="submitButton" mat-raised-button color="primary" (click)="saveInquiry()" type="submit">{{uiLabels.submit}}</button>
+                    </div>
+
+                    <!-- <div fxFlex="90 1 auto" fxLayoutGap="30px" style="padding-left: 200px;" *ngIf="!(isHandset$ | async)">
+                        <button style="width: 100px;" id="submitButton" mat-raised-button color="primary" (click)="saveInquiry()" *ngIf="inquiry.isHuman && inquiry.isAgreed" type="submit">{{uiLabels.submit}}</button>
+                        <button style="width: 100px;" mat-raised-button color="primary" *ngIf="!(inquiry.isHuman && inquiry.isAgreed)" type="submit" disabled>{{uiLabels.submit}}</button>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayoutGap="30px" *ngIf="(isHandset$ | async)">
+                        <button style="width: 100px;" id="submitButton" mat-raised-button color="primary" (click)="saveInquiry()" *ngIf="inquiry.isHuman && inquiry.isAgreed" type="submit">{{uiLabels.submit}}</button>
+                        <button style="width: 100px;" mat-raised-button color="primary" *ngIf="!(inquiry.isHuman && inquiry.isAgreed)" type="submit" disabled>{{uiLabels.submit}}</button>
+                    </div> -->
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </div>
+</mat-card>

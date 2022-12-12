@@ -1,0 +1,140 @@
+<div>
+    <mat-toolbar class="row">
+        <div class="row left" style="flex:1">
+            <mat-label>
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode"></app-lang-def-button>
+                </span>
+                {{uiLabels.tripList}}
+            </mat-label>
+        </div>
+        <div class="row right" style="flex:1" *ngIf="isTripConfirmation">
+            <button mat-raised-button class="list-button" style="margin-right: 50px;" (click)="confirmPicks()">{{uiLabels.confirmButton}}</button>
+        </div>
+
+    </mat-toolbar>
+    <div style="margin-bottom: 65px;">
+        <mat-accordion multi>
+            <mat-expansion-panel *ngFor="let item of driverTripPlan" [expanded]="false" style="color: black; margin: 7px;">
+                <mat-expansion-panel-header style="background-color:  rgb(190, 223, 223);">
+                    <div style="flex:1">
+                        <div class="three-section-list-row">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.driverName}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.driverName}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.tripTime}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.startTime.substring(0,2)}}:{{item.startTime.substring(2)}} - {{item.endTime.substring(0,2)}}:{{item.endTime.substring(2)}}
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </mat-expansion-panel-header>
+
+                <div *ngFor="let pick of item.pickList, index as i" class="column fx-1">
+                    <div class="three-section-list-row" style="border-bottom: 1px solid gainsboro;padding: 10px 0px 10px 0px;">
+
+                        <div class="list-value-section">
+                            <div class="list-section-label" style="width:90px;">
+                                {{uiLabels.pick}}
+                            </div>
+                            <div class="list-section-separator">
+                                -
+                            </div>
+
+                            <div class="list-section-value" style="flex:100%">
+                                {{i+1}}
+                            </div>
+                        </div>
+
+                        <div class="list-value-section">
+                            <div class="list-section-label" style="width:90px;">
+                                <label *ngIf="pick.projectTitle">{{uiLabels.projectTitle}}</label>
+                                <label *ngIf="!pick.projectTitle">{{uiLabels.agreementTitle}}</label>
+                            </div>
+                            <div class="list-section-separator">
+                                :
+                            </div>
+
+                            <div class="list-section-value" style="flex:100%">
+                                <label *ngIf="pick.projectTitle">{{pick.projectTitle}}</label>
+                                <label *ngIf="!pick.projectTitle">{{pick.agreementTitle}}</label>
+                            </div>
+                        </div>
+
+                        <div class="list-value-section">
+                            <div class="list-section-label" style="width:90px;">
+                                {{uiLabels.pickQuantity}}
+                            </div>
+                            <div class="list-section-separator">
+                                :
+                            </div>
+
+                            <div class="list-section-value" style="flex:100%">
+                                {{pick.quantity}} {{pick.disposalInfo.unit}}
+                            </div>
+                        </div>
+
+                        <div class="list-value-section">
+
+                            <div class="list-section-label" style="width:90px;">
+                                <mat-checkbox #loadCheck *ngIf="isTripConfirmation" class="list-section-label" color="primary" [checked]="pick.loadStatus>=pickStatusLoaded" (click)="onLoadClick(pick,item,loadCheck, $event)" style="margin-right:10px"></mat-checkbox>
+                                <mat-chip-list *ngIf="pick.loadStatus>=pickStatusLoaded">
+                                    <mat-chip style="width: 80px;">{{uiLabels.pickStatusLoaded}}</mat-chip>
+                                </mat-chip-list>
+                                <mat-label *ngIf="pick.loadStatus<pickStatusLoaded && isTripConfirmation">{{uiLabels.loadButton}}</mat-label>
+
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+
+                            <!-- <div class="list-section-value" style="flex:100%">
+                                <mat-checkbox color="primary" [checked]="pick.loadStatus>=pickStatusUnloaded" (click)="onUnloadClick(pick,$event)">
+                                    Unload
+                                </mat-checkbox>
+                            </div> -->
+                        </div>
+
+                        <div class="list-value-section">
+
+                            <div class="list-section-label" *ngIf="!isTripConfirmation && pick.loadStatus<pickStatusLoaded">
+                                <button mat-raised-button class="list-button" style="margin-right: 20px;" (click)="loadPick(item,i)">{{uiLabels.loadButton}}</button>
+                            </div>
+
+                            <div class="list-section-label" style="flex:100%">
+                                <button mat-raised-button class="list-button" style="margin-right: 20px;" (click)="printManifesto(pick.pickId, item.isManualManifestoTrip)">{{uiLabels.printManifestoButton}}</button>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </div>
+</div>

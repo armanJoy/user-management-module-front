@@ -1,0 +1,329 @@
+<div>
+    <div fxLayout="row">
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.headerLabel}}
+            </mat-label>
+            <div fxLayoutAlign="end center" style="margin-right: 40px;">
+                <button id="addBranchBtn" mat-raised-button color="primary" style="width: 150px;" (click)="switchToAgreementTab()">{{uiLabels.createButton}}</button>
+            </div>
+        </mat-toolbar>
+        <mat-divider>
+        </mat-divider>
+    </div>
+
+    <div class="filter-section">
+
+        <mat-select id="" *ngIf="!hideAgreementOperationFilterDropdown" [(ngModel)]="selectedOperationFilter" placeholder={{selectedOperationFilter.operationTitle}} style="width: 150px; font-size: 15px; color: white;border: 1px solid gainsboro;padding: 3px;">
+            <div *ngFor="let item of filterItems">
+                <mat-option [value]="item" id={{item}}>
+                    {{item.operationTitle}}
+                </mat-option>
+            </div>
+        </mat-select>
+
+        <mat-radio-group *ngFor="let eachFilter of selectedOperationFilter.statusList" [(ngModel)]="statusFilterModel" (ngModelChange)="searchByText()" style="margin-top: 20px;margin-left: 10px;margin-bottom: 10px;">
+            <mat-radio-button style="margin-right: 10px;" value={{eachFilter.statusId}}>{{eachFilter.statusTitle}}</mat-radio-button>
+        </mat-radio-group>
+
+        <!-- <div *ngFor="let eachFilter of selectedOperationFilter.statusList">
+            <input [(ngModel)]="eachFilter.isSelected" class="checkboxInput" (ngModelChange)="searchByText()" style="width: 15px;margin-right: 5px;" type="checkbox" name="check" />
+            <label for="check"> {{eachFilter.statusTitle}}</label>
+        </div> -->
+    </div>
+
+    <mat-accordion style="width: 100%;" multi>
+
+        <app-search-pagination (searchByText)="searchByText()" [showProgressBar]="showProgressBar"></app-search-pagination>
+
+        <mat-expansion-panel #panel [expanded]="item.isOpen" *ngFor="let item of agreementList | agreementFilter: selectedOperationFilter.statusList" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;">
+            <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);" (click)="prepareAgreementBasicInfo(item,panel, $event)">
+                <div style="flex:1">
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                {{uiLabels.agreementTitle}}
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value" style="font-weight: 500;">
+                                {{item.title}}
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                {{uiLabels.validDate}}
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                {{item.validDate}}
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+            </mat-expansion-panel-header>
+
+            <div class="list-item" *ngIf="item.isBasicInfoFetched">
+
+                <div class="three-section-list-row" style="margin-bottom: 10px;">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.agreementTitle}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div style="cursor: pointer;" class="list-section-value" (click)="viewAgreementInfo(item)">
+                            {{item.title}}
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                        </div>
+
+                        <div class="list-section-separator">
+
+                        </div>
+                        <div class="list-section-value">
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="three-section-list-row">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.createDate}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.createDate}}
+                        </div>
+
+                    </div>
+                    <div class="list-value-section" *ngIf="item.dumperPartnerInfo.assignedRoles==dumperCompanyTitle || item.transporterPartnerInfo.assignedRoles==dumperCompanyTitle || item.processorPartnerInfo.assignedRoles==dumperCompanyTitle">
+                        <div class="list-section-label">
+                            {{uiLabels.dumperCompany}}
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+
+                        <div class="list-section-value partner-name" *ngIf="item.dumperPartnerInfo.assignedRoles==dumperCompanyTitle" (click)="openPartnerDetailsPopup(item.dumperPartnerInfo)">
+                            <span>{{item.dumperPartnerInfo.companyName}} ({{uiLabels.creatorLabel}})</span>
+
+                            <mat-chip class="temporary-status" *ngIf="item.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+
+                            <mat-icon class="launch-icon">launch</mat-icon>
+                        </div>
+                        <div class="list-section-value partner-name" *ngIf="item.transporterPartnerInfo.assignedRoles==dumperCompanyTitle" (click)="openPartnerDetailsPopup(item.transporterPartnerInfo)">
+                            <span><span>{{item.transporterPartnerInfo.companyName}}</span></span>
+
+                            <mat-chip class="temporary-status" *ngIf="item.transporterPartnerInfo.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+
+                            <mat-icon class="launch-icon">launch</mat-icon>
+                            <span *ngIf="item.isApproveRequiredState && item.transporterPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" color="primary">check_box</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                            <span *ngIf="item.isApproveRequiredState && !item.transporterPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                        </div>
+                        <div class="list-section-value partner-name" *ngIf="item.processorPartnerInfo && item.processorPartnerInfo.assignedRoles==dumperCompanyTitle" (click)="openPartnerDetailsPopup(item.processorPartnerInfo)">
+
+                            <span><span>{{item.processorPartnerInfo.companyName}}</span></span>
+
+                            <mat-chip class="temporary-status" *ngIf="item.processorPartnerInfo.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+
+                            <mat-icon class="launch-icon">launch</mat-icon>
+                            <span *ngIf="item.isApproveRequiredState && item.processorPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" color="primary">check_box</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                            <span *ngIf="item.isApproveRequiredState && !item.processorPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="list-value-section" fxLayoutGap="15px">
+                        <div class="list-section-value" *ngIf="item.agreementStatus.statusId=='statusAgreementFinished' || item.agreementStatus.statusId=='statusAgreementInUse'">
+                            <button mat-raised-button class="list-button-light agreement-action-btn" (click)="viewAgreementInfo(item)">{{uiLabels.viewBtn}}</button>
+                        </div>
+
+                        <div class="list-section-value" *ngFor="let eachProcess of item.processsList">
+
+                            <button *ngIf="eachProcess.processId!='editProcess'" mat-raised-button class="list-button-light agreement-action-btn" (click)="editAgreement(item,eachProcess)">{{eachProcess.processTitle}}</button>
+
+                        </div>
+                        <div class="list-section-value" *ngFor="let eachProcess of item.processsList">
+
+                            <button *ngIf="eachProcess.processId=='editProcess'" mat-raised-button class="list-button-light agreement-action-btn" (click)="editAgreement(item,eachProcess)">{{eachProcess.processTitle}}</button>
+
+                        </div>
+                        <div class="list-section-value">
+                            <button mat-raised-button class="list-button-light agreement-action-btn" (click)="copyAgreement(item)">{{uiLabels.copyButton}}</button>
+                        </div>
+
+                        <div class="list-section-value" *ngIf="item.agreementStatus.statusId=='statusNewAgreement'">
+
+                            <button mat-raised-button class="list-button-light agreement-action-btn" (click)="removeAgreement(item.agreementId)">{{uiLabels.removeButton}}</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="three-section-list-row">
+                    <div class="list-value-section" *ngIf="item.dumperPartnerInfo.assignedRoles==transporterCompanyTitle || item.transporterPartnerInfo.assignedRoles==transporterCompanyTitle || item.processorPartnerInfo.assignedRoles==transporterCompanyTitle">
+                        <div class="list-section-label">
+                            {{uiLabels.transporterCompany}}
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+
+                        <div class="list-section-value partner-name" *ngIf="item.dumperPartnerInfo.assignedRoles==transporterCompanyTitle" (click)="openPartnerDetailsPopup(item.dumperPartnerInfo)">
+
+                            <span>{{item.dumperPartnerInfo.companyName}} ({{uiLabels.creatorLabel}})</span>
+
+                            <mat-chip class="temporary-status" *ngIf="item.dumperPartnerInfo.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+
+                            <mat-icon class="launch-icon">launch</mat-icon>
+                        </div>
+                        <div class="list-section-value partner-name" *ngIf="item.transporterPartnerInfo.assignedRoles==transporterCompanyTitle" (click)="openPartnerDetailsPopup(item.transporterPartnerInfo)">
+
+                            <span><span>{{item.transporterPartnerInfo.companyName}}</span></span>
+
+                            <mat-chip class="temporary-status" *ngIf="item.transporterPartnerInfo.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+
+                            <mat-icon class="launch-icon">launch</mat-icon>
+                            <span *ngIf="item.isApproveRequiredState && item.transporterPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" color="primary">check_box</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                            <span *ngIf="item.isApproveRequiredState && !item.transporterPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                        </div>
+                        <div class="list-section-value partner-name" *ngIf="item.processorPartnerInfo.assignedRoles==transporterCompanyTitle" (click)="openPartnerDetailsPopup(item.processorPartnerInfo)">
+
+                            <span><span>{{item.processorPartnerInfo.companyName}}</span></span>
+
+                            <mat-chip class="temporary-status" *ngIf="item.processorPartnerInfo.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+
+                            <mat-icon class="launch-icon">launch</mat-icon>
+                            <span *ngIf="item.isApproveRequiredState && item.processorPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" color="primary">check_box</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                            <span *ngIf="item.isApproveRequiredState && !item.processorPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="list-value-section" *ngIf="item.dumperPartnerInfo.assignedRoles==processorCompanyTitle || item.transporterPartnerInfo.assignedRoles==processorCompanyTitle || item.processorPartnerInfo.assignedRoles==processorCompanyTitle">
+                        <div class="list-section-label">
+                            {{uiLabels.processorCompany}}
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+
+                        <div class="list-section-value partner-name" *ngIf="item.dumperPartnerInfo.assignedRoles==processorCompanyTitle" (click)="openPartnerDetailsPopup(item.dumperPartnerInfo)">
+
+                            <span>{{item.dumperPartnerInfo.companyName}} ({{uiLabels.creatorLabel}})</span>
+
+                            <mat-chip class="temporary-status" *ngIf="item.dumperPartnerInfo.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+
+                            <mat-icon class="launch-icon">launch</mat-icon>
+                        </div>
+                        <div class="list-section-value partner-name" *ngIf="item.transporterPartnerInfo.assignedRoles==processorCompanyTitle" (click)="openPartnerDetailsPopup(item.transporterPartnerInfo)">
+
+                            <span><span>{{item.transporterPartnerInfo.companyName}}</span></span>
+
+                            <mat-chip class="temporary-status" *ngIf="item.transporterPartnerInfo.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+
+                            <mat-icon class="launch-icon">launch</mat-icon>
+                            <span *ngIf="item.isApproveRequiredState && item.transporterPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" color="primary">check_box</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                            <span *ngIf="item.isApproveRequiredState && !item.transporterPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                        </div>
+                        <div class="list-section-value partner-name" *ngIf="item.processorPartnerInfo.assignedRoles==processorCompanyTitle" (click)="openPartnerDetailsPopup(item.processorPartnerInfo)">
+
+                            <span><span>{{item.processorPartnerInfo.companyName}}</span></span>
+
+                            <mat-chip class="temporary-status" *ngIf="item.processorPartnerInfo.approvalStatus==statusTemporaryUse">{{uiLabels.temporary}}</mat-chip>
+
+                            <mat-icon class="launch-icon">launch</mat-icon>
+                            <span *ngIf="item.isApproveRequiredState && item.processorPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" color="primary">check_box</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                            <span *ngIf="item.isApproveRequiredState && !item.processorPartnerInfo.isApprovalDone">
+                                <mat-icon class="partner-approval-icon" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+                                <span class="partner-approval-status_label">{{uiLabels.partnerApprovalStatus}}</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="list-value-section">
+
+                        <div class="list-section-label">
+
+                        </div>
+
+                        <div class="list-section-separator">
+
+                        </div>
+
+                        <div class="list-section-value" style=" margin-right: 25px;">
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </mat-expansion-panel>
+        <mat-label *ngIf="agreementList.length<pageSize" style="padding: 10px;">{{dataEndsLabel}}</mat-label>
+    </mat-accordion>

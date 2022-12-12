@@ -1,0 +1,245 @@
+<mat-card>
+    <div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+        <mat-card-content>
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+                <div fxLayout="row" fxLayoutAlign="start center" *ngIf="(isHandset$ | async)">
+                    <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <!-- <mat-label>{{uiLabels.companyName}}</mat-label> -->
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <!-- <mat-label>:</mat-label> -->
+                    </div>
+                    <div fxFlex="100 1 auto">
+                        <!-- <mat-label>{{companyInfo.companyName}}</mat-label> -->
+                    </div>
+                    <div fxFlex="0 1 auto" style="padding-right: 100px;" fxLayoutAlign="center end">
+                        <button *ngIf="!isViewMode" style="width: 100px;" id="editAccountantBtn" mat-raised-button color="primary" (click)="openAccountantInfoDiolog(companyInfo)">{{uiLabels.editBtn}}</button>
+                        <!-- (click)="openCompanyInfoDiolog(companyInfo)" -->
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" *ngIf="(isHandset$ | async)">
+                    <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.accountantName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="100 1 auto">
+                        <mat-label>{{companyInfo.accountantInfo.accountantName}}</mat-label>
+                    </div>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" *ngIf="!(isHandset$ | async)">
+                    <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>
+                            <span *ngIf="isSystemAdmin">
+                                <app-lang-def-button [componentCode]="componentCode">
+                                </app-lang-def-button>
+                            </span>
+                            {{uiLabels.accountantName}}
+                        </mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="100 1 auto">
+                        <mat-label>{{companyInfo.accountantInfo.accountantName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 auto" style="padding-right: 100px;" fxLayoutAlign="center end">
+                        <button *ngIf="!isViewMode" style="width: 100px;" id="editAccountantBtn" mat-raised-button color="primary" (click)="openAccountantInfoDiolog(companyInfo)">{{uiLabels.editBtn}}</button>
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.accountantEmail}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{companyInfo.accountantInfo.accountantEmail}}</mat-label>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.contactNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{companyInfo.accountantInfo.contactNoFormated}}</mat-label>
+                    </div>
+                </div>
+
+                <div fxLayout="row" *ngIf="!(isHandset$ | async)">
+                    <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.paymentMethd}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="row">
+                        <div *ngFor=" let mode of companyInfo.accountantInfo.paymentMode,index as i">
+                            <mat-label *ngIf="i==0">{{mode}} </mat-label>
+                            <mat-label *ngIf="i>0">, {{mode}}</mat-label>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div fxLayout="row" *ngIf="(isHandset$ | async)">
+                    <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.paymentMethd}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="column">
+                        <div *ngFor=" let mode of companyInfo.accountantInfo.paymentMode,index as i">
+                            <mat-label *ngIf="i==0">{{mode}} </mat-label>
+                            <mat-label *ngIf="i>0"> {{mode}}</mat-label>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.invoiceCloseDate}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{companyInfo.accountantInfo.invoiceClosingDate}}</mat-label>
+                    </div>
+                </div>
+                <div fxLayout="row" style="padding-bottom: 20px;">
+                    <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.invoicePaymentDate}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{companyInfo.accountantInfo.invoicePaymentDate}}</mat-label>
+                    </div>
+                </div>
+
+            </div>
+        </mat-card-content>
+
+    </div>
+
+</mat-card>
+
+
+
+<div fxLayout="row">
+    <mat-toolbar style="background-color: rgb(235, 235, 235);">
+        <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.paymentTransferInfo}}</mat-label>
+        <div fxLayoutAlign="end center" [ngClass]="!(isHandset$ | async) ? 'desktop-header-margin' : 'mobile-header-margin'">
+            <button *ngIf="!isViewMode" id="addBranchBtn" mat-raised-button color="primary" (click)="openBankAccountInfoDiolog()">{{uiLabels.addaccountBtn}}</button>
+        </div>
+    </mat-toolbar>
+    <mat-divider>
+    </mat-divider>
+</div>
+
+
+<mat-accordion style="width: 100%;" multi>
+    <mat-expansion-panel *ngFor="let item of companyInfo.bankAccountList,index as i" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;">
+        <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);">
+            <div style="flex:1">
+                <div class="three-section-list-row" style="margin-bottom: 10px;" id="bankAccount+{{i}}">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            <mat-label>{{uiLabels.bankName}}</mat-label>
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            <mat-label>{{item.bankName}}</mat-label>
+                        </div>
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            <mat-label>{{uiLabels.accountNumber}}</mat-label>
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            <mat-label>{{item.accountNumber}}</mat-label>
+                        </div>
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+
+                        </div>
+
+                        <div class="list-section-separator">
+
+                        </div>
+                        <div class="list-section-value">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel-header>
+        <div class="list-item">
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        <mat-label>{{uiLabels.branchName}}</mat-label>
+                    </div>
+
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        <mat-label>{{item.branchName}}</mat-label>
+                    </div>
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        <mat-label>{{uiLabels.accountName}}</mat-label>
+                    </div>
+
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        <mat-label>{{item.accountName}}</mat-label>
+                    </div>
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+                    <div class="list-section-separator">
+
+                    </div>
+                    <div class="list-section-value" fxLayoutGap="25px">
+                        <button *ngIf="!isViewMode" mat-raised-button class="list-button" id="bankAccountEditBtn+{{i}}" (click)="openBankAccountInfoDiolog(item)">{{uiLabels.editBtn}}</button>
+
+                        <button *ngIf="!isViewMode" mat-raised-button class="list-button" id="removeBankAccount{{i}}" (click)="removeBankAccount(item.bankAccountId)">{{uiLabels.removeButton}}</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </mat-expansion-panel>
+</mat-accordion>

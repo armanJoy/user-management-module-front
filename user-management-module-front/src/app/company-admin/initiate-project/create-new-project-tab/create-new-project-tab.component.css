@@ -1,0 +1,23 @@
+.addressSelectDesktop {
+  width: 20%;
+}
+
+.selected-radio {
+    color: blue;
+}
+
+.nonselected-radio {
+    color: gray;
+}
+
+.not-aplicable-radio {
+    color: gray;
+}
+
+.active-radio {
+    color: gray;
+}
+
+.inactive-radio {
+    color: gray;
+}

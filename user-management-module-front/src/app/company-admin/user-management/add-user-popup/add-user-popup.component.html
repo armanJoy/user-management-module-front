@@ -1,0 +1,345 @@
+<mat-card-header style="padding-bottom: 20px;">
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    <mat-card-title *ngIf="formUserInfo.userInfoId==''" style="padding-bottom: 10px;">{{uiLabels.addTitle}}</mat-card-title>
+    <mat-card-title *ngIf="formUserInfo.userInfoId!=''" style="padding-bottom: 10px;">{{uiLabels.editTitle}}</mat-card-title>
+</mat-card-header>
+<mat-dialog-content>
+
+    <mat-card>
+
+        <mat-card-content [ngClass]="!(isHandset$ | async) ? 'desktop-padding' : ''">
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.name}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input placeholder={{uiLabels.name}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='name' [(ngModel)]="formUserInfo.userName">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.officeName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input placeholder={{uiLabels.jobTitle}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='jobTitle' [(ngModel)]="formUserInfo.officeName" readonly>
+                        <!-- <mat-label>{{formUserInfo.officeName}}</mat-label> -->
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <!-- <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.userId}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input *ngIf="formUserInfo.userInfoId==''" placeholder={{uiLabels.userId}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='userId' [(ngModel)]="formUserInfo.userId">
+                        <input *ngIf="formUserInfo.userInfoId!=''" placeholder={{uiLabels.userId}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='userId' [(ngModel)]="formUserInfo.userId" readonly>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div> -->
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.department}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input placeholder={{uiLabels.department}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='department' [(ngModel)]="formUserInfo.department">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.jobTitle}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input placeholder={{uiLabels.jobTitle}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='jobTitle' [(ngModel)]="formUserInfo.jobTitle">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.email}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input *ngIf="formUserInfo.userInfoId==''" placeholder={{uiLabels.email}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='email' [(ngModel)]="formUserInfo.userEmail">
+                        <input *ngIf="formUserInfo.userInfoId!=''" placeholder={{uiLabels.email}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='email' [(ngModel)]="formUserInfo.userEmail" readonly>
+
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.selectAddress}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <div fxFlex="90 1 auto" fxLayoutAlign="start center">
+                            <mat-form-field class="addressSelectDesktop">
+                                <mat-select matNativeControl placeholder="Select From List" style="padding-right: 25px;" (selectionChange)="doSomething($event)">
+
+                                    <mat-option *ngFor="let item of addressDropDownViewList" id={{item.name}} [value]="item">
+                                        {{item.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+
+                        </div>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.officeAddress}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxLayoutAlign="center center">
+
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" id="officeAddress" matInput [(ngModel)]="zipCode" style="margin-right: 20px;" readonly>
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" id="officeAddress" matInput [(ngModel)]="officeAddress" style="margin-right: 20px;" readonly>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+
+                </div>
+
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.officeContactNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input mask="00-0000-0000" placeholder="03-2222-2222" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='officeContactNo' [(ngModel)]="formateContactNo" readonly>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.mobileNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input mask="00-0000-0000" placeholder="03-2222-2222" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='mobileNo' [(ngModel)]="formUserInfo.userContactNo">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row" *ngIf="isDriver">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.licenseNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input placeholder={{uiLabels.licenseNo}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='licenseNo' [(ngModel)]="formUserInfo.licenseNo">
+
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row" *ngIf="formUserInfo.drivingLicenseUpload && isDriver">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <!-- <mat-label>{{uiLabels.uploadedLicensePreview}}</mat-label> -->
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <!-- <mat-label>:</mat-label> -->
+                    </div>
+
+                    <div fxFlex="90 1 auto">
+                        <mat-card style="height: 100px;width: 100px;"><img class="image-preview " src={{formUserInfo.drivingLicenseUpload}}></mat-card>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row" *ngIf="isDriver">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.licenseUpload}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+
+                    <div fxFlex="90 1 auto">
+                        <input type="file" [title]="" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='licenseUpload' (change)="upLoadFile($event,1)" style="display:none;" />
+                        <button>
+                            <label for='licenseUpload'>
+                                <mat-label>{{uiLabels.uploadFile}}</mat-label>
+                            </label>
+                        </button>
+                        <span *ngIf="formUserInfo.drivingLicenseUpload" style="margin-left: 5px;">
+                            <mat-label>{{uiLabels.fileUploaded}}</mat-label>
+                        </span>
+                        <span *ngIf="!formUserInfo.drivingLicenseUpload" style="margin-left: 5px;">
+                            <mat-label>{{uiLabels.noFileUploaded}}</mat-label>
+                        </span>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row" *ngIf="formUserInfo.userSealUploadedFile">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <!-- <mat-label>{{uiLabels.uploadedUserSealPreview}}</mat-label> -->
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <!-- <mat-label>:</mat-label> -->
+                    </div>
+
+                    <div fxFlex="90 1 auto">
+                        <mat-card style="height: 100px;width: 100px;"><img class="image-preview " src={{formUserInfo.userSealUploadedFile}}></mat-card>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.userSealUpload}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+
+                    <div fxFlex="90 1 auto">
+                        <input type="file" [title]="" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='userSealUploadedFile' (change)="upLoadFile($event,2)" style="display:none;" />
+                        <button>
+                            <label for='userSealUploadedFile'>
+                                <mat-label>{{uiLabels.uploadFile}}</mat-label>
+                            </label>
+                        </button>
+                        <span *ngIf="formUserInfo.userSealUploadedFile" style="margin-left: 5px;">
+                            <mat-label>{{uiLabels.fileUploaded}}</mat-label>
+                        </span>
+                        <span *ngIf="!formUserInfo.userSealUploadedFile" style="margin-left: 5px;">
+                            <mat-label>{{uiLabels.noFileUploaded}}</mat-label>
+                        </span>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.remarks}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input placeholder={{uiLabels.remarks}} [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id='remarks' [(ngModel)]="formUserInfo.remarks">
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div>
+                <app-role-tab [isViewMode]="isViewMode" [DxrRoleListViewForSelectedUser]='DxrRoleListViewForSelectedUser' [sendRole]="sendRole" [SendUserInfo]="SendUserInfo"></app-role-tab>
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
+</mat-dialog-content>
+<mat-card-actions align="end">
+    <button style="margin-right: 25px;" id="closeBtn" mat-raised-button color="accent" mat-dialog-close id='closeBtn'>
+        {{uiLabels.closeBtn}}
+    </button>
+    <button id="saveBtn" mat-raised-button color="primary" type="click" id='saveBtn' (click)="onClick(formUserInfo)">
+        {{uiLabels.saveBtn}}
+    </button>
+</mat-card-actions>

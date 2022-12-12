@@ -1,0 +1,100 @@
+<div class="popUp" fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="!(isHandset$ | async)">
+
+    <mat-card>
+        <mat-card-title>
+            <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>
+            {{uiLabels.title}}
+        </mat-card-title>
+        <mat-card-content>
+            <div fxLayout="row">
+                <div fxFlex="0 1 200px" fxLayout="column" fxLayoutAlign="center end">
+
+                </div>
+                <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                    <mat-label>{{uiLabels.status}}</mat-label>
+                </div>
+                <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto" fxLayoutAlign="start center" fxLayputGap="25px">
+                    <mat-radio-group color="primary" aria-label="Select an option" [(ngModel)]="subscriptinDetail.response">
+                        <div fxLayout="row" fxFlex="5 1 auto" style="margin-right: 10px;">
+                            <mat-radio-button id="filterAccept" value="Accept" type="click">{{uiLabels.accept}}</mat-radio-button>
+                        </div>
+                        <div fxLayout="row" id="filterReject" fxFlex="5 1 auto" style="margin-right: 10px;">
+                            <mat-radio-button value="Reject">{{uiLabels.reject}}</mat-radio-button>
+                        </div>
+
+                    </mat-radio-group>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+</div>
+<div class="popUp" fxLayout="row" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="(isHandset$ | async)">
+
+    <mat-card>
+        <mat-card-title>
+            {{uiLabels.title}}
+        </mat-card-title>
+        <mat-card-title>
+            <div fxLayout="row wrap">
+                <div fxFlex="0 1 80px" fxLayout="column" style="padding-top:10px ;" fxLayoutAlign="center end">
+                    <mat-label>{{uiLabels.status}}</mat-label>
+                </div>
+                <div fxFlex="90 1 auto" fxLayoutAlign="start center" fxLayout="column wrap">
+                    <mat-radio-group color="primary" aria-label="Select an option" [(ngModel)]="subscriptinDetail.response">
+                        <div fxFlex="5 1 auto">
+                            <mat-radio-button id="filterAccept" value="Accept" style="padding-right: 10px;padding-left: 10px;" type="click">{{uiLabels.accept}}</mat-radio-button>
+                        </div>
+                        <div id="filterReject" fxFlex="5 1 auto">
+                            <mat-radio-button value="Reject">{{uiLabels.reject}}</mat-radio-button>
+                        </div>
+
+                    </mat-radio-group>
+                </div>
+            </div>
+        </mat-card-title>
+    </mat-card>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- <div>
+    <mat-card>
+        <mat-card-content>
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                <div fxLayout="row wrap">
+                    <div fxLayout="row" fxFlex="5 1 auto">
+                        <div fxFlex="5 1 auto" fxLayout="column" fxLayoutAlign="center">
+                            <mat-label>{{uiLabels.cnfirmation}}</mat-label>
+                        </div>
+
+                    </div>
+
+                    <mat-radio-group aria-label="Select an option" [(ngModel)]="subscriptinDetail.response">
+                        <div fxLayout="row" fxFlex="5 1 auto" style="margin-right: 10px;">
+                            <mat-radio-button id="filterAccept" value="Accept" type="click">{{uiLabels.accept}}</mat-radio-button>
+                        </div>
+                        <div fxLayout="row" id="filterReject" fxFlex="5 1 auto" style="margin-right: 10px;">
+                            <mat-radio-button value="Reject">{{uiLabels.reject}}</mat-radio-button>
+                        </div>
+
+                    </mat-radio-group>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div> -->

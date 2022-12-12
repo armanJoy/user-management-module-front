@@ -1,0 +1,19 @@
+<span *ngIf="isSystemAdmin">
+    <app-lang-def-button [componentCode]="componentCode">
+    </app-lang-def-button>
+</span>
+<mat-tab-group (selectedTabChange)="tabChange($event)" *ngIf="viewContent">
+    <mat-tab label={{uiLabels.dumperTab}}>
+        <app-role-def-menu-list [menuRepository]="menuRepository" [selectedCompanyCategoryId]="selectedCompanyCategoryId" [selectedCategoryRoles]="selectedCategoryRoles" [menuList]="selectedMenuList" [fullMenuList]="fullMenuList" [dxrRoles]="dxrRoles"></app-role-def-menu-list>
+    </mat-tab>
+    <mat-tab label={{uiLabels.transporterTab}}>
+        <app-role-def-menu-list [menuRepository]="menuRepository" [selectedCompanyCategoryId]="selectedCompanyCategoryId" [selectedCategoryRoles]="selectedCategoryRoles" [menuList]="selectedMenuList" [fullMenuList]="fullMenuList" [dxrRoles]="dxrRoles"></app-role-def-menu-list>
+    </mat-tab>
+    <!-- <mat-tab label={{uiLabels.transporterTab}}>
+        <app-role-def-menu-list [menuList]="menuRoleDef"></app-role-def-menu-list>
+    </mat-tab>
+    <mat-tab label={{uiLabels.processorTab}}>
+        <app-role-def-menu-list [menuList]="menuRoleDef"></app-role-def-menu-list>
+    </mat-tab> -->
+
+</mat-tab-group>

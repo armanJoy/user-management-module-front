@@ -1,0 +1,262 @@
+<mat-card>
+    <div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+        <!-- <div fxLayoutAlign="center start"> -->
+        <mat-card-header style="padding-bottom: 20px;">
+            <mat-card-title style="padding-bottom: 10px;">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode"></app-lang-def-button>
+                </span>
+                {{uiLabels.title}}
+
+            </mat-card-title>
+
+        </mat-card-header>
+        <!-- <app-lang-def-button></app-lang-def-button> -->
+        <!-- </div> -->
+
+        <mat-card-content>
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.companyName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="companyName" placeholder="排出株式会社" matInput [(ngModel)]="subscriptionFormInformation.companyName">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.zipCode}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="zipcode" mask="000-0000" placeholder="〒333-0001" matInput [(ngModel)]="subscriptionFormInformation.zipcode" value="" textInput class="form-control" type="text" (input)="SearchZipCodeData(subscriptionFormInformation.zipcode)">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+
+                        {{uiLabels.address}}<label></label>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <textarea [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="address" placeholder="東京都品川区１−２−４" matInput [(ngModel)]="subscriptionFormInformation.address" rows="3" cols="20"> </textarea>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.conatctNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="contactNo" mask="00-0000-0000" placeholder="03-2222-2222" matInput [(ngModel)]="subscriptionFormInformation.contactNo" value="">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <!-- <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                        {{uiLabels.subscriptionEmail}}
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="textarea" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="subscriptionEmail" type="email" matInput [(ngModel)]="subscriptionFormInformation.subscriptionEmail" ngModel required>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div> -->
+
+                <div fxLayout="row" *ngIf="(isHandset$ | async)">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="start end">
+
+                        <mat-label>{{uiLabels.companyCategory}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="start center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxLayout="column" fxFlex="90 1 auto" fxLayoutAlign="start start">
+                        <div *ngFor="let catagory of catagoryList,index as i" fxLayoutAlign="start center">
+                            <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id={{catagory.name}} [(ngModel)]="catagory.isCheck" class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [value]="catagory.name" (change)="onCheckboxChange($event)" />
+                            <label for="check"> {{catagory.label}}</label>
+                        </div>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+
+                </div>
+
+                <div fxLayout="row" *ngIf="!(isHandset$ | async)">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.companyCategory}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxLayout="row" fxFlex="15 1 auto" *ngFor="let catagory of catagoryList,index as i" fxLayoutAlign="start center">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id={{catagory.name}} [(ngModel)]="catagory.isCheck" class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [value]="catagory.name" (change)="onCheckboxChange($event)" />
+                        <label for="check"> {{catagory.label}}</label>
+                    </div>
+                    <div fxFlex="75 1 auto" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{uiLabels.selctMultiple}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.subscriberName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="subscriberName" placeholder="管理者　太郎" matInput [(ngModel)]="subscriptionFormInformation.subscriberName">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+
+                        <mat-label>{{uiLabels.subscriberMail}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="subscriberMail" placeholder="adamitsu-mi@abc.co.jp" type="email" matInput [(ngModel)]="subscriptionFormInformation.subscriberMail" ngModel required>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+
+                        <mat-label>License No
+                        </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="subscriberMail" placeholder="adamitsu-mi@abc.co.jp" type="email" matInput [(ngModel)]="subscriptionFormInformation.wasteProcessingLicenceNo" ngModel required>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{uiLabels.asAdmin}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 130px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlignment="start start" fxFlex="90 1 auto">
+                        <!-- <div fxLayout="row">
+                            <div style="padding-right: 10px;">
+                                <mat-checkbox id="isHuman" [color]="'primary'" [(ngModel)]="subscriptionFormInformation.isHuman">
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                {{uiLabels.humanVerification}}
+                            </div>
+                        </div> -->
+                        <div fxLayout="row">
+                            <div style="padding-right: 10px;">
+                                <mat-checkbox id="termsCondition" [class.selected]="true" [color]="'primary'" [(ngModel)]="subscriptionFormInformation.isAgree">
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                <a (click)="termsAndConditionPopupOpen()">
+                                    <u>{{uiLabels.termsCondition}}</u>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row" style="padding-top: 15px;">
+                    <div fxFlex="90 1 auto" fxLayoutGap="30px" fxLayoutAlign="center center">
+                        <button style="width: 150px;" id="subscriptionSubmitButton" mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+                        <button style="width: 150px;" id="subscriptionSubmitButton" mat-raised-button color="primary" type="click" (click)="onSubmit()">{{uiLabels.submit}}</button>
+                    </div>
+
+                </div>
+            </div>
+        </mat-card-content>
+    </div>
+</mat-card>

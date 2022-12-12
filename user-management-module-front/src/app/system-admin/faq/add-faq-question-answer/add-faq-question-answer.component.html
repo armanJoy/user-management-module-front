@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>
+
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    {{uiLabels.pageHeader}}
+</h2>
+<mat-dialog-content>
+    <!-- <mat-card>
+        <mat-card-content> -->
+    <div fxLayout="column" [ngClass]="!(isHandset$ | async) ? 'form-padding-popup' : 'form-padding-popup-mobile'" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+        <div fxLayout="row">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.questionLabel}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input id="faqQuestion" matInput [(ngModel)]="newFaq.faqInfoQuestion">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.answerLabel}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input id="faqAnswer" matInput [(ngModel)]="newFaq.faqInfoAnswer">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+    </div>
+    <!-- </mat-card-content>
+
+    </mat-card> -->
+</mat-dialog-content>
+<mat-dialog-actions class="action-button-right" align="end">
+    <button id="cancelBtn" mat-raised-button color="accent" mat-dialog-close>{{uiLabels.cancelBtn}}</button>
+    <button id="addBtn" mat-raised-button color="primary" (click)="saveFaq()" *ngIf="newFaq.faqInfoId.length==0">{{uiLabels.addBtn}}</button>
+    <button id="updateBtn" mat-raised-button color="primary" (click)="saveFaq()" *ngIf="newFaq.faqInfoId.length!=0">{{uiLabels.updateBtn}}</button>
+</mat-dialog-actions>

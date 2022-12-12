@@ -1,0 +1,32 @@
+<mat-dialog-content>
+    <mat-card>
+        <mat-card-content>
+            <mat-tab-group [selectedIndex]="selectedIndex" (focusChange)="informChange($event.index)">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                <mat-tab label={{uiLabels.roleTab}}>
+                    <app-role-tab [isViewMode]="isViewMode" [selectedUser]='selectedUser' [selectTab]="switchTab" [SendUserInfo]='SendUserInfo' [DxrRoleListViewForSelectedUser]='roleList' [roleWiseMenuAccessList]="roleWiseMenuAccessList"></app-role-tab>
+                </mat-tab>
+                <mat-tab label={{uiLabels.menuAccessTab}}>
+                    <app-menu-access-tab [selectedUser]='selectedUser' [SendUserInfo]='SendUserInfo' [menuAccessList]='menuAccessList' [roleWiseMenuAccessList]="roleWiseMenuAccessList"></app-menu-access-tab>
+                </mat-tab>
+            </mat-tab-group>
+
+        </mat-card-content>
+
+    </mat-card>
+
+
+</mat-dialog-content>
+
+<mat-card-actions align="end">
+    <button id="closeBtn" style="margin-right: 25px;" mat-raised-button color="accent" (click)="onClose()" id='closeBtn'>
+        {{uiLabels.closeBtn}}
+    </button>
+    <button id="saveBtn" style="margin-right: 25px;" mat-raised-button color="primary" (click)="onClick()">
+        {{uiLabels.saveBtn}}
+    </button>
+
+</mat-card-actions>

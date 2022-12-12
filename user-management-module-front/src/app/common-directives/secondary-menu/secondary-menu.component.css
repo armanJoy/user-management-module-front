@@ -1,0 +1,19 @@
+.sidenav {
+  width: 250px;
+}
+
+.secondary-menu {
+  background-color: rgb(224, 224, 241);
+}
+.secondary-menu mat-expansion-panel-header {
+  padding-left: 15px;
+}
+
+.secondary-menu mat-nav-list {
+  margin-left: -20px;
+}
+
+.secondary-menu-head {
+  /* background-color: rgb(224, 224, 241); */
+  background-color: rgb(185, 185, 204);
+}

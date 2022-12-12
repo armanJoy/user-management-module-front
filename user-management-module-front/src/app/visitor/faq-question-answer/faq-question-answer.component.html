@@ -1,0 +1,50 @@
+<div fxLayout="row" *ngIf="!isAdmin">
+    <mat-toolbar style="background-color: rgb(235, 235, 235);">
+        <mat-label id="faqTypeHeader" fxLayoutAlign="start center" fxFlex="1 1 100%">
+
+            {{selectedFaqType?.faqType}}
+        </mat-label>
+    </mat-toolbar>
+    <mat-divider>
+    </mat-divider>
+</div>
+<span *ngIf="isSystemAdmin">
+    <app-lang-def-button [componentCode]="componentCode">
+    </app-lang-def-button>
+</span>
+<div>
+    <mat-accordion style="width: 100%;" multi>
+        <mat-expansion-panel *ngFor="let item of faqInfoList, index as i">
+            <mat-expansion-panel-header>
+                <div fxLayout="row wrap" fxFlex *ngIf="!(isHandset$ | async)">
+                    <div fxLayout="column" fxLayoutAlign="center start" fxFlex="1 1 80%">
+                        <mat-label>{{uiLabels.question}} . {{item.faqInfoQuestion}}</mat-label>
+
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 10%" *ngIf="isAdmin" style="padding-right: 40px;padding-bottom: 40px;padding-top: 40px;">
+                        <button id={{item.faqInfoQuestion}} mat-raised-button class="simple-button" (click)="editFaqInfo(item)">{{uiLabels.editBtn}}</button>
+                    </div>
+
+                    <div fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 10%" *ngIf="isAdmin" style="padding-right: 40px;padding-bottom: 40px;padding-top: 40px;">
+                        <button id="removeButton{{i}}" mat-raised-button class="simple-button" (click)="removeFaqInfo(item.faqInfoId)">{{uiLabels.removeButton}}</button>
+                    </div>
+                </div>
+
+                <div fxLayout="row wrap" fxFlex *ngIf="(isHandset$ | async)">
+                    <div fxLayout="column" fxLayoutAlign="center start" fxFlex="1 1 55%">
+                        <mat-label>{{uiLabels.question}} . {{item.faqInfoQuestion}}</mat-label>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="center start" fxFlex="1 1 45%" *ngIf="isAdmin">
+                        <button id={{item.faqInfoQuestion}} mat-raised-button class="simple-button" (click)="editFaqInfo(item)">{{uiLabels.editBtn}}</button>
+                    </div>
+
+                    <div fxLayout="column" fxLayoutAlign="center start" fxFlex="1 1 45%" *ngIf="isAdmin">
+                        <button id="removeButton{{i}}" mat-raised-button class="simple-button" (click)="removeFaqInfo(item.faqInfoId)">{{uiLabels.removeButton}}</button>
+                    </div>
+                </div>
+            </mat-expansion-panel-header>
+            <mat-label>{{uiLabels.answer}} . {{item.faqInfoAnswer}}</mat-label>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

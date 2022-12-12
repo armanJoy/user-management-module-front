@@ -1,0 +1,27 @@
+<mat-tab-group (selectedTabChange)='getStaticContent($event)' [selectedIndex]="selectedIndex" *ngIf="loadHtml && uiLabels">
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    <mat-tab id="caseStudyTab" label={{uiLabels.caseStudyTabHead}}>
+        <app-case-study [isAdmin]="true" [pageContents]="staticPages" [staticPage]="staticPages[0]"></app-case-study>
+    </mat-tab>
+    <mat-tab id="howtoUseItTab" label={{uiLabels.howToUseItTabHead}}>
+        <app-how-to-use-it [isAdmin]="true"></app-how-to-use-it>
+    </mat-tab>
+    <mat-tab id="introductionFlowTab" label={{uiLabels.introductionFlowTabHead}}>
+        <app-introduction-flow [isAdmin]="true"></app-introduction-flow>
+    </mat-tab>
+    <mat-tab id="companyUsingItTab" label={{uiLabels.companyUsingItTabHead}}>
+        <app-company-using-it [isAdmin]="true"></app-company-using-it>
+    </mat-tab>
+    <mat-tab id="costingTab" label={{uiLabels.costingTabHead}}>
+        <app-costing [isAdmin]="true"></app-costing>
+    </mat-tab>
+    <mat-tab id="termsofUseTab" label={{uiLabels.termsOfUseTabHead}}>
+        <app-terms-of-use [isAdmin]="true"></app-terms-of-use>
+    </mat-tab>
+    <mat-tab id="privacyPolicy" label={{uiLabels.privacyPolicyTabHead}}>
+        <app-privacy-policy [isAdmin]="true"></app-privacy-policy>
+    </mat-tab>
+</mat-tab-group>

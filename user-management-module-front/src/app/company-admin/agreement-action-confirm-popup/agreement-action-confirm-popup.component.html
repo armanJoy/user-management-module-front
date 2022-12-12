@@ -1,0 +1,12 @@
+<div>
+    <h2>{{uiLabels.headerLabel}}</h2>
+
+    <div style="padding: 15px; border-radius: 15px; border: 1px solid gray;">
+        <mat-label style="padding: 50px 25px 25px 25px;font-size: 18px;">{{uiLabels.newStatusStatement}} <span style="font-weight: 550;">{{data.newStatus}}</span></mat-label>
+
+        <div style="display: flex;padding-top: 80px;justify-content: space-around;">
+            <!-- <button mat-raised-button color="accent" [mat-dialog-close]='false'>{{uiLabels.cancelButton}}</button> -->
+            <button mat-raised-button color="primary" [mat-dialog-close]='true'>{{uiLabels.confirmButton}}</button>
+        </div>
+    </div>
+</div>

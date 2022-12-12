@@ -1,0 +1,45 @@
+<div *ngIf="viewContent">
+
+    <mat-card>
+        <span *ngIf="isSystemAdmin">
+            <app-lang-def-button [componentCode]="componentCode">
+            </app-lang-def-button>
+        </span>
+
+        <app-schedule-dashboard-tab *ngIf="isProjectListView" [search]="getProjectList" [selectTab]="switchTab" [projectList]="projectList" [project]="project" [isLoadMenuAvailable]="isLoadMenuAvailable" [isUnloadMenuAvailable]="isUnloadMenuAvailable" [redirectToLoadMenu]="redirectToLoadMenu" [redirectToUnloadMenu]="redirectToUnloadMenu" [isWastePickScheduleView]="isWastePickScheduleView" [companyId]="companyId" [switchTabToVehicleTripSchedule]="switchTabToVehicleTripSchedule" [project]="project" [projectListView]="projectListView" [isRedirecteView]="isRedirecteView">
+        </app-schedule-dashboard-tab>
+
+        <app-project-info-tab *ngIf="isWastePickScheduleView" [companyId]="companyId" [selectTab]="switchTabToVehicleTripSchedule" [project]="project" [projectListView]="projectListView" [isRedirecteView]="isRedirecteView">
+        </app-project-info-tab>
+
+        <app-vehicle-trip-schedule *ngIf="isVehicleTripScheduleView" [confirmDisposeSchedule]="confirmDisposeSchedule" [isScheduleConfirmed]="isScheduleConfirmed" [disposeList]="project.wasteDisposalInfo" [dateWiseDisposePickList]="dateWiseDisposePickList" [updateDisposeWisePickList]="UpdateDisposeWisePickList" [driverList]="driverList" [disposalInfo]="disposalInfo" [column]="column" [row]="row" [planQuantity]="planQuantity" [UpdateplanQuantity]="UpdateplanQuantity" [projectListView]="projectListView" [pickSchedule]="pickSchedule" [isRedirecteView]="isRedirecteView">
+        </app-vehicle-trip-schedule>
+
+
+
+
+
+        <!-- <mat-tab-group [selectedIndex]="selectedIndex" (focusChange)="informChange($event.index)">
+            <mat-tab label={{uiLabels.projectScheduleDashboard}}>
+                <app-schedule-dashboard-tab [search]="getProjectList" [selectTab]="switchTab" [projectList]="projectList" [project]="project" [isLoadMenuAvailable]="isLoadMenuAvailable" [isUnloadMenuAvailable]="isUnloadMenuAvailable" [redirectToLoadMenu]="redirectToLoadMenu" [redirectToUnloadMenu]="redirectToUnloadMenu"></app-schedule-dashboard-tab>
+            </mat-tab>
+            <mat-tab label={{uiLabels.wasteSchedule}}>
+                <app-project-info-tab [companyId]="companyId" [selectTab]="switchTabToVehicleTripSchedule" [project]="project">
+
+                </app-project-info-tab>
+            </mat-tab>
+            <mat-tab label={{uiLabels.vehicleTripSchedule}}>
+                <app-vehicle-trip-schedule [confirmDisposeSchedule]="confirmDisposeSchedule" [isScheduleConfirmed]="isScheduleConfirmed" [disposeList]="project.wasteDisposalInfo" [dateWiseDisposePickList]="dateWiseDisposePickList" [selectTab]="UpdateDisposeWisePickList" [driverList]="driverList" [disposalInfo]="disposalInfo" [column]="column" [row]="row" [planQuantity]="planQuantity" [UpdateplanQuantity]="UpdateplanQuantity" [projectListView]="projectListView" [pickSchedule]="pickSchedule">
+
+                </app-vehicle-trip-schedule>
+            </mat-tab>
+            <mat-tab label={{uiLabels.projectTripSchedule}}>
+                <app-project-trip-schedule [isScheduleConfirmed]="isScheduleConfirmed" [dateWiseDisposePickList]="dateWiseDisposePickList" [row]="row" [project]="project"></app-project-trip-schedule>
+            </mat-tab>
+
+        </mat-tab-group> -->
+
+
+    </mat-card>
+
+</div>

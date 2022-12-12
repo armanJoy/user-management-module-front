@@ -1,0 +1,80 @@
+.disabled{
+    color: gray;
+}
+
+.check-box{
+    font-size: 21px;
+    margin-right: 5px;
+}
+
+.checked{
+    color: blue;
+}
+
+.unchecked{
+    color: rgb(56, 56, 56);
+}
+
+.hide-section{
+    display:none;
+}
+
+.selected-radio{
+    color: blue;
+}
+
+.nonselected-radio {
+    color: rgb(56, 56, 56);
+}
+
+.not-aplicable-radio{
+    color: gray;
+}
+
+.active-radio{
+    color: gray;
+}
+
+.inactive-radio{
+    color: gray;
+}
+
+.form-container-mob {
+  margin: 10px 10px 5px 10px;
+}
+
+.form-container-pc {
+  margin: 10px 0px 10px 10px;
+}
+
+.form-container-pc .two-section-list-row {
+  margin-bottom: 15px;
+}
+
+.form-container-mob .two-section-list-row {
+  margin-bottom: 15px;
+}
+
+.form-container-pc .three-section-list-row {
+  margin-bottom: 10px;
+}
+
+.form-container-mob .three-section-list-row {
+  margin-bottom: 10px;
+}
+
+.form-container-pc .three-section-list-row .list-value-section {
+  margin-bottom: 15px;
+}
+
+.form-container-mob .three-section-list-row .list-value-section {
+  margin-bottom: 15px;
+}
+
+.form-container-pc .three-section-list-row .list-action-section {
+  margin-bottom: 15px;
+}
+
+.form-container-mob .three-section-list-row .list-action-section {
+  margin-bottom: 15px;
+}

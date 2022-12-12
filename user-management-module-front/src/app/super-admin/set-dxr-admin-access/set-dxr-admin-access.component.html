@@ -1,0 +1,69 @@
+<mat-card>
+    <div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+        <mat-card-header>
+            <mat-card-title style="padding-bottom: 10px;">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.formTitle}}
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="start end">
+                        <mat-label>{{uiLabels.fullName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="start center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <textarea style="height: 300px;" id="abcd123" [ngClass]="!(isHandset$ | async) ? 'input-large' : 'input-large'" matInput [(ngModel)]="dxrAdminAccess"></textarea>
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row" *ngIf="(isHandset$ | async)">
+                    <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label *ngIf="jsonCorrect==false" style="color: red;">{{uiLabels.invalidJsonMessage}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <button id="submitButton" mat-raised-button class="simple-button" type="submit" (click)="setDxrAdminAccess()">{{uiLabels.createBtn}}</button>
+
+                    </div>
+                </div>
+
+
+
+                <div fxLayout="row" *ngIf="!(isHandset$ | async)">
+                    <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label *ngIf="jsonCorrect==false" style="color: red;">{{uiLabels.invalidJsonMessage}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                    <div fxFlex="90 1 auto" style="padding-left: 50px;">
+
+                        <button id="submitButton" mat-raised-button class="simple-button" type="submit" (click)="setDxrAdminAccess()">{{uiLabels.createBtn}}</button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </mat-card-content>
+    </div>
+
+</mat-card>

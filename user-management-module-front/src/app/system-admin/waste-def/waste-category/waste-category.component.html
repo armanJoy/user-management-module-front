@@ -1,0 +1,51 @@
+<!-- <div fxLayout="row">
+    <mat-toolbar style="background-color: rgb(235, 235, 235);">
+        <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.wasteCategoryLabel}}</mat-label>
+    </mat-toolbar>
+    <mat-divider>
+    </mat-divider>
+</div> -->
+
+<div fxLayout="row">
+    <mat-toolbar style="background-color: rgb(235, 235, 235);">
+        <span *ngIf="isSystemAdmin">
+            <app-lang-def-button [componentCode]="componentCode">
+            </app-lang-def-button>
+        </span>
+
+        <!-- <div fxLayoutAlign="start center" fxLayout="column" fxFlex="0 0 120px">
+            <mat-label>{{uiLabels.wasteCategory}} :</mat-label>
+        </div>
+        <div fxLayoutAlign="center start" fxLayout="column" fxFlex="0 0 70%">
+            <mat-label>{{selectedCategory?.categoryTitle}}</mat-label>
+        </div> -->
+        <mat-label fxFlex="1 1 85%" fxLayoutAlign="start start">{{uiLabels.wasteCategory}} : {{selectedCategory?.categoryTitle}}</mat-label>
+        <div fxLayoutAlign="center end" fxLayout="column" fxFlex="0 0 15%">
+            <button id="addWasteTypeBtn" mat-raised-button class="simple-button" (click)="openTypeAddDialog()">{{uiLabels.addButton}}</button>
+        </div>
+    </mat-toolbar>
+    <mat-divider>
+    </mat-divider>
+</div>
+
+<div id="faqTypeList" *ngFor="let eachCategory of wasteTypeList, index as i" class="common-list-item simple-list" [ngStyle]="{'background-color': selectedItem==eachCategory ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(eachCategory)">
+    <div fxLayout="row">
+        <div fxFlex="1 1 60%" fxLayout="column" fxLayoutAlign="center start">
+            <mat-label>{{uiLabels.wasteCategoryLabel}} : {{eachCategory.wasteTypeTitle}}</mat-label>
+        </div>
+        <!-- <div fxFlex="0 0 45%" fxLayout="column" fxLayoutAlign="center start">
+            <mat-label>{{eachCategory.wasteTypeTitle}}</mat-label>
+        </div> -->
+
+        <div fxFlex="1 1 20%">
+            <button id="{{'wasteType' + i}}" mat-raised-button class="simple-button" (click)="showWasteItemsOfSelectedType(eachCategory)">{{uiLabels.wasteCategoryDetailsButton}}</button>
+        </div>
+        <div fxFlex="1 1 10%" fxLayoutAlign="center end">
+            <button id="{{eachCategory.wasteTypeId + 'Edit'}}" mat-raised-button class="simple-button" (click)="openTypeAddDialog(eachCategory)">{{uiLabels.editBtn}}</button>
+        </div>
+        <div fxFlex="1 1 10%" fxLayoutAlign="center end">
+            <button id="{{'removeType'+i}}" mat-raised-button class="simple-button" (click)="removeItem(eachCategory.wasteTypeId)">{{uiLabels.removeButton}}</button>
+        </div>
+    </div>
+
+</div>

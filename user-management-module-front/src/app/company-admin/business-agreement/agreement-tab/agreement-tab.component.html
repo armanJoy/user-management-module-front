@@ -1,0 +1,1001 @@
+<div *ngIf="viewContent">
+    <div fxLayout="row wrap" *ngIf="selectedProcess && selectedProcess.processAction && selectedProcess.processAction.length > 0">
+        <div style="margin: 15px 40px 15px 15px;display: flex;justify-content: flex-end;flex: 1;">
+            <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="onClickBackBtn()"> {{uiLabels.back}}</button>
+            <div *ngFor="let eachActionButton of selectedProcess.processAction">
+                <button [disabled]="!isValidAgreementTitle" id="" mat-raised-button color="primary" (click)="saveAgreement(eachActionButton)">{{eachActionButton.actionTitle}}</button>
+            </div>
+        </div>
+    </div>
+    <!-- Agreement Basic Info Header-->
+    <div fxLayout="row">
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.headerLabel}}
+            </mat-label>
+
+        </mat-toolbar>
+    </div>
+    <!-- Agreement Basic Info-->
+    <div [ngClass]="(isHandset$ | async) ? 'form-container-mob' : 'form-container-pc'">
+        <div>
+            <div class="two-section-list-row">
+
+                <div class="list-value-section-one ">
+                    <div class="list-section-label">
+                        {{uiLabels.agreementTitle}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        <mat-label *ngIf="isViewMode">{{selectedAgreement.title}}</mat-label>
+                        <input *ngIf="!isViewMode" id="" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="selectedAgreement.title" (focusout)="validAgreementTitle(selectedAgreement.title, selectedAgreement.agreementId)">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="two-section-list-row ">
+                <div class="list-value-section-one ">
+                    <div class="list-section-label">
+                        {{uiLabels.agreementDate}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        <mat-label *ngIf="isViewMode">{{selectedAgreement.createDate}}</mat-label>
+                        <app-date-time-input *ngIf="!isViewMode" id="inspectionDate" [modelObject]="selectedAgreement" [modelDateAttributeName]="'createDate'"></app-date-time-input>
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-section-list-row ">
+                <div class="list-value-section-one ">
+                    <div class="list-section-label">
+                        {{uiLabels.agreementValidDate}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        <mat-label *ngIf="isViewMode">{{selectedAgreement.validDate}}</mat-label>
+                        <app-date-time-input *ngIf="!isViewMode" id="inspectionDate" [modelObject]="selectedAgreement" [modelDateAttributeName]="'validDate'"></app-date-time-input>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- Creating Company Header -->
+    <mat-toolbar fxLayout="row" style="background-color: rgb(235, 235, 235);font-size: 18px;font-weight: 550;">
+        <div class="column" style="display: flex;justify-content: flex-start;align-items: center;flex: 1;padding-left: 10px;">
+            {{uiLabels.dumperCompanyInfoSectionHeader}}
+        </div>
+
+        <div class="column" style="display: flex;justify-content: flex-start;align-items: center;flex: 2;">
+
+            <div class="column" style="display: flex;justify-content: flex-start;align-items: center;" *ngFor="let eachCategory of selectedAgreement.dumperPartnerInfo.companyCategorySelection, index as creatorCategoryIndex">
+
+                <mat-icon *ngIf="eachCategory.isSelected" class="selected-radio" (click)="updatePartnerRoleSelection(eachCategory, $event,creatorCategoryIndex,selectedAgreement.dumperPartnerInfo,0)">radio_button_checked </mat-icon>
+
+                <mat-icon *ngIf="!eachCategory.isSelected" [ngClass]="{'not-aplicable-radio':!eachCategory.isDisable,'inactive-radio': creatorRoleSelection(eachCategory, creatorCategoryIndex)}" (click)="updatePartnerRoleSelection(eachCategory, $event,creatorCategoryIndex,selectedAgreement.dumperPartnerInfo,0)">radio_button_unchecked</mat-icon>
+
+                <label for="check" style="margin: 6px; font-size: 16px;" [ngClass]="{'not-aplicable-radio':!eachCategory.isDisable,'inactive-radio': creatorRoleSelection(eachCategory, creatorCategoryIndex)}"> {{uiLabels[eachCategory.title]}}</label>
+            </div>
+
+            <!-- <div class="column" style="display: flex;justify-content: flex-start;align-items: center;" *ngFor="let creatorBusinessCategory of selectedAgreement.dumperPartnerInfo.companyBusinessCategory, index as creatorRoleIndex">
+                <input class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [(ngModel)]="selectedAgreement.dumperPartnerInfo.companyRoleSelection[creatorRoleIndex]" />
+                <label for="check" style="margin: 6px; font-size: 16px;"> {{uiLabels[creatorBusinessCategory]}}</label>
+            </div> -->
+        </div>
+
+    </mat-toolbar>
+
+    <!-- Creating Company Info-->
+    <div [ngClass]="(isHandset$ | async) ? 'form-container-mob' : 'form-container-pc'">
+        <div>
+            <div class="two-section-list-row">
+                <div class="list-value-section-one">
+                    <div class="list-section-label">
+                        {{uiLabels.companyName}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        {{selectedAgreement.dumperPartnerInfo.companyName}}
+
+                    </div>
+                </div>
+
+                <div class="list-value-section-two ">
+
+                </div>
+            </div>
+
+            <div class="two-section-list-row ">
+                <div class="list-value-section-one ">
+                    <div class="list-section-label">
+                        {{uiLabels.companyZipCode}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        {{selectedAgreement.dumperPartnerInfo.companyZipCodeFormated}}
+
+                    </div>
+                </div>
+
+                <div class="list-value-section-two ">
+
+                </div>
+            </div>
+
+            <div class="two-section-list-row ">
+                <div class="list-value-section-one ">
+                    <div class="list-section-label">
+                        {{uiLabels.companyAddress}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        {{selectedAgreement.dumperPartnerInfo.companyAddress}}
+
+                    </div>
+                </div>
+
+                <div class="list-value-section-two ">
+
+                </div>
+
+            </div>
+
+            <div class="two-section-list-row ">
+                <div class="list-value-section-one ">
+                    <div class="list-section-label">
+                        {{uiLabels.companyContactNo}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        {{selectedAgreement.dumperPartnerInfo.contactNoFormated}}
+
+                    </div>
+                </div>
+                <div class="list-value-section-two ">
+
+                </div>
+
+            </div>
+
+            <div class="two-section-list-row">
+
+                <div class="list-value-section-one">
+                    <div class="list-section-label">
+                        {{uiLabels.companyPersonInCharge}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        {{selectedAgreement.dumperPartnerInfo.personInChargeName}}
+
+                    </div>
+                </div>
+
+                <div class="list-value-section-two ">
+                    <div class="list-section-label">
+                        <!-- {{uiLabels.companyPersonInCharge}} -->
+                    </div>
+                    <div class="list-section-separator">
+                        <!-- : -->
+                    </div>
+
+                    <div class="list-section-value">
+                        <!-- <button *ngIf="!isViewMode" mat-raised-button class="list-button-light" (click)="openSelectPersonInChargePopup(selectedAgreement.dumperPartnerInfo)">{{uiLabels.selectPersonInChargeButton}}</button> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Business Partner Setting -->
+    <mat-accordion>
+        <mat-expansion-panel #partnerPanel [expanded]="true">
+            <mat-expansion-panel-header style="background-color: rgb(236, 236, 236);">
+                <div fxLayout="row" fxFlex="0 0 100">
+                    <mat-toolbar style="padding: 10px 10px 0px 10px;margin-bottom:10px; background-color: rgb(236, 236, 236);">
+                        <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.businessPartnerSettingSectionHeader}}</mat-label>
+                        <div fxLayoutAlign="end center">
+                            <button *ngIf="!isViewMode" id="" style="margin-right: 40px;" mat-raised-button class="list-button" (click)="openSelectPartnerPopup($event, selectedAgreement.partnerList, partnerPanel)">{{uiLabels.selectPartnerButton}}</button>
+                        </div>
+                    </mat-toolbar>
+                    <mat-divider>
+                    </mat-divider>
+                </div>
+            </mat-expansion-panel-header>
+            <!-- Business Partner Setting -->
+            <div [ngClass]="(isHandset$ | async) ? 'form-container-mob' : 'form-container-pc'" *ngIf="selectedAgreement.partnerList && selectedAgreement.partnerList.length > 0">
+                <div>
+
+                    <mat-accordion multi="true">
+                        <div *ngFor="let item of selectedAgreement.partnerList, index as partnerIndex">
+                            <div style="margin-bottom: 5px;">
+                                <mat-expansion-panel #panel [expanded]="true">
+                                    <mat-expansion-panel-header class="row" style="padding: 10px 10px 0px 10px;margin-bottom:10px; background-color: rgb(241, 240, 240);">
+
+                                        <div class="column" style="display: flex;justify-content: flex-start;align-items: center;flex: 1;">
+                                            {{item.companyName}}
+                                        </div>
+
+                                        <div class="column" style="display: flex;justify-content: flex-start;align-items: center;flex: 2;">
+
+                                            <div class="column" style="display: flex;justify-content: flex-start;align-items: center;" *ngFor="let eachCategory of item.companyCategorySelection, index as partnerCategoryIndex">
+
+                                                <mat-icon *ngIf="eachCategory.isSelected" class="selected-radio" (click)="updatePartnerRoleSelection(eachCategory, $event,partnerCategoryIndex,item,partnerIndex, panel, true)">radio_button_checked </mat-icon>
+
+                                                <mat-icon *ngIf="!eachCategory.isSelected" [ngClass]="{'not-aplicable-radio':!eachCategory.isDisable,'inactive-radio': partnerRoleSelection(eachCategory, partnerCategoryIndex,partnerIndex)}" (click)="updatePartnerRoleSelection(eachCategory, $event,partnerCategoryIndex,item,partnerIndex, panel,  true)">radio_button_unchecked</mat-icon>
+
+                                                <label for="check" style="margin: 6px; font-size: 16px;" [ngClass]="{'not-aplicable-radio':!eachCategory.isDisable,'inactive-radio': partnerRoleSelection(eachCategory, partnerCategoryIndex,partnerIndex)}"> {{uiLabels[eachCategory.title]}}</label>
+                                            </div>
+
+                                            <!-- <div class="column" style="display: flex;justify-content: flex-start;align-items: center;" *ngFor="let partnerBusinessCategory of item.companyCategorySelection, index as partnerRoleIndex">
+                                                <input class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [(ngModel)]="item.companyRoleSelection[partnerRoleIndex]" />
+                                                <label for="check" style="margin: 6px;"> {{uiLabels[partnerBusinessCategory.title]}}</label>
+                                            </div> -->
+                                        </div>
+
+                                    </mat-expansion-panel-header>
+
+                                    <div class="two-section-list-row ">
+                                        <div class="list-value-section-one ">
+                                            <div class="list-section-label">
+                                                {{uiLabels.companyName}}
+                                            </div>
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{item.companyName}}
+                                            </div>
+                                        </div>
+
+                                        <div class="list-value-section-two ">
+
+                                        </div>
+
+                                    </div>
+                                    <div class="two-section-list-row ">
+                                        <div class="list-value-section-one ">
+                                            <div class="list-section-label">
+                                                {{uiLabels.companyAddress}}
+                                            </div>
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{item.companyZipCodeFormated}}, {{item.companyAddress}}
+                                            </div>
+                                        </div>
+
+                                        <div class="list-value-section-two ">
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="two-section-list-row ">
+                                        <div class="list-value-section-one ">
+                                            <div class="list-section-label">
+                                                {{uiLabels.companyContactNo}}
+                                            </div>
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{item.contactNoFormated}}
+                                            </div>
+                                        </div>
+
+                                        <div class="list-value-section-two ">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="two-section-list-row">
+
+                                        <div class="list-value-section-one">
+                                            <div class="list-section-label">
+                                                {{uiLabels.companyPersonInCharge}}
+                                            </div>
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+
+                                            <div class="list-section-value">
+                                                {{item.personInChargeName}}
+                                            </div>
+                                        </div>
+
+                                        <div class="list-value-section-two ">
+                                            <div class="list-section-label">
+                                                <!-- {{uiLabels.companyPersonInCharge}} -->
+                                            </div>
+                                            <div class="list-section-separator">
+                                                <!-- : -->
+                                            </div>
+
+                                            <div class="list-section-value">
+                                                <button *ngIf="!isViewMode" mat-raised-button class="list-button-light" (click)="openSelectPersonInChargePopup(item)">{{uiLabels.selectPersonInChargeButton}}</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </mat-expansion-panel>
+
+                                <!-- </mat-accordion> -->
+                            </div>
+                        </div>
+                    </mat-accordion>
+
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+    <div style="height: 25px;">
+
+    </div>
+
+    <!-- Agreement Price Setting -->
+
+    <!-- *ngIf="isTransporterRole()" -->
+    <mat-accordion>
+        <mat-expansion-panel #transportPricePanel [expanded]="true">
+            <mat-expansion-panel-header style="background-color: rgb(235, 235, 235);">
+                <div fxLayout="row" fxFlex="0 0 100">
+                    <mat-toolbar style="padding: 10px 10px 0px 10px;margin-bottom:10px; background-color: rgb(236, 236, 236);">
+                        <mat-icon *ngIf="selectedAgreement.isTransportPriceApply" class="check-box checked" color="primary" (click)="updateTransportPriceApply($event)">check_box</mat-icon>
+                        <mat-icon *ngIf="!selectedAgreement.isTransportPriceApply" class="check-box unchecked" (click)="updateTransportPriceApply($event)">check_box_outline_blank</mat-icon>
+                        <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.transportPriceSettingSectionHeader}}</mat-label>
+
+
+                        <div fxLayoutAlign="end center">
+                            <button *ngIf="!isViewMode" id="" style="margin-right: 40px;" mat-raised-button class="list-button" (click)="openSelectWastePopup(transportPricePanel)">{{uiLabels.selectWasteButton}}</button>
+                        </div>
+                    </mat-toolbar>
+                </div>
+            </mat-expansion-panel-header>
+            <!-- Agreement Price Setting -->
+
+            <!-- Transport Price List Section Header-->
+            <div [ngClass]="(isHandset$ | async) ? 'form-container-mob' : 'form-container-pc'">
+                <div fxLayout="row" style="font-size: 19px; padding: 10px;">
+                    <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.wasteCollectionList}}</mat-label>
+                </div>
+                <!-- Transport Price List -->
+                <div>
+                    <div *ngFor="let item of sortedTransportWaste">
+                        <div class="list-item-without-hover">
+                            <div class="three-section-list-row">
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        {{uiLabels.wasteTitle}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+                                        {{item.wasteTitle}}
+                                    </div>
+                                </div>
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        {{uiLabels.transportPrice}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value" [ngClass]="(!selectedAgreement.isTransportPriceApply) ? 'disabled' : ''">
+                                        <mat-label>{{item.price}}</mat-label>
+                                    </div>
+                                </div>
+
+                                <div class="list-value-section" style="flex:1">
+                                    <div class="list-section-value">
+                                        <button *ngIf="!isViewMode" id="" style="margin-right: 40px;" mat-raised-button class="list-button" (click)="removeAgreementTransportAndProcessingWaste(item)">{{uiLabels.removeTransportWasteButton}}</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="three-section-list-row ">
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        {{uiLabels.wasteCollectLocation}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        {{item.pickZipCode}}, {{item.pickAddress}}
+                                    </div>
+                                </div>
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        {{uiLabels.wasteDropLocation}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        {{item.dropZipCode}}, {{item.dropAddress}}
+                                    </div>
+                                </div>
+
+                                <div class="list-value-section" style="flex:1">
+                                    <div class="list-section-value">
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div style="height: 25px;">
+
+    </div>
+
+    <!-- Processing Waste List -->
+
+    <!-- *ngIf="isProcessorRole()" -->
+    <mat-accordion>
+        <mat-expansion-panel #processorPricePanel [expanded]="true">
+            <mat-expansion-panel-header style="background-color: rgb(235, 235, 235);">
+                <div fxLayout="row" fxFlex="0 0 100">
+                    <mat-toolbar style="padding: 10px 10px 0px 10px;margin-bottom:10px; background-color: rgb(236, 236, 236);">
+                        <mat-icon *ngIf="selectedAgreement.isProcessingPriceApply" class="check-box checked" color="primary" (click)="updateProcessingPriceApply($event)">check_box</mat-icon>
+                        <mat-icon *ngIf="!selectedAgreement.isProcessingPriceApply" class="check-box unchecked" (click)="updateProcessingPriceApply($event)">check_box_outline_blank</mat-icon>
+                        <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.processingPriceSectionHeader}}</mat-label>
+                        <!-- <div fxLayoutAlign="end center" *ngIf="!isTransporterRole()">
+                            <button *ngIf="!isViewMode" id="" style="margin-right: 40px;" mat-raised-button class="list-button" (click)="openSelectWastePopup(processorPricePanel)">{{uiLabels.selectWasteButton}}</button>
+                        </div> -->
+                    </mat-toolbar>
+                </div>
+            </mat-expansion-panel-header>
+            <!-- Processing Price List-->
+            <div>
+                <div *ngFor="let item of sortedProcessWaste">
+                    <div class="list-item-without-hover">
+                        <div class="two-section-list-row" style="padding-bottom: 5px;">
+
+                            <div class="list-value-section-one">
+                                <div class="list-section-label">
+                                    {{uiLabels.wasteTitle}}
+                                </div>
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+
+                                <div class="list-section-value">
+                                    {{item.wasteTitle}}
+                                </div>
+                            </div>
+
+                            <div class="list-value-section-two">
+                                <div class="list-section-label">
+                                    {{uiLabels.wasteType}}
+                                </div>
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.wasteCategoryTitle}}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="two-section-list-row ">
+                            <div class="list-value-section-one ">
+                                <div class="list-section-label">
+                                    {{uiLabels.wasteUnit}}
+                                </div>
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.unit}}
+
+                                </div>
+                            </div>
+
+                            <div class="list-value-section-two">
+                                <div class="list-section-label">
+                                    {{uiLabels.transportPrice}}
+                                </div>
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value" [ngClass]="(!selectedAgreement.isProcessingPriceApply) ? 'disabled' : ''">
+                                    <input [disabled]="!selectedAgreement.isProcessingPriceApply" *ngIf="!isViewMode" type="number" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" matInput [(ngModel)]="item.price" (ngModelChange)="prepareInvoiceWasteInfoList(selectedAgreement)">
+                                    <mat-label *ngIf="isViewMode">{{item.price}}</mat-label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+    <div style="height: 25px;">
+
+    </div>
+
+    <!-- Invoice Settings -->
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header style="background-color: rgb(235, 235, 235);">
+                <div fxLayout="row" fxFlex="0 0 100">
+                    <mat-toolbar style="padding: 10px 10px 0px 10px;margin-bottom:10px; background-color: rgb(236, 236, 236);">
+                        <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.invoiceSettings}}</mat-label>
+                    </mat-toolbar>
+                </div>
+            </mat-expansion-panel-header>
+
+            <div>
+                <div style="font-size: 17px; padding: 10px;">{{uiLabels.selectInvoiceReceiver}}</div>
+
+                <div *ngFor="let partner of getPartners">
+                    <div>
+                        <div class="three-section-list-row">
+
+                            <div class="list-value-section start-center" fxLayoutGap="10px">
+
+                                <mat-icon class="selected-radio" *ngIf="selectedAgreement.invoiceReceiverComId && selectedAgreement.invoiceReceiverComId==partner.companyId">radio_button_checked </mat-icon>
+
+                                <mat-icon class="nonselected-radio" *ngIf="!selectedAgreement.invoiceReceiverComId || selectedAgreement.invoiceReceiverComId!=partner.companyId" (click)="selectInvoiceReceiver(partner.companyId)">radio_button_unchecked</mat-icon>
+
+                                <mat-label>{{partner.companyName}}</mat-label>
+
+                                <div *ngFor="let item of partner.companyCategorySelection">
+                                    <mat-chip-list>
+                                        <mat-chip *ngIf="item.isSelected">{{uiLabels[item.title]}}</mat-chip>
+                                    </mat-chip-list>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div [ngClass]="(isHandset$ | async) ? 'form-container-mob' : 'form-container-pc'">
+                <div fxLayout="row" style="font-size: 19px; padding: 10px;">
+                    <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.invoiceWasteList}}</mat-label>
+                </div>
+                <div>
+                    <div *ngFor="let item of sortedInvoiceWaste">
+                        <div class="list-item-without-hover">
+                            <div class="three-section-list-row">
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        {{uiLabels.wasteTitle}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+                                        {{item.wasteTitle}}
+                                    </div>
+                                </div>
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        {{uiLabels.transportPrice}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        <mat-label>{{item.price}} ({{item.priceSuffix}})</mat-label>
+                                    </div>
+                                </div>
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        Generator
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        <mat-label>{{item.invoiceGeneratorName}}</mat-label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="three-section-list-row ">
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        {{uiLabels.wasteCollectLocation}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        {{item.pickZipCode}}, {{item.pickAddress}}
+                                    </div>
+                                </div>
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        {{uiLabels.wasteDropLocation}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        {{item.dropZipCode}}, {{item.dropAddress}}
+                                    </div>
+                                </div>
+
+                                <div class="list-value-section" style="flex:2">
+                                    <div class="list-section-label">
+                                        Receiver
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        <mat-label>{{item.invoiceReceiverName}}</mat-label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+    <div style="height: 25px;">
+
+    </div>
+
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header style="background-color: rgb(235, 235, 235);">
+                <!-- Payment Method Setting -->
+
+                <div fxLayout="row">
+                    <mat-toolbar style="padding: 10px 10px 0px 10px;margin-bottom:10px;background-color: rgb(235, 235, 235);">
+                        <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.paymentMethodSettingSectionHeader}}</mat-label>
+
+                    </mat-toolbar>
+                </div>
+            </mat-expansion-panel-header>
+            <!-- Payment Receiving Company List -->
+            <div [ngClass]="(isHandset$ | async) ? 'form-container-mob' : 'form-container-pc'">
+                <div>
+
+                    <div *ngFor="let item of getPartners">
+                        <div style="margin-bottom: 5px;">
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="true">
+                                    <mat-expansion-panel-header style="padding: 10px 10px 0px 10px;margin-bottom:10px; background-color: rgb(241, 240, 240);">
+                                        <div style="display: flex; flex: 1;justify-content: flex-start;">
+                                            {{item.companyName}}
+                                        </div>
+                                    </mat-expansion-panel-header>
+
+                                    <div class="row">
+                                        <div class="column" style="display: flex;justify-content: flex-start;align-items: center; margin-right: 10px;">Payment Method : </div>
+                                        <div class="column" style="display: flex;justify-content: flex-start;align-items: center;">
+                                            <mat-icon *ngIf="item.bankPayment" class="selected-radio" (click)="updatePaymentMethodSelection(item,'0')">radio_button_checked </mat-icon>
+                                            <mat-icon *ngIf="!item.bankPayment" (click)="updatePaymentMethodSelection(item,'0')">radio_button_unchecked</mat-icon>
+                                            <label style="margin: 6px; font-size: 16px;"> Bank</label>
+                                        </div>
+
+                                        <div class="column" style="display: flex;justify-content: flex-start;align-items: center;">
+                                            <mat-icon *ngIf="!item.bankPayment" class="selected-radio" (click)="updatePaymentMethodSelection(item,'1')">radio_button_checked </mat-icon>
+                                            <mat-icon *ngIf="item.bankPayment" (click)="updatePaymentMethodSelection(item,'1')">radio_button_unchecked</mat-icon>
+                                            <label style="margin: 6px; font-size: 16px;"> Cash</label>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="item.bankPayment">
+                                        <div fxLayout="row" style="flex:1;">
+                                            <div fxLayout="column" style="flex:1;">
+                                                <div class="two-section-list-row " style="padding-top: 15px;">
+                                                    <!-- <mat-radio-button id="{{item.companyId+'own'}}" [value]="useSavedAccount" style=" margin-bottom: 15px;"> -->
+                                                    <div class="list-value-section-one " style="justify-content: flex-start;">
+                                                        <div class="list-section-label" style="flex: 250px;font-size: 19px;">
+                                                            {{uiLabels.savedBankAccountInfo}}
+                                                        </div>
+
+                                                        <div class="list-section-separator">
+                                                            <!-- : -->
+                                                        </div>
+                                                        <div class="list-section-value">
+                                                            <!-- {{item.companyName}} -->
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div *ngIf="item.accountType==useSavedAccount">
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.bankName}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.accountInfo.bankName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.branchName}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.accountInfo.branchName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.accountNo}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.accountInfo.accountNumber}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.accountName}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.accountInfo.accountName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div *ngIf="item.accountType==useOtherAccount">
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.bankName}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.otherBankAccountInfo.bankName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.branchName}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.otherBankAccountInfo.branchName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.accountNo}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.otherBankAccountInfo.accountNumber}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.accountName}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.otherBankAccountInfo.accountName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- accountant info -->
+                                            <div [ngClass]="(isHandset$ | async) ? 'form-container-mob' : 'form-container-pc'" style="flex:1;">
+                                                <div fxLayout="row" style="font-size: 19px; padding: 10px;">
+                                                    <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.invoiceInfo}}</mat-label>
+                                                </div>
+
+                                                <div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.accountantName}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.accountantInfo.accountantName}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.accountantEmail}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.accountantInfo.accountantEmail}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.invoiceClosingDate}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.accountantInfo.invoiceClosingDate}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="two-section-list-row ">
+                                                        <div class="list-value-section-one ">
+                                                            <div class="list-section-label">
+                                                                {{uiLabels.invoicePaymentDate}}
+                                                            </div>
+                                                            <div class="list-section-separator">
+                                                                :
+                                                            </div>
+                                                            <div class="list-section-value">
+                                                                {{item.accountantInfo.invoicePaymentDate}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div class="two-section-list-row ">
+                                                                                                                                        <div class="list-value-section-one ">
+                                                                                                                                            <div class="list-section-label">
+                                                                                                                                                {{uiLabels.paymentMethod}}
+                                                                                                                                            </div>
+                                                                                                                                            <div class="list-section-separator">
+                                                                                                                                                :
+                                                                                                                                            </div>
+                                                                                                                                            <div class="list-section-value">
+                                                                                                                                                {{item.accountantInfo.paymentMode}}
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div> -->
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div fxLayout="row" style="flex:1;">
+                                            <app-select-bank-popup style="display: flex; flex:1;" [partnerAcInfo]="(item.accountType==useSavedAccount) ? item.accountInfo : item.otherBankAccountInfo" [bankAcComponentData]="item.bankAcComponentData"></app-select-bank-popup>
+                                        </div>
+                                    </div>
+
+                                </mat-expansion-panel>
+
+                            </mat-accordion>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+    </mat-accordion>
+
+    <!-- remark -->
+    <div class="two-section-list-row " style="margin-top: 15px;">
+        <div class="list-value-section-one ">
+            <div class="list-section-label">
+                {{uiLabels.agreementRemark}}
+            </div>
+            <div class="list-section-separator">
+                :
+            </div>
+            <div class="list-section-value">
+                <mat-label *ngIf="isViewMode">{{selectedAgreement.agreementRemark}}</mat-label>
+                <input id="" *ngIf="!isViewMode" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="selectedAgreement.agreementRemark">
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,274 @@
+<div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+    <div fxLayoutAlign="center center">
+        <mat-toolbar style="padding-left: 25px;">
+            <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>
+            <span>{{uiLabels.categoryHeader}}</span>
+        </mat-toolbar>
+    </div>
+    <div style="padding-left: 50px;">
+        <mat-radio-group fxLayout="column wrap" color="primary" aria-label="Select an option" [(ngModel)]="categoryFilter">
+            <div fxLayout="row" fxFlex="0 1 auto" style="padding-top: 10px;padding-bottom: 10px;">
+                <mat-radio-button id="existingCategory" value="Existing Category">{{uiLabels.existing}}</mat-radio-button>
+                <!-- (selectionChange)="onAddressSelectionChange()" placeholder="所属事業所*" [(ngModel)]="selectedAddress" -->
+                <mat-select *ngIf="categoryFilter=='Existing Category'" (selectionChange)="onSelectCategory()" [(ngModel)]="newCategory" style="padding-left: 30px;width: 220px;">
+                    <mat-option *ngFor="let category of wasteCategoryList" [value]="category">
+                        {{category.categoryTitle}}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div fxLayout="row" fxFlex="0 1 auto" style="padding-top: 10px;padding-bottom: 10px;">
+                <mat-radio-button id="newCategory" value="New Category">{{uiLabels.new}}</mat-radio-button>
+            </div>
+
+        </mat-radio-group>
+    </div>
+    <div fxLayout="column" [ngClass]="!(isHandset$ | async) ? 'form-padding-popup' : 'form-padding-popup-mobile'" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+        <div fxLayout="row">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteCategoryTitle}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="wasteCategoryName" matInput placeholder="" [(ngModel)]="newCategory.categoryTitle">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteCategoryCode}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="categoryCode" matInput [(ngModel)]="newCategory.categoryCode">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteCategoryRemark}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="categoryRemark" matInput [(ngModel)]="newCategory.remarks">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+    </div>
+    <div fxLayoutAlign="center center">
+        <mat-toolbar style="padding-left: 25px;">
+            <!-- <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span> -->
+            <span>{{uiLabels.typeHeader}}</span>
+        </mat-toolbar>
+    </div>
+    <div style="padding-left: 50px;">
+        <mat-radio-group fxLayout="column wrap" color="primary" aria-label="Select an option" [(ngModel)]="typeFilter">
+            <div fxLayout="row" fxFlex="0 1 auto" style="padding-top: 10px;padding-bottom: 10px;">
+                <mat-radio-button id="existingType" value="Existing Type">{{uiLabels.existing}}</mat-radio-button>
+                <!-- (selectionChange)="onAddressSelectionChange()" placeholder="所属事業所*" [(ngModel)]="selectedAddress" -->
+
+                <mat-select *ngIf="typeFilter=='Existing Type'" (selectionChange)="onSelectType()" [(ngModel)]="newWasteType" style="padding-left: 30px;width: 220px;">
+                    <mat-option *ngFor="let type of selectedWasteCategoryWasteTypeList" [value]="type">
+                        {{ type.wasteTypeTitle}}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div fxLayout="row" fxFlex="0 1 auto" style="padding-top: 10px;padding-bottom: 10px;">
+                <mat-radio-button id="newType" value="New Type">{{uiLabels.new}}</mat-radio-button>
+            </div>
+
+        </mat-radio-group>
+    </div>
+    <div fxLayout="column" [ngClass]="!(isHandset$ | async) ? 'form-padding-popup' : 'form-padding-popup-mobile'" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+        <div fxLayout="row">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteTypeTitle}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="wasteCategoryTitle" matInput placeholder="" [(ngModel)]="newWasteType.wasteTypeTitle">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteTypeCode}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="wasteCategoryCode" matInput [(ngModel)]="newWasteType.wasteTypeCode">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteCategoryRemark}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="wasteCategoryRemark" matInput [(ngModel)]="newWasteType.remarks">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+    </div>
+    <div fxLayoutAlign="center center">
+        <mat-toolbar style="padding-left: 25px;">
+            <span>{{uiLabels.itemHeader}}</span>
+        </mat-toolbar>
+    </div>
+    <div style="padding-left: 50px;">
+        <mat-radio-group fxLayout="column wrap" color="primary" aria-label="Select an option" [(ngModel)]="itemFilter">
+            <div fxLayout="row" fxFlex="0 1 auto" style="padding-top: 10px;padding-bottom: 10px;">
+                <mat-radio-button id="existingWasteItem" value="Existing Item">{{uiLabels.existing}}</mat-radio-button>
+                <mat-select *ngIf="itemFilter=='Existing Item'" [(ngModel)]="newWasteItem" style="padding-left: 30px;width: 220px;">
+                    <mat-option *ngFor="let item of selectedWasteTypeWasteItemList" [value]="item">
+                        {{ item.wasteTitle}}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div fxLayout="row" fxFlex="0 1 auto" style="padding-top: 10px;padding-bottom: 10px;">
+                <mat-radio-button id="newWasteItem" value="New Item">{{uiLabels.new}}</mat-radio-button>
+            </div>
+
+        </mat-radio-group>
+    </div>
+
+    <div fxLayout="column" [ngClass]="!(isHandset$ | async) ? 'form-padding-popup' : 'form-padding-popup-mobile'" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteItemTitle}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="wasteItemTitle" matInput [(ngModel)]="newWasteItem.wasteTitle">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteItemUnit}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="wasteItemUnit" matInput [(ngModel)]="newWasteItem.unitDef">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteShape}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="wasteItemShape" matInput [(ngModel)]="newWasteItem.wasteShape">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wastePackage}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="wasteItemPackage" matInput [(ngModel)]="newWasteItem.wastePackage">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteItemRemark}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="wasteItemRemark" matInput [(ngModel)]="newWasteItem.remarks">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+        <div fxLayout="row" style="padding-top: 15px;">
+            <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>&nbsp;</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>&nbsp;</mat-label>
+            </div>
+            <div fxFlex="90 1 auto" fxLayoutGap="30px" style="padding-left: 200px;" *ngIf="!(isHandset$ | async)">
+                <button style="width: 100px;" id="submitButton" mat-raised-button color="primary" type="submit" (click)="saveNewWaste()">{{uiLabels.addBtn}}</button>
+            </div>
+            <div fxFlex="90 1 auto" fxLayoutGap="30px" *ngIf="(isHandset$ | async)">
+                <button style="width: 100px;" id="submitButton" mat-raised-button color="primary" type="submit" (click)="saveNewWaste()">{{uiLabels.addBtn}}</button>
+            </div>
+
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+    </div>
+</div>

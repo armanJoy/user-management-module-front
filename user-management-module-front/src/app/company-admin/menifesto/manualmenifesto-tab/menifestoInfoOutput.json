@@ -1,0 +1,403 @@
+{
+    "menifestoInfoId": "b9d86644-ef4d-41b1-8d72-d25b9398d123",
+    "menifestoUniqueId": "M2345600005",
+    "date": "20220616154525",
+    "dateView": "2022/06/16 15:45:25",
+    "projectId": "",
+    "tripIds": [
+        ""
+    ],
+    "tripIdDef": [],
+    "pickIdDef": [],
+    "wasteId": "",
+    "projectName": "",
+    "creator": "0716fabb-9a0c-432f-818e-c7277940ee07|Dumper",
+    "firstParty": "562dbdb4-7fcf-430f-9703-c27f8079971b|Transporter",
+    "secondparty": "0367a3fb-b97f-4234-a741-029b3502e67c|Processor",
+    "aggrementInfo": {
+        "agreementId": "9e538147-e3af-41ce-9828-c82310510685",
+        "title": "IRA  Agreement",
+        "createDate": "2022/05/23 00:00:00",
+        "createDateView": null,
+        "validDate": "2023/05/22 00:00:00",
+        "validDateView": null,
+        "agreementType": "",
+        "agreementStatus": {
+            "statusId": "statusAgreementInUse",
+            "statusTitle": ""
+        },
+        "dumperPartnerInfo": {
+            "agreementPartnerInfoId": "edb07491-41f5-4956-befa-d5c57c6c026d",
+            "companyId": "562dbdb4-7fcf-430f-9703-c27f8079971b",
+            "companyName": "mangrove system",
+            "companyZipCode": "1900100",
+            "companyZipCodeFormated": "",
+            "companyAddress": "東京都あきる野市東京都西多摩郡日の出町",
+            "contactNo": "0190020100",
+            "contactNoFormated": "",
+            "personInChargeId": "2a76609d-e59d-4305-9040-392d270b597e",
+            "personInChargeName": "Asad",
+            "accountantInfo": {
+                "companyId": "562dbdb4-7fcf-430f-9703-c27f8079971b",
+                "accountantId": "b5c06afd-f7ca-4d26-a24f-e7724eae9ea5",
+                "accountantName": "Monirul Islam",
+                "accountantEmail": "asad@gmail.com",
+                "invoiceClosingDate": "2022/02/13 00:00:00",
+                "invoicePaymentDate": "2022/02/13 00:00:00",
+                "contactNo": "0190020100",
+                "paymentMode": [
+                    "Cash",
+                    "Bank Transfer"
+                ]
+            },
+            "accountInfo": {
+                "paymentMethodInfoId": "",
+                "companyId": "562dbdb4-7fcf-430f-9703-c27f8079971b",
+                "bankAccountId": "",
+                "bankName": "",
+                "branchName": "",
+                "accountNumber": "",
+                "accountName": ""
+            },
+            "otherBankAccountInfo": {
+                "paymentMethodInfoId": "",
+                "companyId": "",
+                "bankAccountId": "",
+                "bankName": "",
+                "branchName": "",
+                "accountNumber": "",
+                "accountName": ""
+            },
+            "accountType": "savedAccount",
+            "assignedRoles": "Transporter",
+            "companyBusinessCategory": [
+                "Dumper",
+                "Transporter",
+                "Processor"
+            ],
+            "isApprovalDone": false,
+            "personInchargeEmail": "asadul83.islam@gmail.com"
+        },
+        "transporterPartnerInfo": {
+            "agreementPartnerInfoId": "9c223a6a-e1b4-414d-94b0-f1e34e8cc471",
+            "companyId": "0367a3fb-b97f-4234-a741-029b3502e67c",
+            "companyName": "Start Waste Procession Co.",
+            "companyZipCode": "1200001",
+            "companyZipCodeFormated": "",
+            "companyAddress": "東京都足立区大谷田",
+            "contactNo": "1121213333",
+            "contactNoFormated": "",
+            "personInChargeId": "403cbc9f-46d1-4094-bf69-f65ebdc4a6b1",
+            "personInChargeName": "Arman Reza Joy",
+            "accountantInfo": {
+                "companyId": "0367a3fb-b97f-4234-a741-029b3502e67c",
+                "accountantId": "accountant00001100",
+                "accountantName": "Mostafejur",
+                "accountantEmail": "mostafejur@gmail.com",
+                "invoiceClosingDate": "2022/02/11 00:00:00",
+                "invoicePaymentDate": "2022/02/13 00:00:00",
+                "contactNo": "",
+                "paymentMode": [
+                    "Cash",
+                    "Bank Transfer"
+                ]
+            },
+            "accountInfo": {
+                "paymentMethodInfoId": "4ba12d32-3b31-4731-8f67-fe7cd0bc0147",
+                "companyId": "0367a3fb-b97f-4234-a741-029b3502e67c",
+                "bankAccountId": "",
+                "bankName": "",
+                "branchName": "",
+                "accountNumber": "",
+                "accountName": ""
+            },
+            "otherBankAccountInfo": {
+                "paymentMethodInfoId": "",
+                "companyId": "",
+                "bankAccountId": "",
+                "bankName": "",
+                "branchName": "",
+                "accountNumber": "",
+                "accountName": ""
+            },
+            "accountType": "savedAccount",
+            "assignedRoles": "Processor",
+            "companyBusinessCategory": [
+                "Transporter",
+                "Processor"
+            ],
+            "isApprovalDone": false,
+            "personInchargeEmail": "joy.mangrovesystemsbd@gmail.com"
+        },
+        "processorPartnerInfo": {
+            "agreementPartnerInfoId": "9e6c88ea-11f2-464e-b5df-be8dff256697",
+            "companyId": "0716fabb-9a0c-432f-818e-c7277940ee07",
+            "companyName": "Mirpur Waste Solutions Limited",
+            "companyZipCode": "1200000",
+            "companyZipCodeFormated": "",
+            "companyAddress": "東京都足立区",
+            "contactNo": "0123456789",
+            "contactNoFormated": "",
+            "personInChargeId": "dba00606-d357-4c6e-b43c-29e78b3849f2",
+            "personInChargeName": "Khairul Alam",
+            "accountantInfo": {
+                "companyId": "0716fabb-9a0c-432f-818e-c7277940ee07",
+                "accountantId": "0b6f1a71-6368-4c11-9d7a-2f1e5948b966",
+                "accountantName": "Ariful Islam",
+                "accountantEmail": "asadul83.islam@gmail.com",
+                "invoiceClosingDate": "2022/03/10 00:00:00",
+                "invoicePaymentDate": "2022/03/10 00:00:00",
+                "contactNo": "8801734200",
+                "paymentMode": [
+                    "Cash"
+                ]
+            },
+            "accountInfo": {
+                "paymentMethodInfoId": "58d5df03-ed1b-41f1-a130-fa2f9ecb7bd4",
+                "companyId": "0716fabb-9a0c-432f-818e-c7277940ee07",
+                "bankAccountId": "",
+                "bankName": "",
+                "branchName": "",
+                "accountNumber": "",
+                "accountName": ""
+            },
+            "otherBankAccountInfo": {
+                "paymentMethodInfoId": "",
+                "companyId": "",
+                "bankAccountId": "",
+                "bankName": "",
+                "branchName": "",
+                "accountNumber": "",
+                "accountName": ""
+            },
+            "accountType": "savedAccount",
+            "assignedRoles": "Dumper",
+            "companyBusinessCategory": [
+                "Dumper",
+                "Transporter",
+                "Processor"
+            ],
+            "isApprovalDone": false,
+            "personInchargeEmail": "asadul83.islam@gmail.com"
+        },
+        "agreementWasteTransportInfo": [
+            {
+                "agreementWasteTransportInfoId": "2db8dfdc-8912-44b5-a7e3-ec6a15d9763d",
+                "wasteDefId": "waste001",
+                "wasteCategoryId": "typeid0001",
+                "wasteTitle": "Coal debris",
+                "wasteCategoryTitle": "Burnt husk",
+                "pickZipCode": "7350015",
+                "pickAddress": "広島県安芸郡府中町青崎東",
+                "pickBrachId": "",
+                "dropZipCode": "7350017",
+                "dropAddress": "広島県安芸郡府中町青崎南",
+                "dropBrachId": "",
+                "price": 20,
+                "unit": "Ton",
+                "wasteShape": "Circle",
+                "wastePackage": "Debris"
+            }
+        ],
+        "agreementWasteProcessInfo": [
+            {
+                "agreementWasteProcessInfoId": "7995bae1-b758-42c5-a016-86f69f44ee9c",
+                "wasteDefId": "waste001",
+                "wasteCategoryId": "typeid0001",
+                "wasteTitle": "Coal debris",
+                "wasteCategoryTitle": "Burnt husk",
+                "price": 30,
+                "unit": "Ton"
+            }
+        ],
+        "partnerList": [
+            {
+                "agreementPartnerInfoId": "9c223a6a-e1b4-414d-94b0-f1e34e8cc471",
+                "companyId": "0367a3fb-b97f-4234-a741-029b3502e67c",
+                "companyName": "Start Waste Procession Co.",
+                "companyZipCode": "1200001",
+                "companyZipCodeFormated": "",
+                "companyAddress": "東京都足立区大谷田",
+                "contactNo": "1121213333",
+                "contactNoFormated": "",
+                "personInChargeId": "403cbc9f-46d1-4094-bf69-f65ebdc4a6b1",
+                "personInChargeName": "Arman Reza Joy",
+                "accountantInfo": {
+                    "companyId": "0367a3fb-b97f-4234-a741-029b3502e67c",
+                    "accountantId": "accountant00001100",
+                    "accountantName": "Mostafejur",
+                    "accountantEmail": "mostafejur@gmail.com",
+                    "invoiceClosingDate": "2022/02/11 00:00:00",
+                    "invoicePaymentDate": "2022/02/13 00:00:00",
+                    "contactNo": "",
+                    "paymentMode": [
+                        "Cash",
+                        "Bank Transfer"
+                    ]
+                },
+                "accountInfo": {
+                    "paymentMethodInfoId": "4ba12d32-3b31-4731-8f67-fe7cd0bc0147",
+                    "companyId": "0367a3fb-b97f-4234-a741-029b3502e67c",
+                    "bankAccountId": "",
+                    "bankName": "",
+                    "branchName": "",
+                    "accountNumber": "",
+                    "accountName": ""
+                },
+                "otherBankAccountInfo": {
+                    "paymentMethodInfoId": "",
+                    "companyId": "",
+                    "bankAccountId": "",
+                    "bankName": "",
+                    "branchName": "",
+                    "accountNumber": "",
+                    "accountName": ""
+                },
+                "accountType": "savedAccount",
+                "assignedRoles": "Processor",
+                "companyBusinessCategory": [
+                    "Transporter",
+                    "Processor"
+                ],
+                "isApprovalDone": false,
+                "personInchargeEmail": "joy.mangrovesystemsbd@gmail.com"
+            },
+            {
+                "agreementPartnerInfoId": "9e6c88ea-11f2-464e-b5df-be8dff256697",
+                "companyId": "0716fabb-9a0c-432f-818e-c7277940ee07",
+                "companyName": "Mirpur Waste Solutions Limited",
+                "companyZipCode": "1200000",
+                "companyZipCodeFormated": "",
+                "companyAddress": "東京都足立区",
+                "contactNo": "0123456789",
+                "contactNoFormated": "",
+                "personInChargeId": "dba00606-d357-4c6e-b43c-29e78b3849f2",
+                "personInChargeName": "Khairul Alam",
+                "accountantInfo": {
+                    "companyId": "0716fabb-9a0c-432f-818e-c7277940ee07",
+                    "accountantId": "0b6f1a71-6368-4c11-9d7a-2f1e5948b966",
+                    "accountantName": "Ariful Islam",
+                    "accountantEmail": "asadul83.islam@gmail.com",
+                    "invoiceClosingDate": "2022/03/10 00:00:00",
+                    "invoicePaymentDate": "2022/03/10 00:00:00",
+                    "contactNo": "8801734200",
+                    "paymentMode": [
+                        "Cash"
+                    ]
+                },
+                "accountInfo": {
+                    "paymentMethodInfoId": "58d5df03-ed1b-41f1-a130-fa2f9ecb7bd4",
+                    "companyId": "0716fabb-9a0c-432f-818e-c7277940ee07",
+                    "bankAccountId": "",
+                    "bankName": "",
+                    "branchName": "",
+                    "accountNumber": "",
+                    "accountName": ""
+                },
+                "otherBankAccountInfo": {
+                    "paymentMethodInfoId": "",
+                    "companyId": "",
+                    "bankAccountId": "",
+                    "bankName": "",
+                    "branchName": "",
+                    "accountNumber": "",
+                    "accountName": ""
+                },
+                "accountType": "savedAccount",
+                "assignedRoles": "Dumper",
+                "companyBusinessCategory": [
+                    "Dumper",
+                    "Transporter",
+                    "Processor"
+                ],
+                "isApprovalDone": false,
+                "personInchargeEmail": "asadul83.islam@gmail.com"
+            }
+        ],
+        "agreementRemark": "",
+        "agreementProcessId": "",
+        "agreementActionId": ""
+    },
+    "menifestoStatus": "2",
+    "manualManifesto": {
+        "date": "",
+        "deliveryNo": "D03546400005",
+        "manifestoNo": "M2345600005",
+        "refNo": "",
+        "dumperInfo": {
+            "companyId": "0716fabb-9a0c-432f-818e-c7277940ee07",
+            "personInChargerId": "dba00606-d357-4c6e-b43c-29e78b3849f2",
+            "personInchargeEmail": "asadul83.islam@gmail.com",
+            "personName": "Khairul Alam",
+            "businessName": "Mirpur Waste Solutions Limited",
+            "zipCode": "1200000",
+            "address": "東京都足立区",
+            "contactNo": "0123456789",
+            "workPlace": "Uttara",
+            "workZip": "1200000",
+            "workAddress": "東京都足立区",
+            "workContactNo": "3426786987"
+        },
+        "manifestoDisposeWasteInfo": [
+            {
+                "collectionId": "2db8dfdc-8912-44b5-a7e3-ec6a15d9763d",
+                "wasteId": "waste001",
+                "wasteName": "Coal debris",
+                "unit": "Ton",
+                "shape": "Circle",
+                "wastePackage": "Debris",
+                "quantity": 10,
+                "transportPrice": 0
+            }
+        ],
+        "manifestoProcessWasteInfo": [
+            {
+                "collectionId": "",
+                "wasteId": "waste001",
+                "wasteName": "Coal debris",
+                "unit": "Ton",
+                "shape": "Circle",
+                "wastePackage": "Debris",
+                "quantity": 10,
+                "establishedQuantity": 10,
+                "processPrice": 30
+            }
+        ],
+        "transhipmentInfo": {
+            "storageName": "Dumping Storage",
+            "inCharge": "",
+            "zipCode": "",
+            "address": ""
+        },
+        "transportInfo": {
+            "companyId": "562dbdb4-7fcf-430f-9703-c27f8079971b",
+            "personInChargerId": "2a76609d-e59d-4305-9040-392d270b597e",
+            "personInchargeEmail": "asadul83.islam@gmail.com",
+            "personName": "Asad",
+            "businessName": "mangrove system",
+            "zipCode": "1900100",
+            "address": "東京都あきる野市東京都西多摩郡日の出町",
+            "contactNo": "0190020100",
+            "vehicleNo": "L-0293",
+            "vehicleType": "Large",
+            "transportMethod": "Dumping",
+            "transportComplateDate": "20220206",
+            "driverName": ""
+        },
+        "totalQuantity": 0,
+        "processorInfo": {
+            "companyId": "0367a3fb-b97f-4234-a741-029b3502e67c",
+            "personInChargerId": "403cbc9f-46d1-4094-bf69-f65ebdc4a6b1",
+            "personInchargeEmail": "joy.mangrovesystemsbd@gmail.com",
+            "personName": "Arman Reza Joy",
+            "businessName": "Start Waste Procession Co.",
+            "zipCode": "1200001",
+            "address": "東京都足立区大谷田",
+            "contactNo": "1121213333",
+            "processingComplateDate": "20220208",
+            "disposeComplateDate": "20220209"
+        },
+        "additionalInfo": "Manual Manifesto"
+    },
+    "manifestoType": "menifestoType0002"
+}

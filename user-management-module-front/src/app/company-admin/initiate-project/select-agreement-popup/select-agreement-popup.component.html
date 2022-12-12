@@ -1,0 +1,21 @@
+<mat-card>
+
+    <mat-dialog-content>
+        <mat-card>
+            <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>
+
+            <app-agreement-list-tab *ngIf="isUserList" [searchByText]="search" [creatorRole]="creatorRole" [partnerRole]="partnerRole" [businessCategoryFilter]="businessCategoryFilter" [selectTab]="switchTabToWastePick" [agreementList]="agreementList" [projectInfo]="projectInfo" [selectedAgreementIds]="selectedAgreementIds" [fromManifesto]="fromManifesto"></app-agreement-list-tab>
+
+            <app-waste-pick-tab *ngIf="isWastePick" [selectTab]="switchTabToPickSchedul" [agreement]="agreement" [wasteCollectionList]="wasteCollectionList" [projectInfo]="projectInfo" [saveAgreementForMenifesto]="saveAgreementForMenifesto" [agreementData]="agreementData" [Save]="popupCloseOrTabChange" [disposalList]="disposalList" [projectInfo]="projectInfo" [processList]='processList' [agreement]="agreement" [wastePickList]="wastePickList" [projectWasteItemList]="projectWasteItemList" [finalDisposalList]="finalDisposalList" [agreementProcessList]="agreementProcessList" [selectedAgreementInvoiceWasteList]="selectedAgreementInvoiceWasteList"></app-waste-pick-tab>
+
+        </mat-card>
+    </mat-dialog-content>
+    <mat-card-actions align="end">
+        <button mat-raised-button color="accent" mat-dialog-close>
+            {{uiLabels.closeBtn}}
+        </button>
+    </mat-card-actions>
+</mat-card>

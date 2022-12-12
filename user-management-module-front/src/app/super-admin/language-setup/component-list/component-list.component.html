@@ -1,0 +1,35 @@
+<mat-toolbar class="workspace-header">
+    <div fxLayout="row" fxFlex="95 1 auto">
+        <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start">
+            <mat-label>{{uiLabels.componentList}}</mat-label>
+        </div>
+    </div>
+    <div fxLayout="row" fxFlex="5 1 auto" [style]="(isHandset$ | async) ? 'padding-top:10px;' : 'padding-top:0px;'">
+        <div fxFlex="0 1 60px" fxLayout="column" fxLayoutAlign="center end">
+            <button mat-raised-button color="primary" style="width: 170px;font-weight: 550;" (click)="saveIntoDatabase()">{{uiLabels.saveBtn}}</button>
+        </div>
+    </div>
+</mat-toolbar>
+<div class="row right" style="margin-right: 80px;padding: 10px;">
+    <button mat-raised-button class="list-button-light" (click)="openLanguageDiolog(addLanguageJson,true)">Add New Component</button>
+</div>
+<div *ngFor="let item of componentList">
+    <mat-card class="common-list-item" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(item)" style="margin: 5px;">
+        <mat-card-content>
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                <div fxLayout="row wrap">
+                    <div fxLayout="row" fxFlex="95 1 auto" fxLayoutAlign="space-between center" style="padding: 0px 50px 0px 50px;">
+
+                        <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start">
+                            <mat-label>{{item.componentName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                            <button id={{item.componentCode}} mat-raised-button class="simple-button" (click)="openLanguageDiolog(item,false)">{{uiLabels.updateBtn}}</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

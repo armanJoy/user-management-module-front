@@ -1,0 +1,187 @@
+<mat-card style="border:solid rgb(224, 217, 217) 2px;">
+    <div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+        <mat-card-header>
+            <mat-card-title style="padding-bottom: 10px;">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.branchDetails}}
+            </mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+
+        <mat-card-content style="margin-top: 20px;">
+
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="!(isHandset$ | async)">
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.branchName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{branch.branchName}}</mat-label>
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.branchAddress}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{branch.zipcodeFormated}}, {{branch.branchAddress}}</mat-label>
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.contactNo}} </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{branch.branchContactNoFormated}}</mat-label>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.fax}} </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{branch.branchFAXFormated}}</mat-label>
+                    </div>
+                </div>
+
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.personInCharge}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{branch.branchInchargeName}}</mat-label>
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.businessType}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="row">
+                        <div *ngFor=" let category of branch.branchBusinessCategory, index as i">
+                            <mat-label *ngIf="i==0">{{uiLabels[category]}} </mat-label>
+                            <mat-label *ngIf="i>0">, {{uiLabels[category]}}</mat-label>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.remarks}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{branch.remark}}</mat-label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div fxLayout="column" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="(isHandset$ | async)">
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.branchName}}</mat-label>
+                    </u>
+                </div>
+
+                <div>
+                    <mat-label>{{branch.branchName}}</mat-label>
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.branchAddress}}</mat-label>
+                    </u>
+                </div>
+
+                <div>
+                    <mat-label>{{branch.zipcodeFormated}}, {{branch.branchAddress}}</mat-label>
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.contactNo}} </mat-label>
+                    </u>
+                </div>
+
+                <div>
+                    <mat-label>{{branch.branchContactNoFormated}}</mat-label>
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.fax}} </mat-label>
+                    </u>
+                </div>
+
+                <div>
+                    <mat-label>{{branch.branchFAXFormated}}</mat-label>
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.personInCharge}}</mat-label>
+                    </u>
+                </div>
+
+                <div>
+                    <mat-label>{{branch.branchInchargeName}}</mat-label>
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.businessType}}</mat-label>
+                    </u>
+                </div>
+
+                <div>
+                    <mat-label>{{branch.branchBusinessCategory}}</mat-label>
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.remarks}}</mat-label>
+                    </u>
+                </div>
+
+                <div>
+                    <mat-label>{{branch.remark}}</mat-label>
+                </div>
+
+            </div>
+            <mat-card-actions align="end">
+                <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.close}}</button>
+
+            </mat-card-actions>
+        </mat-card-content>
+    </div>
+</mat-card>

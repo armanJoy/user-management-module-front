@@ -1,0 +1,515 @@
+<mat-card style="border:solid rgb(224, 217, 217) 2px;">
+    <div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+        <mat-card-content style="margin-top: 20px;">
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="!(isHandset$ | async)">
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>
+                            <span *ngIf="isSystemAdmin">
+                                <app-lang-def-button [componentCode]="componentCode">
+                                </app-lang-def-button>
+                            </span>
+                            {{uiLabels.companyName}}
+                        </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="companyName" matInput placeholder="排出株式会社" [(ngModel)]="company.companyName">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.zipCode}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="zipcode" mask="000-0000" placeholder="〒333-0001" matInput [(ngModel)]="company.zipcode" value="" textInput class="form-control" type="text" (input)="SearchZipCodeData(company.zipcode)">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.companyAddress}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="companyAddress" matInput placeholder="" [(ngModel)]="company.companyAddress">
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.representativeName}} </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="representativeName" matInput placeholder="" [(ngModel)]="company.representativeName">
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.contactNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="contactNo" mask="00-0000-0000" placeholder="03-2222-2222" [(ngModel)]="company.contactNo">
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.companyFaxNumber}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="companyFaxNumber" mask="00-0000-0000" placeholder="03-2222-2222" matInput [(ngModel)]="company.companyFaxNumber">
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.representativEmail}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="representativEmail" matInput placeholder="" [(ngModel)]="company.representativEmail">
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.companyBusinessCategory}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+
+                    <div fxFlex="90 1 auto" *ngFor="let catagory of catagoryList,index as i" fxLayoutAlign="start center">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id={{catagory.name}} [(ngModel)]="catagory.isCheck" class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [value]="catagory.name" (change)="onCheckboxChange($event)" />
+                        <label for="check"> {{catagory.label}}</label>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <!-- <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center start">
+                        <mat-label>{{uiLabels.notification}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start">
+                        <mat-radio-group fxLayoutGap="20px" color="primary" aria-label="Select an option" class="radio-group" [(ngModel)]="company.notification">
+                            <mat-radio-button id="yesRadioButton" value="Yes">{{uiLabels.yes}}</mat-radio-button>
+                            <mat-radio-button id="noRadioButton" value="No">{{uiLabels.no}}</mat-radio-button>
+                        </mat-radio-group>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div> -->
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.wasteProcessingLicenseNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="wasteProcessingLicenseNo" matInput placeholder="" [(ngModel)]="company.wasteProcessingLicenseNo">
+
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row" *ngIf="company.uploadLicense">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>
+                            <!-- {{uiLabels.uploadedLicensePreview}} -->
+                        </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <!-- <mat-label>:</mat-label> -->
+                    </div>
+
+                    <div fxFlex="90 1 auto">
+                        <mat-card style="height: 100px;width: 100px;"><img class="image-preview " src={{company.uploadLicense}}></mat-card>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.uploadLicense}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="file" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="file" id="uploadLicense" matInput placeholder="" (change)="upLoadFile($event,1)" style="display:none;">
+                        <button>
+                            <label for='uploadLicense'>
+                                {{uiLabels.uploadFile}}
+
+                            </label>
+                        </button>
+                        <span *ngIf="company.uploadLicense" style="margin-left: 5px;">
+                            {{uiLabels.fileUploaded}}</span>
+                        <span *ngIf="!company.uploadLicense" style="margin-left: 5px;">{{uiLabels.noFileUploaded}}</span>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row" *ngIf="company.companySealUploadedFile">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <!-- <mat-label>{{uiLabels.uploadedCompanySealPreview}}</mat-label> -->
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <!-- <mat-label>:</mat-label> -->
+                    </div>
+
+                    <div fxFlex="90 1 auto">
+                        <mat-card style="height: 100px;width: 100px;"><img class="image-preview " src={{company.companySealUploadedFile}}></mat-card>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.companySealUpload}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="file" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="file" id="companySealUploadedFile" matInput placeholder="" (change)="uploadCompanySeal($event,2)" style="display:none;">
+                        <button>
+                            <label for='companySealUploadedFile'>
+                                {{uiLabels.uploadFile}}
+                            </label>
+                        </button>
+                        <span *ngIf="company.companySealUploadedFile" style="margin-left: 5px;">{{uiLabels.fileUploaded}}</span>
+                        <span *ngIf="!company.companySealUploadedFile" style="margin-left: 5px;">
+                            {{uiLabels.noFileUploaded}}</span>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.corporateRegNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="corporateRegNo" matInput placeholder="" [(ngModel)]="company.corporateRegNo">
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <!-- <div fxLayout="row">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.remarks}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="remarks" matInput placeholder="" [(ngModel)]="company.remarks">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div> -->
+                <div fxLayout="row" *ngIf="!(isHandset$ | async)">
+                    <div fxFlex="0 0 180px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+
+                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center center">
+                        <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.closeBtn}}</button>
+                    </div>
+                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center center">
+                        <button id="save" mat-raised-button color="primary" type="submit" (click)="saveCompanyInfo()">{{uiLabels.saveBtn}}</button>
+                    </div>
+                </div>
+
+            </div>
+            <div fxLayout="column" fxLayout="column" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="(isHandset$ | async)">
+
+                <div>
+                    <mat-label>{{uiLabels.companyName}}</mat-label>
+                </div>
+
+                <div>
+                    <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="companyName" matInput placeholder="排出株式会社" [(ngModel)]="company.companyName">
+                </div>
+
+                <div>
+                    <mat-label>{{uiLabels.zipCode}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="zipcode" mask="000-0000" placeholder="〒333-0001" matInput [(ngModel)]="company.zipcode" value="" textInput class="form-control" type="text" (input)="SearchZipCodeData(company.zipcode)">
+                </div>
+
+                <div>
+                    <mat-label>{{uiLabels.companyAddress}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="companyAddress" matInput placeholder="" [(ngModel)]="company.companyAddress">
+
+                </div>
+
+                <div>
+                    <mat-label>{{uiLabels.representativeName}} </mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="representativeName" matInput placeholder="" [(ngModel)]="company.representativeName">
+
+                </div>
+
+                <div>
+                    <mat-label>{{uiLabels.contactNo}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="contactNo" mask="00-0000-0000" placeholder="03-2222-2222" [(ngModel)]="company.contactNo">
+
+                </div>
+
+                <div>
+                    <mat-label>{{uiLabels.companyFaxNumber}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="companyFaxNumber" mask="00-0000-0000" placeholder="03-2222-2222" matInput [(ngModel)]="company.companyFaxNumber">
+
+                </div>
+
+                <div>
+                    <mat-label>{{uiLabels.representativEmail}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="representativEmail" matInput placeholder="" [(ngModel)]="company.representativEmail">
+
+                </div>
+
+                <div>
+                    <mat-label>{{uiLabels.companyBusinessCategory}}</mat-label>
+                </div>
+
+                <div fxLayout="column" fxFlex="90 1 auto" fxLayoutAlign="start start">
+                    <div *ngFor="let catagory of catagoryList,index as i" fxLayoutAlign="start center">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id={{catagory.name}} [(ngModel)]="catagory.isCheck" class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [value]="catagory.name" (change)="onCheckboxChange($event)" />
+                        <label for="check"> {{catagory.label}}</label>
+                    </div>
+                </div>
+
+                <!-- <div>
+                    <mat-label>{{uiLabels.notification}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start">
+                    <mat-radio-group fxLayoutGap="20px" color="primary" aria-label="Select an option" class="radio-group" [(ngModel)]="company.notification">
+                        <mat-radio-button id="yesRadioButton" value="Yes">{{uiLabels.yes}}</mat-radio-button>
+                        <mat-radio-button id="noRadioButton" value="No">{{uiLabels.no}}</mat-radio-button>
+                    </mat-radio-group>
+
+                </div> -->
+
+
+                <div>
+                    <mat-label>{{uiLabels.wasteProcessingLicenseNo}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="wasteProcessingLicenseNo" matInput placeholder="" [(ngModel)]="company.wasteProcessingLicenseNo">
+
+                </div>
+
+                <div fxLayout="row wrap" *ngIf="company.uploadLicense">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>
+                            <!-- {{uiLabels.uploadedLicensePreview}} -->
+                        </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <!-- <mat-label>:</mat-label> -->
+                    </div>
+
+                    <div fxFlex="90 1 auto">
+                        <mat-card style="height: 100px;width: 100px;"><img class="image-preview " src={{company.uploadLicense}}></mat-card>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div>
+                    <mat-label>{{uiLabels.uploadLicense}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input type="file" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="file" id="uploadLicense" matInput placeholder="" (change)="upLoadFile($event,1)" style="display:none;">
+                    <button>
+                        <label for='uploadLicense'>
+                            {{uiLabels.uploadFile}}
+
+                        </label>
+                    </button>
+                    <span *ngIf="company.uploadLicense" style="margin-left: 5px;">
+                        {{uiLabels.fileUploaded}}</span>
+                    <span *ngIf="!company.uploadLicense" style="margin-left: 5px;">{{uiLabels.noFileUploaded}}</span>
+
+                    <!-- <input type="file" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="file" matInput placeholder="" (change)="upLoadFile($event,1)"> -->
+
+                </div>
+                <div fxLayout="row wrap" *ngIf="company.companySealUploadedFile">
+                    <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                        <!-- <mat-label>{{uiLabels.uploadedCompanySealPreview}}</mat-label> -->
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                        <!-- <mat-label>:</mat-label> -->
+                    </div>
+
+                    <div fxFlex="90 1 auto">
+                        <mat-card style="height: 100px;width: 100px;"><img class="image-preview " src={{company.companySealUploadedFile}}></mat-card>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div>
+                    <mat-label>{{uiLabels.companySealUpload}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+
+                    <input type="file" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="file" id="companySealUploadedFile" matInput placeholder="" (change)="uploadCompanySeal($event,2)" style="display:none;">
+                    <button>
+                        <label for='companySealUploadedFile'>
+                            {{uiLabels.uploadFile}}
+                        </label>
+                    </button>
+                    <span *ngIf="company.companySealUploadedFile" style="margin-left: 5px;">{{uiLabels.fileUploaded}}</span>
+                    <span *ngIf="!company.companySealUploadedFile" style="margin-left: 5px;">
+                        {{uiLabels.noFileUploaded}}</span>
+
+                    <!-- <input type="file" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="file" matInput placeholder="" (change)="upLoadFile($event,2)"> -->
+                </div>
+                <div>
+                    <mat-label>{{uiLabels.corporateRegNo}}</mat-label>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="corporateRegNo" matInput placeholder="" [(ngModel)]="company.corporateRegNo">
+
+                </div>
+                <!-- <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.remarks}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="remarks" matInput placeholder="" [(ngModel)]="company.remarks">
+                </div> -->
+
+                <div fxLayout="column" *ngIf="(isHandset$ | async)" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+                    <div fxLayout="row" fxLayoutAlign="center center" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                        <div fxFlex="0 0 80px" fxLayoutAlign="center center">
+                            <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.closeBtn}}</button>
+                        </div>
+                        <div fxFlex="0 0 80px" fxLayoutAlign="center center">
+                            <button id="save" mat-raised-button color="primary" type="submit" (click)="saveCompanyInfo()">{{uiLabels.saveBtn}}</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </mat-card-content>
+    </div>
+</mat-card>

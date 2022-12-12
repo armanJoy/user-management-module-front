@@ -1,0 +1,18 @@
+<div fxLayout="row">
+    <mat-toolbar style="background-color: rgb(235, 235, 235);">
+        <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+            <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>
+            {{uiLabels.headerLabel}}
+        </mat-label>
+        <div fxLayoutAlign="end center">
+            <button id="modifyButton" mat-raised-button class="simple-button" *ngIf="isAdmin" (click)="modifyStaticContent()">{{uiLabels.modifyBtn}}</button>
+        </div>
+    </mat-toolbar>
+</div>
+
+<div #divBinder>
+
+</div>

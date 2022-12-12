@@ -1,0 +1,125 @@
+<div>
+    <div fxLayout="row" style="padding-top: 20px;">
+        <mat-toolbar fxLayout="row" fxFlex="1 1 auto">
+            <div fxFlex="1 1 auto" fxLayout="column" fxLayoutAlign="center start">
+                <mat-label>
+                    <span *ngIf="isSystemAdmin">
+                        <app-lang-def-button [componentCode]="componentCode">
+                        </app-lang-def-button>
+                    </span>
+                    {{uiLabels.pageHeader}}
+                </mat-label>
+            </div>
+        </mat-toolbar>
+    </div>
+
+    <!-- <app-search-pagination (searchByText)="searchByText()"></app-search-pagination> -->
+    <mat-accordion style="width: 100%;" multi>
+        <mat-expansion-panel *ngFor="let item of companyWasteCoefficient, index as i" style="margin-bottom: 5px;">
+            <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);">
+                <div style="flex:1">
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;" id="wasteRequest+{{i}}">
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-label>{{uiLabels.companyName}}</mat-label>
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value" style="font-weight: 500;">
+                                <mat-label>{{item.companyName}}</mat-label>
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-label>{{uiLabels.contactNo}}</mat-label>
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                <mat-label>{{item.contactNoView}}</mat-label>
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-label>{{uiLabels.address}}</mat-label>
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                <mat-label>{{item.zipCodeView}}, {{item.address}}</mat-label>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </mat-expansion-panel-header>
+
+            <div class="list-item">
+                <div class="three-section-list-row">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            <mat-label>{{uiLabels.wasteName}}</mat-label>
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            <mat-label>{{wasteItemInfo.wasteTitle}}</mat-label>
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            <mat-label>{{uiLabels.wasteCoefficient}}</mat-label>
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            <input id="wasteCoefficient" matInput type="number" [(ngModel)]="item.wasteCoefficient">
+                        </div>
+
+                    </div>
+
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            <!-- <mat-label>{{uiLabels.wasteCoefficient}}</mat-label> -->
+                        </div>
+
+                        <div class="list-section-separator">
+                            <!-- : -->
+                        </div>
+                        <div class="list-section-value">
+                            <button id="createBtnwasteRequest+{{i}}" mat-raised-button class="list-button" (click)="updateCompanyCoefficient(item)">
+                                {{uiLabels.updateButton}}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- <div class="row" style="display: flex;flex:1;justify-content:flex-end;padding: 5px;">
+                    <button id="createBtnwasteRequest+{{i}}" mat-raised-button class="list-button" (click)="updateCompanyCoefficient(item)">
+                        {{uiLabels.updateButton}}
+                    </button>
+                </div> -->
+
+
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+</div>

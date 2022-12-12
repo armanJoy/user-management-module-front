@@ -1,0 +1,339 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    /* height: 100%; */
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+}
+
+.component-container {
+    height: 100vh;
+    /* background: white; */
+    /* color: black; */
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.footer {
+    position: fixed;
+    overflow: hidden;
+    bottom: 0;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid rgb(216, 216, 216);
+    background-color: rgb(226, 226, 226);
+}
+
+.common-list-item:hover {
+    background-color: rgb(208, 244, 247);
+}
+
+.common-list-item {
+    background-color: none;
+}
+
+.simple-list {
+    padding: 10px;
+    padding-left: 25px;
+    /* margin-bottom: 5px; */
+    font-size: 16px;
+    border-bottom: 1px solid rgb(226, 225, 225);
+}
+
+.simple-button {
+    border: 1px solid rgb(166, 166, 168) !important;
+    font-weight: normal;
+    color: rgb(57, 57, 59);
+    box-shadow: none !important;
+}
+
+.list-button {
+    /* width: 140px !important; */
+    min-width: unset !important;
+    border: 1px solid rgb(95, 95, 128) !important;
+    font-weight: normal;
+    background-color: rgb(174, 192, 199);
+    box-shadow: none !important;
+}
+
+.list-button-medium {
+    width: 170px !important;
+    min-width: unset !important;
+    border: 1px solid rgb(95, 95, 128) !important;
+    font-weight: normal;
+    background-color: rgb(174, 192, 199);
+    box-shadow: none !important;
+}
+
+.list-button-light {
+    border: 1px solid rgb(95, 95, 128) !important;
+    font-weight: normal;
+    background-color: rgb(211 211 211);
+    box-shadow: none !important;
+}
+
+input {
+    width: 100%;
+    height: 25px;
+}
+
+.form-padding {
+    padding: 10px 300px 0px 300px;
+}
+
+.form-padding-popup {
+    padding: 10px 20px 10px 20px;
+}
+
+.form-padding-popup-mobile {
+    padding: 5px 10px 5px 10px;
+}
+
+.input-small {
+    width: 250px;
+}
+
+.input-medium {
+    width: 400px;
+}
+
+.input-large {
+    width: 100%;
+}
+
+.workspace-header {
+    background-color: rgb(207, 207, 231);
+}
+
+/* new list styles */
+
+.list-item-without-hover {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 5px;
+    background-color: none;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 5px;
+    background-color: none;
+}
+
+.list-item:hover {
+    background-color: rgb(208, 244, 247);
+}
+
+.show-in-mobile {
+    visibility: visible;
+}
+
+.hide-in-mobile {
+    visibility: hidden;
+}
+
+@media (min-width: 900px) {
+    .three-section-list-row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .two-section-list-row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* .two-section-list-row .list-value-section-two {
+    margin-left: -0.57%;
+  } */
+
+    .show-in-mobile {
+        visibility: hidden;
+    }
+
+    .hide-in-mobile {
+        visibility: visible;
+    }
+
+    /* .list-action-section-separator{
+    justify-content: center;
+    align-self: center;
+} */
+}
+
+.start-center {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.three-section-list-row .list-value-section {
+    display: flex;
+    flex: 2;
+    padding: 5px;
+}
+
+.three-section-list-row .list-section-label {
+    display: flex;
+    flex: 150px;
+    justify-content: flex-end;
+    align-self: center;
+}
+
+.three-section-list-row .list-section-separator {
+    display: flex;
+    flex: 20px;
+    justify-content: center;
+    align-self: center;
+}
+
+.three-section-list-row .list-section-value {
+    display: flex;
+    flex: 100;
+    justify-content: flex-start;
+    align-self: center;
+}
+
+.three-section-list-row .list-action-section {
+    display: flex;
+    flex: 1;
+    padding: 5px;
+}
+
+.three-section-list-row .list-action-section-label {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    align-self: center;
+}
+
+.three-section-list-row .list-action-section-separator {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-self: center;
+}
+
+.three-section-list-row .list-action-section-value {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-self: center;
+}
+
+/* two-section-row */
+
+.two-section-list-row .list-value-section-one {
+    display: flex;
+    flex: 2;
+    /* margin-left: 100px; */
+}
+
+.two-section-list-row .list-value-section-two {
+    display: flex;
+    flex: 3;
+    margin-left: -0.37%;
+}
+
+.two-section-list-row .list-section-label {
+    display: flex;
+    flex: 150px;
+    justify-content: flex-end;
+    align-self: center;
+}
+
+.two-section-list-row .list-section-separator {
+    display: flex;
+    flex: 20px;
+    justify-content: center;
+    align-self: center;
+}
+
+.two-section-list-row .list-section-value {
+    display: flex;
+    flex: 100;
+    justify-content: flex-start;
+    align-self: center;
+}
+
+.two-section-list-row .list-action-section {
+    display: flex;
+    flex: 3;
+}
+
+.two-section-list-row .list-action-section-label {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    align-self: center;
+}
+
+.two-section-list-row .list-action-section-separator {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-self: center;
+}
+
+.two-section-list-row .list-action-section-value {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-self: center;
+}
+
+.image-preview {
+    height: 100px;
+    width: 100px;
+}
+
+.expansion-pannel-header {
+    background-color: rgb(190, 223, 223);
+}

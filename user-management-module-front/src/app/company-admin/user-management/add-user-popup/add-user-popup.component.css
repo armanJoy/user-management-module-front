@@ -1,0 +1,14 @@
+.addressSelectDesktop {
+  width: 40%;
+}
+.addressSelectMobile {
+  width: 100%;
+}
+input#officeAddress {
+  border: 1px solid #767070;
+}
+
+.desktop-padding {
+  padding-left: 50px;
+}
+

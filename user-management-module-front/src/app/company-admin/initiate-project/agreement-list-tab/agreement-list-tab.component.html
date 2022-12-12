@@ -1,0 +1,267 @@
+<mat-dialog-content style="width: 98%;">
+    <div fxLayout="row">
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.headerLabel}}
+            </mat-label>
+            <div fxLayoutAlign="end center" style="margin-right: 40px;">
+                <button id="nextBtn" mat-raised-button color="primary" style="width: 150px;" (click)="TabChange()">{{uiLabels.nextBtn}}</button>
+            </div>
+        </mat-toolbar>
+    </div>
+
+    <mat-toolbar>
+        <mat-label>Selected Agreements</mat-label>
+    </mat-toolbar>
+    <div *ngFor="let item of projectInfo.agreementInfo,index as i">
+        <!-- [ngStyle]="{'background-color': selectedItem.agreementId==item.agreementId ? 'rgb(224, 224, 241)' : ''}" -->
+        <div class="list-item">
+            <div class="three-section-list-row">
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        <!-- (click)="updateSelectedItemList(item, $event)" -->
+                        <!-- <mat-checkbox id="check{{i}}" [(ngModel)]="item.isSelected" (click)="onSelectionChange(item, $event)" style="padding-right: 15px;"> -->
+                        {{uiLabels.agreementTitle}}
+                        <!-- </mat-checkbox> -->
+
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        {{item.agreementTitle}}
+                    </div>
+                </div>
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        {{uiLabels.validDate}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        {{item.agreementValidDate}}
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="three-section-list-row">
+
+                <div class="list-value-section" *ngIf="(item.dumperPartner && item.dumperPartner.companyInfoId && item.dumperPartner.assignRoles==dumperCompanyTitle) || (item.transporterPartner && item.transporterPartner.assignRoles && item.transporterPartner.assignRoles==dumperCompanyTitle) || (item.processorPartner && item.processorPartner.assignRoles && item.processorPartner.assignRoles==dumperCompanyTitle)">
+                    <div class="list-section-label">
+                        {{uiLabels.dumperCompany}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        <mat-label *ngIf="item.dumperPartner.assignRoles==dumperCompanyTitle">{{item.dumperPartner.companyName}}</mat-label>
+                        <mat-label *ngIf=" item.transporterPartner.assignRoles==dumperCompanyTitle ">{{item.transporterPartner.companyName}}</mat-label>
+                        <mat-label *ngIf="item.processorPartner.assignRoles==dumperCompanyTitle">{{item.processorPartner.companyName}}</mat-label>
+                    </div>
+                </div>
+
+                <div class="list-value-section" *ngIf="(item.dumperPartner && item.dumperPartner.companyInfoId && item.dumperPartner.assignRoles==transporterCompanyTitle) || (item.transporterPartner && item.transporterPartner.assignRoles && item.transporterPartner.assignRoles==transporterCompanyTitle) || (item.processorPartner && item.processorPartner.assignRoles && item.processorPartner.assignRoles==transporterCompanyTitle)">
+                    <div class="list-section-label">
+                        {{uiLabels.transporterCompany}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        <mat-label *ngIf="item.dumperPartner.assignRoles==transporterCompanyTitle">{{item.dumperPartner.companyName}}</mat-label>
+                        <mat-label *ngIf="item.transporterPartner.assignRoles==transporterCompanyTitle ">{{item.transporterPartner.companyName}}</mat-label>
+                        <mat-label *ngIf="item.processorPartner.assignRoles==transporterCompanyTitle">{{item.processorPartner.companyName}}</mat-label>
+                    </div>
+                </div>
+
+                <div class="list-value-section" *ngIf="((item.dumperPartner && item.dumperPartner.assignRoles!=dumperCompanyTitle) && (item.transporterPartner && item.transporterPartner.assignRoles!=dumperCompanyTitle) && (item.processorPartner && item.processorPartner.assignRoles!=dumperCompanyTitle)) || ((item.dumperPartner && item.dumperPartner.assignRoles!=transporterCompanyTitle) && (item.transporterPartner && item.transporterPartner.assignRoles!=transporterCompanyTitle) && (item.processorPartner && item.processorPartner.assignRoles!=transporterCompanyTitle))">
+                    <div class="list-section-label">
+                    </div>
+                    <div class="list-section-separator">
+
+                    </div>
+
+                    <div class="list-section-value">
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="three-section-list-row">
+
+                <div class="list-value-section" *ngIf="(item.dumperPartner && item.dumperPartner.assignRoles==processorCompanyTitle) || (item.transporterPartner && item.transporterPartner.assignRoles==processorCompanyTitle) || (item.processorPartner && item.processorPartner.assignRoles==processorCompanyTitle)">
+                    <div class="list-section-label">
+                        {{uiLabels.processorCompany}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        <mat-label *ngIf="item.dumperPartner.assignRoles==processorCompanyTitle">{{item.dumperPartner.companyName}}</mat-label>
+                        <mat-label *ngIf=" item.transporterPartner.assignRoles==processorCompanyTitle ">{{item.transporterPartner.companyName}}</mat-label>
+                        <mat-label *ngIf="item.processorPartner.assignRoles==processorCompanyTitle">{{item.processorPartner.companyName}}</mat-label>
+                    </div>
+                </div>
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                    </div>
+                    <div class="list-section-separator">
+
+                    </div>
+
+                    <div class="list-section-value">
+                        <button mat-raised-button class="list-button" (click)="onSelectionChange(item, $event)">{{uiLabels.removeButton}}</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <mat-label style="display: flex;justify-content: flex-end;align-items: center;margin-top: 15px;">Filter : &nbsp;</mat-label>
+        <mat-radio-group *ngFor="let eachFilter of businessCategoryFilter" [(ngModel)]="partnerRole" (ngModelChange)="searchAndFilter()" style="margin-top: 20px;margin-left: 10px;margin-bottom: 10px;">
+            <mat-radio-button style="margin-right: 10px;" value={{eachFilter.title}}>{{uiLabels[eachFilter.title]}}</mat-radio-button>
+        </mat-radio-group>
+
+        <app-search-pagination style="margin-left: 50px;" (searchByText)="searchAndFilter()"></app-search-pagination>
+
+    </div>
+
+    <div *ngFor="let item of agreementList,index as i">
+        <!-- [ngStyle]="{'background-color': selectedItem.agreementId==item.agreementId ? 'rgb(224, 224, 241)' : ''}" -->
+        <div class="list-item">
+            <div class="three-section-list-row">
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        <!-- (click)="updateSelectedItemList(item, $event)" -->
+                        <mat-checkbox id="check{{i}}" [(ngModel)]="item.isSelected" (click)="onSelectionChange(item, $event)" style="padding-right: 15px;">
+                            {{uiLabels.agreementTitle}}
+                        </mat-checkbox>
+
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        {{item.agreementTitle}}
+                    </div>
+                </div>
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        {{uiLabels.validDate}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        {{item.agreementValidDate}}
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="three-section-list-row">
+
+                <div class="list-value-section" *ngIf="(item.dumperPartner && item.dumperPartner.companyInfoId && item.dumperPartner.assignRoles==dumperCompanyTitle) || (item.transporterPartner && item.transporterPartner.assignRoles && item.transporterPartner.assignRoles==dumperCompanyTitle) || (item.processorPartner && item.processorPartner.assignRoles && item.processorPartner.assignRoles==dumperCompanyTitle)">
+                    <div class="list-section-label">
+                        {{uiLabels.dumperCompany}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        <mat-label *ngIf="item.dumperPartner.assignRoles==dumperCompanyTitle">{{item.dumperPartner.companyName}}</mat-label>
+                        <mat-label *ngIf=" item.transporterPartner.assignRoles==dumperCompanyTitle ">{{item.transporterPartner.companyName}}</mat-label>
+                        <mat-label *ngIf="item.processorPartner.assignRoles==dumperCompanyTitle">{{item.processorPartner.companyName}}</mat-label>
+                    </div>
+                </div>
+
+                <div class="list-value-section" *ngIf="(item.dumperPartner && item.dumperPartner.companyInfoId && item.dumperPartner.assignRoles==transporterCompanyTitle) || (item.transporterPartner && item.transporterPartner.assignRoles && item.transporterPartner.assignRoles==transporterCompanyTitle) || (item.processorPartner && item.processorPartner.assignRoles && item.processorPartner.assignRoles==transporterCompanyTitle)">
+                    <div class="list-section-label">
+                        {{uiLabels.transporterCompany}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        <mat-label *ngIf="item.dumperPartner.assignRoles==transporterCompanyTitle">{{item.dumperPartner.companyName}}</mat-label>
+                        <mat-label *ngIf=" item.transporterPartner.assignRoles==transporterCompanyTitle ">{{item.transporterPartner.companyName}}</mat-label>
+                        <mat-label *ngIf="item.processorPartner.assignRoles==transporterCompanyTitle">{{item.processorPartner.companyName}}</mat-label>
+                    </div>
+                </div>
+
+                <div class="list-value-section" *ngIf="((item.dumperPartner && item.dumperPartner.assignRoles!=dumperCompanyTitle) && (item.transporterPartner && item.transporterPartner.assignRoles!=dumperCompanyTitle) && (item.processorPartner && item.processorPartner.assignRoles!=dumperCompanyTitle)) || ((item.dumperPartner && item.dumperPartner.assignRoles!=transporterCompanyTitle) && (item.transporterPartner && item.transporterPartner.assignRoles!=transporterCompanyTitle) && (item.processorPartner && item.processorPartner.assignRoles!=transporterCompanyTitle))">
+                    <div class="list-section-label">
+                    </div>
+                    <div class="list-section-separator">
+
+                    </div>
+
+                    <div class="list-section-value">
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="three-section-list-row">
+
+                <div class="list-value-section" *ngIf="(item.dumperPartner && item.dumperPartner.assignRoles==processorCompanyTitle) || (item.transporterPartner && item.transporterPartner.assignRoles==processorCompanyTitle) || (item.processorPartner && item.processorPartner.assignRoles==processorCompanyTitle)">
+                    <div class="list-section-label">
+                        {{uiLabels.processorCompany}}
+                    </div>
+                    <div class="list-section-separator">
+                        :
+                    </div>
+
+                    <div class="list-section-value">
+                        <mat-label *ngIf="item.dumperPartner.assignRoles==processorCompanyTitle">{{item.dumperPartner.companyName}}</mat-label>
+                        <mat-label *ngIf=" item.transporterPartner.assignRoles==processorCompanyTitle ">{{item.transporterPartner.companyName}}</mat-label>
+                        <mat-label *ngIf="item.processorPartner.assignRoles==processorCompanyTitle">{{item.processorPartner.companyName}}</mat-label>
+                    </div>
+                </div>
+
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                    </div>
+                    <div class="list-section-separator">
+
+                    </div>
+
+                    <div class="list-section-value">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</mat-dialog-content>

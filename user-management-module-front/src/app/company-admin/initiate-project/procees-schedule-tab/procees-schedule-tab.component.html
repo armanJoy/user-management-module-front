@@ -1,0 +1,158 @@
+<mat-dialog-content>
+
+
+
+    <mat-dialog-actions align='end' style="margin-bottom: 10px;">
+        <span style="display:flex;justify-content: flex-start;flex: 1;" *ngIf="isSystemAdmin">
+            <app-lang-def-button [componentCode]="componentCode">
+            </app-lang-def-button>
+        </span>
+        <button mat-raised-button color="primary" (click)="onClick(true)">
+            {{uiLabels.backBtn}}
+        </button>
+        <button mat-raised-button color=primary (click)="onClick(false)">
+            {{uiLabels.saveBtn}}
+        </button>
+
+    </mat-dialog-actions>
+    <div>
+        <div *ngFor="let item of processList,index as i">
+            <div class="list-item">
+
+                <div class="three-section-list-row" style="margin-bottom: 10px;">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.wasteItem}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.wasteItemName}}
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            <!-- Disposal Id -->
+                        </div>
+
+                        <div class="list-section-separator">
+                            <!-- : -->
+                        </div>
+                        <div class="list-section-value">
+                            <!-- {{item.disposalInfoId}} -->
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            <!-- Drop Location -->
+                        </div>
+
+                        <div class="list-section-separator">
+                            <!-- : -->
+                        </div>
+                        <div class="list-section-value">
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="three-section-list-row" style="margin-bottom: 10px;">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.quantity}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.quantity}}
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.price}}/{{item.unit}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            <input type="number" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" id='jobTitle' [(ngModel)]="item.price" (ngModelChange)="prepareTotalprice($event,i)">
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.totalPrice}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            <!-- {{item.price}}*{{item.quantity}} -->
+                            <input type="number" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" id='jobTitle' [(ngModel)]="item.totalPrice" readonly>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="three-section-list-row">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.date}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            <!-- Drop Location -->
+                            {{uiLabels.from}}
+                        </div>
+
+                        <div class="list-section-separator">
+
+                        </div>
+                        <div class="list-section-value">
+                            <app-date-time-input [modelObject]="item" [modelDateAttributeName]="'processStartDate'"></app-date-time-input>
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.to}}
+                        </div>
+
+                        <div class="list-section-separator">
+
+                        </div>
+                        <div class="list-section-value">
+                            <app-date-time-input [modelObject]="item" [modelDateAttributeName]="'processEndDate'"></app-date-time-input>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</mat-dialog-content>

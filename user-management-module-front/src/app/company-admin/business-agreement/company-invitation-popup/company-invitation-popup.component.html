@@ -1,0 +1,145 @@
+<mat-card [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+    <mat-card-header style="padding-bottom: 20px;">
+        <mat-card-title>
+            <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode"></app-lang-def-button>
+            </span>
+            {{uiLabels.title}}
+
+        </mat-card-title>
+
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+        <div class="row">
+
+            <div class="col" fxFlex="0 0 50%">
+
+                <div style="flex:1;padding-top: 10px;">
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+
+                        <div class="list-value-section">
+                            <div class="list-section-value">
+                                <b>
+                                    <mat-label>{{uiLabels.from}}</mat-label>
+                                </b>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-label>{{uiLabels.companyName}}</mat-label>
+                            </div>
+
+                            <div class="list-section-separator">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div class="list-section-value" style="font-weight: 500;">
+                                <mat-label>{{companyInfo.companyName}}</mat-label>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+
+
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-label>{{uiLabels.emailLabel}}</mat-label>
+                            </div>
+
+                            <div class="list-section-separator">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div class="list-section-value">
+                                <mat-label>{{companyInfo.representativEmail}}</mat-label>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="col" fxFlex="0 0 50%">
+
+                <div style="flex:1;padding-top: 10px;">
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+
+                        <div class="list-value-section">
+                            <div class="list-section-value">
+                                <b>
+                                    <mat-label>{{uiLabels.to}}</mat-label>
+                                </b>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-label>{{uiLabels.companyName}}</mat-label>
+                            </div>
+
+                            <div class="list-section-separator">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div class="list-section-value" style="font-weight: 500;">
+                                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="branchName" matInput placeholder="" [(ngModel)]="invitationInfo.receiverComName">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-label>{{uiLabels.emailLabel}}</mat-label>
+                            </div>
+
+                            <div class="list-section-separator">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div class="list-section-value">
+                                <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="branchName" matInput placeholder="" [(ngModel)]="invitationInfo.receiverEmail">
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row right">
+
+            <div class="list-section-value right" fxLayoutGap="30px" style="margin-top: 30px">
+                <button id="sendBtn" mat-raised-button color="primary" (click)="sendInvitation()">{{uiLabels.sendBtn}}</button>
+
+                <button id="sendBtn" mat-raised-button color="accent" mat-dialog-close>Close</button>
+            </div>
+        </div>
+
+
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,36 @@
+<mat-sidenav-container class="sidenav-container component-container" *ngIf="viewComponent && !hideSecondaryMenu">
+    <mat-sidenav class="sidenav secondary-menu" [position]="(isHandset$ | async) ? 'end' : 'start'" #drawer fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+        <mat-toolbar class="secondary-menu-head">
+            <app-lang-def-button [componentCode]="componentCode">
+            </app-lang-def-button>
+            {{uiLabels.secondaryMenuHead}}
+        </mat-toolbar>
+        <mat-nav-list class="secondary-menu" *ngFor="let parentMenuItem of menuList">
+
+            <div>
+                <mat-list-item id={{parentMenuItem.menuId}} [routerLink]="[parentMenuItem.parentSegment,{outlets: { companyAdminOutlet: [parentMenuItem.menuUrl]}}]" [ngClass]="selectedMenu==parentMenuItem.menuTitle ? 'secondary-menu-selected' : ''" (click)="setSelectedMenuName(parentMenuItem.menuTitle)">{{parentMenuItem.menuTitle}}</mat-list-item>
+            </div>
+
+        </mat-nav-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+
+        <div fxLayout="row">
+            <mat-toolbar style="background-color: rgb(224, 224, 241);">
+                <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{selectedMenu}}</mat-label>
+                <div fxLayoutAlign="end center" *ngIf="isHandset$ | async">
+                    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+                        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+                    </button>
+                </div>
+            </mat-toolbar>
+
+        </div>
+        <router-outlet name="companyAdminOutlet"></router-outlet>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+<router-outlet name="companyAdminOutlet" *ngIf="viewComponent && hideSecondaryMenu"></router-outlet>

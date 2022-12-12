@@ -1,0 +1,369 @@
+<div>
+    <span *ngIf="isSystemAdmin && !fromProject">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+
+    <mat-accordion *ngFor="let item of manifestoInfoList ,index as i" class="common-list-item" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(item)" style="width: 100%;margin: 3px;">
+
+        <mat-expansion-panel *ngIf="(isHandset$ | async)" [expanded]="item.isOpen" (click)="getManifestoBasicInfo(item, $event)">
+            <mat-expansion-panel-header style="background-color:  rgb(190, 223, 223);padding: 10px 25px;height: 100%;">
+                <div fxLayout="row" id="{{i}}+manifesto">
+                    <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                        <span *ngIf="isSystemAdmin">
+                            <app-lang-def-button [componentCode]="componentCode">
+                            </app-lang-def-button>
+                        </span>
+                        <div>
+                            <mat-checkbox [(ngModel)]="item.isCheck" id="check{{i}}" *ngIf="!fromProject" [disabled]="item.invoiceGenerated" style="padding-right: 15px;" (click)="updateSelectedItemList(item, $event)"> </mat-checkbox>
+                            {{uiLabels.date}}
+                        </div>
+
+
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <mat-label>{{item.manualManifesto.transportInfo.transportComplateDateView}}</mat-label>
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.projectName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start" *ngIf="item.projectName">
+                        <mat-label>{{item.projectName}}</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start" *ngIf="!item.projectName">
+                        <mat-label>{{projectName}}</mat-label>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center">
+
+                    <button mat-raised-button class="list-button-medium" (click)="detailsVeiw(item, $event)">
+                        {{uiLabels.details}}
+                    </button>
+
+                </div>
+            </mat-expansion-panel-header>
+            <div *ngIf="item.isBasicInfoFetched">
+                <div *ngIf="item.projectId">
+                    <div fxLayout="row" *ngIf="showDumperSection(item)">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.dumperCompanyName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label *ngIf="item.aggrementInfo.dumperPartnerInfo.assignedRoles==dumperCompanyTitle">{{item.aggrementInfo.dumperPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.transporterPartnerInfo.assignedRoles==dumperCompanyTitle">{{item.aggrementInfo.transporterPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.processorPartnerInfo.assignedRoles==dumperCompanyTitle">{{item.aggrementInfo.processorPartnerInfo.companyName}}</mat-label>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" *ngIf="showTransporterSection(item)">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.transportCompanyName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label *ngIf="item.aggrementInfo.dumperPartnerInfo.assignedRoles==transporterCompanyTitle">{{item.aggrementInfo.dumperPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.transporterPartnerInfo.assignedRoles==transporterCompanyTitle">{{item.aggrementInfo.transporterPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.processorPartnerInfo.assignedRoles==transporterCompanyTitle">{{item.aggrementInfo.processorPartnerInfo.companyName}}</mat-label>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" *ngIf="showProcessorSection(item)">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.processorCompanyName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label *ngIf="item.aggrementInfo.dumperPartnerInfo.assignedRoles==processorCompanyTitle">{{item.aggrementInfo.dumperPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.transporterPartnerInfo.assignedRoles==processorCompanyTitle">{{item.aggrementInfo.transporterPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.processorPartnerInfo.assignedRoles==processorCompanyTitle">{{item.aggrementInfo.processorPartnerInfo.companyName}}</mat-label>
+                        </div>
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.wasteItems}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="row" *ngFor="let waste of item.manualManifesto.manifestoProcessWasteInfo,index as i">
+                        <mat-label *ngIf="i==0">{{waste.wasteName}} ({{waste.quantity}} {{waste.unit}})</mat-label>
+                        <mat-label *ngIf="i>0"> {{waste.wasteName}} ({{waste.quantity}} {{waste.unit}})</mat-label>
+                    </div>
+                </div>
+            </div>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel *ngIf="!(isHandset$ | async)" [expanded]="item.isOpen" (click)="getManifestoBasicInfo(item, $event)">
+
+            <mat-expansion-panel-header fxLayout="row" fxLayoutAlign="start center" style="background-color:  rgb(190, 223, 223);padding: 10px 25px;height: 100%;">
+                <div fxFlex="1 1 40">
+                    <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                        <div>
+                            <mat-checkbox *ngIf="(!fromProject || fromCashManifestoTab)" [(ngModel)]="item.isCheck" [disabled]="item.invoiceGenerated || fromAddDate" id="check{{i}}" style="padding-right: 15px;" (click)="updateSelectedItemList(item, $event)"> </mat-checkbox>
+                            {{uiLabels.date}}
+
+                        </div>
+
+                    </div>
+                    <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                        <mat-label>{{item.dateView}}</mat-label>
+                    </div>
+                </div>
+
+                <div fxFlex="1 1 40" *ngIf="item.manifestoType==generatedManifesto">
+                    <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.projectName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start" *ngIf="!item.projectName">
+                        <mat-label>{{projectName}}</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start" *ngIf="item.projectName">
+                        <mat-label>{{item.projectName}}</mat-label>
+                    </div>
+                    <mat-chip-list *ngIf="item.menifestoStatus>=loadedStatus && fromCashManifestoTab">
+                        <mat-chip *ngIf="item.menifestoStatus==loadedStatus">{{uiLabels.loadedStatus}}</mat-chip>
+                        <mat-chip *ngIf="item.menifestoStatus==unloadedStatus">{{uiLabels.unloadedStatus}}</mat-chip>
+                        <mat-chip *ngIf="item.menifestoStatus==completedStatus">{{uiLabels.completedStatus}}</mat-chip>
+                    </mat-chip-list>
+
+                </div>
+
+                <div fxFlex="1 1 40" *ngIf="item.manifestoType==manualManifestoType">
+                    <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.agreementTitle}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start">
+                        <mat-label>{{item.aggrementInfo.title}}</mat-label>
+                    </div>
+                    <mat-chip-list *ngIf="item.menifestoStatus>=loadedStatus && fromCashManifestoTab">
+                        <mat-chip *ngIf="item.menifestoStatus==loadedStatus">{{uiLabels.loadedStatus}}</mat-chip>
+                        <mat-chip *ngIf="item.menifestoStatus==unloadedStatus">{{uiLabels.unloadedStatus}}</mat-chip>
+                        <mat-chip *ngIf="item.menifestoStatus==completedStatus">{{uiLabels.completedStatus}}</mat-chip>
+                    </mat-chip-list>
+                </div>
+
+                <div fxFlex="1 1 40" *ngIf="fromAddDate">
+                    <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                        <button mat-raised-button class="list-button" (click)="updateSelectedItemList(item, $event)">{{uiLabels.removeButton}}</button>
+                    </div>
+
+                </div>
+
+
+            </mat-expansion-panel-header>
+
+            <div *ngIf="item.isBasicInfoFetched && item.projectId" fxLayout="column" fxLayoutGap="15px" style="padding: 15px 0px;">
+
+                <div fxLayout="row" fxLayoutAlign="start start" *ngIf="(item.viewerCompanyIds?.includes(item.aggrementInfo.dumperPartnerInfo.companyId) && item.aggrementInfo.dumperPartnerInfo.assignedRoles==dumperCompanyTitle) || (item.viewerCompanyIds?.includes(item.aggrementInfo.transporterPartnerInfo.companyId) && item.aggrementInfo.transporterPartnerInfo.assignedRoles==dumperCompanyTitle) || (item.viewerCompanyIds?.includes(item.aggrementInfo.processorPartnerInfo.companyId) && item.aggrementInfo.processorPartnerInfo.assignedRoles==dumperCompanyTitle)">
+
+                    <div fxFlex="1 1 40">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.dumperCompanyName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                            <mat-label *ngIf="item.aggrementInfo.dumperPartnerInfo.assignedRoles==dumperCompanyTitle">{{item.aggrementInfo.dumperPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.transporterPartnerInfo.assignedRoles==dumperCompanyTitle">{{item.aggrementInfo.transporterPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.processorPartnerInfo.assignedRoles==dumperCompanyTitle">{{item.aggrementInfo.processorPartnerInfo.companyName}}</mat-label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start start">
+
+                    <div fxFlex="1 1 40" *ngIf="showTransporterSection(item)">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.transportCompanyName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                            <mat-label *ngIf="item.aggrementInfo.dumperPartnerInfo.assignedRoles==transporterCompanyTitle">{{item.aggrementInfo.dumperPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.transporterPartnerInfo.assignedRoles==transporterCompanyTitle">{{item.aggrementInfo.transporterPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.processorPartnerInfo.assignedRoles==transporterCompanyTitle">{{item.aggrementInfo.processorPartnerInfo.companyName}}</mat-label>
+                        </div>
+                    </div>
+
+                    <div fxFlex="1 1 40" *ngIf="showProcessorSection(item)">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.processorCompanyName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                            <mat-label *ngIf="item.aggrementInfo.dumperPartnerInfo.assignedRoles==processorCompanyTitle">{{item.aggrementInfo.dumperPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.transporterPartnerInfo.assignedRoles==processorCompanyTitle">{{item.aggrementInfo.transporterPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.processorPartnerInfo.assignedRoles==processorCompanyTitle">{{item.aggrementInfo.processorPartnerInfo.companyName}}</mat-label>
+                        </div>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <div fxFlex="1 1 40">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.wasteItems}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="95 1 auto" *ngFor="let waste of item.manualManifesto.manifestoProcessWasteInfo,index as i">
+                            <mat-label *ngIf="i==0">{{waste.wasteName}} ({{waste.quantity}} {{waste.unit}})</mat-label>
+                            <mat-label *ngIf="i>0">, {{waste.wasteName}} ({{waste.quantity}} {{waste.unit}})</mat-label>
+                        </div>
+
+                    </div>
+
+                    <div fxFlex="1 1 auto" fxLayoutGap="15px" fxLayoutAlign="end center">
+                        <!-- <button *ngIf="fromProject && item.manifestoType==generatedManifesto && item.project && item.project.projectInfoId && !fromCashManifestoTab" mat-raised-button class="list-button-medium" (click)="openProjectViewPopup(item.project, $event)">
+                            {{uiLabels.projectDetailsBtn}}
+                        </button> -->
+
+                        <button *ngIf="fromProject && item.manifestoType==generatedManifesto && !fromCashManifestoTab" mat-raised-button class="list-button-medium" (click)="showQrCode(item, $event)">
+                            {{uiLabels.qrCodeBtn}}
+                        </button>
+
+                        <button id="{{i}}+editMenifesto" *ngIf="!fromProject && !item.invoiceGenerated && !fromProcessCompletion && !fromCashManifestoTab" mat-raised-button class="list-button-medium" (click)="editManifesto(item, false, $event)">
+                            {{uiLabels.editMenifesto}}
+                        </button>
+
+                        <button mat-raised-button class="list-button-medium" (click)="printReport(item.menifestoInfoId, $event)">
+                            {{uiLabels.generateMenifest}}
+                        </button>
+
+                        <button *ngIf="!fromProject && !fromCashManifestoTab" mat-raised-button class="list-button-medium" (click)="detailsVeiw(item, $event)">
+                            {{uiLabels.details}}
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- <app-project-basic-info *ngIf="fromProject && item.manifestoType==generatedManifesto" [projectViewPopupOpen]="projectViewPopupOpen" [tabChangeForCopyProject]="tabChangeForCopyProject" [tabChangeForEditProject]="tabChangeForEditProject" [viewSchedulePopupOpen]="viewSchedulePopupOpen" [redirectToCreateSchedule]="redirectToCreateSchedule" [redirectToProcessCompletion]="redirectToProcessCompletion" [project]="item.project"></app-project-basic-info> -->
+            </div>
+
+            <div *ngIf="item.isBasicInfoFetched && !item.projectId" fxLayout="column" fxLayoutGap="15px" style="padding: 15px 0px;">
+                <div fxLayout="row" fxLayoutAlign="start start" *ngIf="(item.viewerCompanyIds?.includes(item.aggrementInfo.dumperPartnerInfo.companyId) && item.aggrementInfo.dumperPartnerInfo.assignedRoles==dumperCompanyTitle) || (item.viewerCompanyIds?.includes(item.aggrementInfo.transporterPartnerInfo.companyId) && item.aggrementInfo.transporterPartnerInfo.assignedRoles==dumperCompanyTitle) || (item.viewerCompanyIds?.includes(item.aggrementInfo.processorPartnerInfo.companyId) && item.aggrementInfo.processorPartnerInfo.assignedRoles==dumperCompanyTitle)">
+
+                    <div fxFlex="1 1 40">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.dumperCompanyName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                            <mat-label *ngIf="item.aggrementInfo.dumperPartnerInfo.assignedRoles==dumperCompanyTitle">{{item.aggrementInfo.dumperPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.transporterPartnerInfo.assignedRoles==dumperCompanyTitle">{{item.aggrementInfo.transporterPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.processorPartnerInfo.assignedRoles==dumperCompanyTitle">{{item.aggrementInfo.processorPartnerInfo.companyName}}</mat-label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start start">
+
+                    <div fxFlex="1 1 40" *ngIf="showTransporterSection(item)">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.transportCompanyName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                            <mat-label *ngIf="item.aggrementInfo.dumperPartnerInfo.assignedRoles==transporterCompanyTitle">{{item.aggrementInfo.dumperPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.transporterPartnerInfo.assignedRoles==transporterCompanyTitle">{{item.aggrementInfo.transporterPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.processorPartnerInfo.assignedRoles==transporterCompanyTitle">{{item.aggrementInfo.processorPartnerInfo.companyName}}</mat-label>
+                        </div>
+                    </div>
+
+                    <div fxFlex="1 1 40" *ngIf="showProcessorSection(item)">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.processorCompanyName}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                            <mat-label *ngIf="item.aggrementInfo.dumperPartnerInfo.assignedRoles==processorCompanyTitle">{{item.aggrementInfo.dumperPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.transporterPartnerInfo.assignedRoles==processorCompanyTitle">{{item.aggrementInfo.transporterPartnerInfo.companyName}}</mat-label>
+                            <mat-label *ngIf="item.aggrementInfo.processorPartnerInfo.assignedRoles==processorCompanyTitle">{{item.aggrementInfo.processorPartnerInfo.companyName}}</mat-label>
+                        </div>
+                    </div>
+
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <div fxFlex="1 1 40">
+                        <div fxFlex="0 1 170px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.wasteItems}}</mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="95 1 auto" *ngFor="let waste of item.manualManifesto.manifestoProcessWasteInfo,index as i">
+                            <mat-label *ngIf="i==0">{{waste.wasteName}} ({{waste.quantity}} {{waste.unit}})</mat-label>
+                            <mat-label *ngIf="i>0">, {{waste.wasteName}} ({{waste.quantity}} {{waste.unit}})</mat-label>
+                        </div>
+                    </div>
+
+                    <div fxFlex="1 1 auto" fxLayoutGap="15px" fxLayoutAlign="end center">
+                        <!-- <button *ngIf="fromProject && item.manifestoType==generatedManifesto && item.project && item.project.projectInfoId" mat-raised-button class="list-button-medium" (click)="openProjectViewPopup(item.project, $event)">
+                            {{uiLabels.projectDetailsBtn}}
+                        </button> -->
+
+                        <button *ngIf="fromProject && item.manifestoType==generatedManifesto && !fromCashManifestoTab" mat-raised-button class="list-button-medium" (click)="showQrCode(item, $event)">
+                            {{uiLabels.qrCodeBtn}}
+                        </button>
+
+                        <button id="{{i}}+editMenifesto" *ngIf="!fromProject && !item.invoiceGenerated && !fromProcessCompletion && !fromCashManifestoTab" mat-raised-button class="list-button-medium" (click)="editManifesto(item, false, $event)">
+                            {{uiLabels.editMenifesto}}
+                        </button>
+
+                        <button mat-raised-button class="list-button-medium" (click)="printReport(item.menifestoInfoId, $event)">
+                            {{uiLabels.generateMenifest}}
+                        </button>
+
+                        <button *ngIf="!fromProject && !fromCashManifestoTab " mat-raised-button class="list-button-medium" (click)="detailsVeiw(item, $event)">
+                            {{uiLabels.details}}
+                        </button>
+
+                        <button *ngIf="!fromProject && isTransporterCompany(item.aggrementInfo) && !fromCashManifestoTab &&  item.manifestoType==manualManifestoType" mat-raised-button class="list-button-medium" (click)="manualManifestoTrip(item.menifestoInfoId)">
+                            Trip
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,1243 @@
+<div *ngIf="viewContent">
+
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+
+    <!-- --------------Project View Popup Start-------------------------- -->
+
+    <div *ngIf="isViewPopup">
+        <span style="margin-bottom: 20px;">
+            <label style="font-weight: 500;font-size:large;color:rgb(79, 79, 212);">{{uiLabels.projectDetailsInformation}}</label>
+        </span>
+
+        <mat-dialog-content>
+
+            <!-- project Information -->
+            <mat-card>
+                <span style="font-weight: 500;font-size: medium;">
+                    {{uiLabels.projectInformation}}
+                </span>
+            </mat-card>
+
+            <mat-card>
+                <mat-card-content>
+                    <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                        <div fxLayout="row wrap" fxLayoutAlign="start start">
+                            <div fxFlex="0 0 45">
+                                <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>{{uiLabels.projectTitle}}</mat-label>
+                                </div>
+
+                                <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                    <mat-label>{{project.projectTitle}}</mat-label>
+                                </div>
+
+                            </div>
+
+                            <div fxFlex="0 0 45" style="margin-left: 10px;">
+                                <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>{{uiLabels.projectCreationDate}}</mat-label>
+                                </div>
+
+                                <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                    <mat-label>{{project.projectCreationDate}}</mat-label>
+                                </div>
+                            </div>
+                        </div>
+                        <div fxLayout="row wrap" fxLayoutAlign="start start">
+                            <div fxFlex="0 0 45">
+                                <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>{{uiLabels.projectStartDate}}</mat-label>
+                                </div>
+
+                                <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                    <mat-label>{{project.projectStartDate}}</mat-label>
+                                </div>
+
+                            </div>
+
+                            <div fxFlex="0 0 45" style="margin-left: 10px;">
+                                <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>{{uiLabels.projectEndDate}}</mat-label>
+                                </div>
+
+                                <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                    <mat-label>{{project.projectEndDate}}</mat-label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="false" fxLayout="row wrap" fxLayoutAlign="start start">
+
+                            <div fxFlex="0 0 45">
+                                <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>{{uiLabels.oparatingBranch}}</mat-label>
+                                </div>
+
+                                <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                    <mat-label>{{project.operatingOfficeName}}</mat-label>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </mat-card-content>
+
+            </mat-card>
+
+            <!-- Agreement and Partner Information -->
+            <mat-card>
+                <mat-accordion style="width: 100%;" multi>
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header style="font-weight: 500;font-size: medium;padding: 7px;">
+                            {{uiLabels.agreementInformation}}
+                        </mat-expansion-panel-header>
+                        <div *ngFor="let eachAgreement of project.agreementInfo">
+                            <mat-card-content *ngIf="(eachAgreement.dumperPartner && eachAgreement.dumperPartner.companyInfoId==companyId) || (eachAgreement.transporterPartner && eachAgreement.transporterPartner.companyInfoId==companyId) || (eachAgreement.processorPartner && eachAgreement.processorPartner.companyInfoId==companyId)">
+                                <div class="three-section-list-row">
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.agreementTitle}}
+                                        </div>
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+
+                                        <div class="list-section-value">
+                                            {{eachAgreement.agreementTitle}}
+                                        </div>
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.validDate}}
+                                        </div>
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+
+                                        <div class="list-section-value">
+                                            {{eachAgreement.agreementValidDate}}
+                                        </div>
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+
+                                        </div>
+                                        <div class="list-section-separator">
+
+                                        </div>
+
+                                        <div class="list-section-value">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="three-section-list-row" *ngIf="eachAgreement.dumperPartner && eachAgreement.dumperPartner.companyInfoId && eachAgreement.dumperPartner.companyInfoId!=companyId">
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            Partner Company
+                                        </div>
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+
+                                        <div class="list-section-value">
+
+                                            <mat-label>{{eachAgreement.dumperPartner.companyName}}</mat-label>
+                                        </div>
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            Role
+                                        </div>
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+
+                                        <div class="list-section-value">
+                                            <mat-label>{{uiLabels[eachAgreement.dumperPartner.assignRoles]}}</mat-label>
+                                        </div>
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+
+                                        </div>
+                                        <div class="list-section-separator">
+
+                                        </div>
+
+                                        <div class="list-section-value">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="three-section-list-row" *ngIf="eachAgreement.transporterPartner && eachAgreement.transporterPartner.companyInfoId && eachAgreement.transporterPartner.companyInfoId!=companyId">
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            Partner Company
+                                        </div>
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+
+                                        <div class="list-section-value">
+
+                                            <mat-label>{{eachAgreement.transporterPartner.companyName}}</mat-label>
+                                        </div>
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            Role
+                                        </div>
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+
+                                        <div class="list-section-value">
+                                            <mat-label>{{uiLabels[eachAgreement.transporterPartner.assignRoles]}}</mat-label>
+                                        </div>
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+
+                                        </div>
+                                        <div class="list-section-separator">
+
+                                        </div>
+
+                                        <div class="list-section-value">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="three-section-list-row" *ngIf="eachAgreement.processorPartner && eachAgreement.processorPartner.companyInfoId && eachAgreement.processorPartner.companyInfoId!=companyId">
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            Partner Company
+                                        </div>
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+
+                                        <div class="list-section-value">
+                                            <mat-label>{{eachAgreement.processorPartner.companyName}}</mat-label>
+                                        </div>
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            Role
+                                        </div>
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+
+                                        <div class="list-section-value">
+                                            <mat-label>{{uiLabels[eachAgreement.processorPartner.assignRoles]}}</mat-label>
+                                        </div>
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+
+                                        </div>
+                                        <div class="list-section-separator">
+
+                                        </div>
+
+                                        <div class="list-section-value">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </mat-card-content>
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+            </mat-card>
+
+            <!-- Waste and Bill Information -->
+            <mat-card>
+                <mat-accordion style="width: 100%;" multi>
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header style="font-weight: 500;font-size: medium;padding: 7px;">
+                            {{uiLabels.wastePickInformation}}
+                        </mat-expansion-panel-header>
+                        <div>
+                            <app-project-info-tab *ngIf="disposeWisePickView" [isViewPopup]="isViewPopup" [project]="project"></app-project-info-tab>
+                        </div>
+                        <mat-card-content *ngIf="!disposeWisePickView">
+
+                            <div *ngFor="let item of project.wasteDisposalInfo">
+                                <div class="list-item-without-hover">
+
+                                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+                                        <div class="list-value-section" style="flex: 2;">
+                                            <div class="list-section-label">
+                                                {{uiLabels.wasteItem}}
+                                            </div>
+
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{item.wasteItemName}}
+                                            </div>
+
+                                        </div>
+
+                                        <div class="list-value-section" style="flex: 3;">
+                                            <div class="list-section-label" style="flex:300px">
+                                                {{uiLabels.date}}
+                                            </div>
+
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                <mat-label>{{item.fromDate.substring(0, item.fromDate.length-8)}}</mat-label>
+                                                <span>&nbsp; ~ &nbsp;</span>
+                                                <mat-label>{{item.toDate.substring(0, item.toDate.length-8)}}</mat-label>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+                                        <div class="list-value-section" style="flex: 2;">
+                                            <div class="list-section-label">
+                                                {{uiLabels.pickLocation}}
+                                            </div>
+
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{item.pickLocation}}
+                                            </div>
+
+                                        </div>
+                                        <div class="list-value-section" style="flex: 3;">
+                                            <div class="list-section-label" style="flex:300px">
+                                                {{uiLabels.dropLocation}}
+                                            </div>
+
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{item.dropLocation}}
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+
+                                        <div class="list-value-section" style="flex: 2;">
+                                            <div class="list-section-label">
+                                                {{uiLabels.pickQuantity}}({{item.unit}})
+                                            </div>
+
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{item.quantity}}
+                                            </div>
+
+                                        </div>
+
+                                        <div class="list-value-section col" style="flex: 3;">
+                                            <div class="list-value-section" *ngIf="showTransportPrice()">
+
+                                                <div class="list-section-label" style="flex:300px">
+                                                    <span>
+                                                        <mat-label *ngIf="project.dumperPartner && project.dumperPartner.assignRoles==transporterCompanyTitle">{{project.dumperPartner.companyName}}</mat-label>
+                                                        <mat-label *ngIf="project.transporterPartner && project.transporterPartner.assignRoles==transporterCompanyTitle">{{project.transporterPartner.companyName}}</mat-label>
+                                                        <mat-label *ngIf="project.processorPartner && project.processorPartner.assignRoles==transporterCompanyTitle">{{project.processorPartner.companyName}}</mat-label>
+
+                                                        {{uiLabels.bill}}
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="list-section-separator">
+                                                    :
+                                                </div>
+                                                <div class="list-section-value">
+                                                    {{item.price * item.quantity}}
+                                                </div>
+
+                                            </div>
+
+                                            <div class="list-value-section" *ngIf="showProcessorPrice()">
+                                                <div class="list-section-label" style="flex:300px">
+                                                    <span>
+                                                        <mat-label *ngIf="project.dumperPartner && project.dumperPartner.assignRoles==processorRole">{{project.dumperPartner.companyName}}</mat-label>
+                                                        <mat-label *ngIf="project.transporterPartner && project.transporterPartner.assignRoles==processorRole">{{project.transporterPartner.companyName}}</mat-label>
+                                                        <mat-label *ngIf="project.processorPartner && project.processorPartner.assignRoles==processorRole">{{project.processorPartner.companyName}}</mat-label>
+                                                        {{uiLabels.bill}}
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="list-section-separator">
+                                                    :
+                                                </div>
+                                                <div class="list-section-value" *ngFor="let processItem of project.wasteProcessInfo | processFilter: item.wasteItemId">
+                                                    {{processItem.price * item.quantity}}
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div style="display: none;" class="three-section-list-row" *ngFor="let processItem of project.wasteProcessInfo | processFilter: item.wasteItemId">
+                                        <div class="list-value-section">
+                                            <div class="list-section-label">
+                                                {{uiLabels.processDate}}
+                                            </div>
+
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                <mat-label>{{project.projectStartDate.substring(0, project.projectStartDate.length-8)}}</mat-label>
+                                                <span>&nbsp; ~ &nbsp;</span>
+                                                <mat-label>{{project.projectEndDate.substring(0, project.projectEndDate.length-8)}}</mat-label>
+                                            </div>
+
+                                        </div>
+                                        <div class="list-value-section">
+                                            <div class="list-section-label">
+
+                                            </div>
+
+                                            <div class="list-section-separator">
+
+                                            </div>
+                                            <div class="list-section-value">
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </mat-card-content>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <div class="three-section-list-row" style="margin-top: 15px;">
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+                            {{uiLabels.remarks}}
+                        </div>
+
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            <mat-label>{{project.remarks}}</mat-label>
+
+                        </div>
+
+                    </div>
+                    <div class="list-value-section">
+                        <div class="list-section-label">
+
+                        </div>
+
+                        <div class="list-section-separator">
+
+                        </div>
+                        <div class="list-section-value">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </mat-card>
+
+        </mat-dialog-content>
+    </div>
+
+    <mat-card-actions align="end" *ngIf="isViewPopup">
+        <button mat-raised-button color="accent" mat-dialog-close>
+            {{uiLabels.closeBtn}}
+        </button>
+    </mat-card-actions>
+
+    <!-- --------------Project View Popup End-------------------------- -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!-- --------------Project Form Start-------------------------------- -->
+
+    <div *ngIf="!isViewPopup">
+        <div fxLayout="row wrap" *ngIf="selectedProcess && selectedProcess.processAction && selectedProcess.processAction.length > 0">
+            <div style="margin: 5px 20px 5px 15px;display: flex;justify-content: flex-end;flex: 1;" fxLayoutGap="25px">
+                <button id="" mat-raised-button color="primary" (click)="selectTab(0)">{{uiLabels.projectList}}</button>
+            </div>
+
+            <div style="margin: 5px 40px 5px 15px;" fxLayoutGap="25px">
+                <button *ngFor="let eachActionButton of selectedProcess.processAction" id="" mat-raised-button color="primary" (click)="onClickSaveBtn(eachActionButton)">
+                    <span *ngIf="eachActionButton.actionId!='addMissingPartnerActionId'">{{eachActionButton.actionTitle}}</span>
+                    <span *ngIf="eachActionButton.actionId=='addMissingPartnerActionId'">{{uiLabels[eachActionButton.actionTitle]}}</span>
+                </button>
+            </div>
+        </div>
+
+        <mat-card style="background-color: rgb(233, 233, 233);padding: 15px;font-size: 16px; font-weight: 500;">
+            <span>
+                {{uiLabels.projectInformation}}
+            </span>
+        </mat-card>
+
+        <!-- Project Basic Info Section Start-->
+        <mat-card>
+            <mat-card-content>
+                <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                    <div fxLayout="row wrap" fxLayoutAlign="start start">
+                        <div fxFlex="0 0 45">
+                            <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.projectTitle}}</mat-label>
+                            </div>
+
+                            <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                <input [readonly]="isViewMode" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="project.projectTitle" (focusout)="validProjectTitle(project.projectTitle)">
+                            </div>
+
+                        </div>
+
+                        <div fxFlex="0 0 45" style="margin-left: 10px;">
+                            <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.projectCreationDate}}</mat-label>
+                            </div>
+
+                            <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                <app-date-time-input [readOnly]="isViewMode" [modelObject]="project" [modelDateAttributeName]="'projectCreationDate'"></app-date-time-input>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start start">
+                        <div fxFlex="0 0 45">
+                            <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.projectStartDate}}</mat-label>
+                            </div>
+
+                            <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                <app-date-time-input [readOnly]="isViewMode" [modelObject]="project" [modelDateAttributeName]="'projectStartDate'"></app-date-time-input>
+                            </div>
+
+                        </div>
+
+                        <div fxFlex="0 0 45" style="margin-left: 10px;">
+                            <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.projectEndDate}}</mat-label>
+                            </div>
+
+                            <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                <app-date-time-input [readOnly]="isViewMode" [modelObject]="project" [modelDateAttributeName]="'projectEndDate'"></app-date-time-input>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!isViewMode" fxLayout="row wrap" fxLayoutAlign="start start">
+                        <div fxFlex="0 0 45">
+                            <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.initiatorCompany}}</mat-label>
+                            </div>
+
+                            <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 0 85" fxLayoutAlign="start start">
+
+                                <mat-label *ngIf="project.projectInfoId">{{project.initiatorCompanyName}}</mat-label>
+                                <mat-label *ngIf="!project.initiatorCompanyName">{{companyName}}</mat-label>
+                            </div>
+
+                        </div>
+
+                        <div fxFlex="0 0 45" style="margin-left: 10px;">
+                            <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.creatorRole}}</mat-label>
+                            </div>
+
+                            <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 0 85" fxLayoutAlign="start start">
+
+                                <div class="column" style="display: flex;justify-content: flex-start;align-items: center;" *ngFor="let eachCategory of project.companyCategorySelection, index as creatorCategoryIndex">
+
+                                    <mat-icon *ngIf="eachCategory.isSelected" class="selected-radio" (click)="updateCreatorRoleSelection(eachCategory,creatorCategoryIndex)">radio_button_checked </mat-icon>
+
+                                    <mat-icon *ngIf="!eachCategory.isSelected" [ngClass]="{'not-aplicable-radio':!eachCategory.isDisable}" (click)="updateCreatorRoleSelection(eachCategory,creatorCategoryIndex)">radio_button_unchecked</mat-icon>
+
+                                    <label for="check" style="margin: 6px; font-size: 16px;" [ngClass]="{'not-aplicable-radio':!eachCategory.isDisable}">{{uiLabels[eachCategory.title]}}</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="!isViewPopup && !isViewMode" fxLayout="row wrap" fxLayoutAlign="start start">
+                        <div fxFlex="0 0 45">
+                            <div fxFlex="0 0 120px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.selectFromList}}</mat-label>
+                            </div>
+
+                            <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 0 60" fxLayoutAlign="start start" style="border:solid black 1px ;box-sizing: border-box;">
+
+                                <mat-select matNativeControl placeholder={{project.operatingOfficeName}} style="padding-right: 25px;height: 25px;" [(ngModel)]="addressDropDownModel" (selectionChange)="doSomething($event)">
+                                    <mat-option *ngFor="let item of addressDropDownViewList" id={{item.name}} [value]="item">
+                                        {{item.name}}
+                                    </mat-option>
+                                </mat-select>
+
+                            </div>
+                        </div>
+                        <div fxFlex="0 0 45" style="margin-left: 10px;">
+                            <div fxFlex="0 0 140px" fxLayout="column" fxLayoutAlign="center end">
+                                <mat-label>{{uiLabels.oparatingBranch}}</mat-label>
+                            </div>
+
+                            <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                <mat-label>{{project.operatingOfficeName}}</mat-label>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+        <!-- Project Basic Info Section End-->
+
+        <!-- Project Agreement Info Section Start-->
+        <mat-card>
+            <mat-accordion style="width: 100%;" multi>
+
+                <mat-expansion-panel #agreementInfoPanel [expanded]="true">
+
+                    <mat-expansion-panel-header style="padding: 7px;">
+
+                        <span style="font-weight: 500;font-size: medium;padding-top: 10px;">
+                            {{uiLabels.agreementInformation}}
+                        </span>
+                        <span *ngIf="!isViewMode" style="margin-left: 700px;">
+                            <button mat-raised-button class="list-button" (click)="selectAgreementPopupOpen(project, agreementInfoPanel)">{{uiLabels.selectAgreementBtn}}</button>
+                        </span>
+                    </mat-expansion-panel-header>
+
+                    <div *ngFor="let eachAgreement of project.agreementInfo">
+                        <mat-card-content *ngIf="(eachAgreement.dumperPartner && eachAgreement.dumperPartner.companyInfoId==companyId) || (eachAgreement.transporterPartner && eachAgreement.transporterPartner.companyInfoId==companyId) || (eachAgreement.processorPartner && eachAgreement.processorPartner.companyInfoId==companyId)">
+                            <div class="three-section-list-row">
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        {{uiLabels.agreementTitle}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+                                        {{eachAgreement.agreementTitle}}
+                                    </div>
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        {{uiLabels.validDate}}
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+                                        {{eachAgreement.agreementValidDate}}
+                                    </div>
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+
+                                    </div>
+                                    <div class="list-section-separator">
+
+                                    </div>
+
+                                    <div class="list-section-value">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="three-section-list-row" *ngIf="eachAgreement.dumperPartner && eachAgreement.dumperPartner.companyInfoId && eachAgreement.dumperPartner.companyInfoId!=companyId">
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        Partner Company
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+
+                                        <mat-label>{{eachAgreement.dumperPartner.companyName}}</mat-label>
+                                    </div>
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        Role
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+                                        <mat-label>{{uiLabels[eachAgreement.dumperPartner.assignRoles]}}</mat-label>
+                                    </div>
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+
+                                    </div>
+                                    <div class="list-section-separator">
+
+                                    </div>
+
+                                    <div class="list-section-value">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="three-section-list-row" *ngIf="eachAgreement.transporterPartner && eachAgreement.transporterPartner.companyInfoId && eachAgreement.transporterPartner.companyInfoId!=companyId">
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        Partner Company
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+
+                                        <mat-label>{{eachAgreement.transporterPartner.companyName}}</mat-label>
+                                    </div>
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        Role
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+                                        <mat-label>{{uiLabels[eachAgreement.transporterPartner.assignRoles]}}</mat-label>
+                                    </div>
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+
+                                    </div>
+                                    <div class="list-section-separator">
+
+                                    </div>
+
+                                    <div class="list-section-value">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="three-section-list-row" *ngIf="eachAgreement.processorPartner && eachAgreement.processorPartner.companyInfoId && eachAgreement.processorPartner.companyInfoId!=companyId">
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        Partner Company
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+                                        <mat-label>{{eachAgreement.processorPartner.companyName}}</mat-label>
+                                    </div>
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        Role
+                                    </div>
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+
+                                    <div class="list-section-value">
+                                        <mat-label>{{uiLabels[eachAgreement.processorPartner.assignRoles]}}</mat-label>
+                                    </div>
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+
+                                    </div>
+                                    <div class="list-section-separator">
+
+                                    </div>
+
+                                    <div class="list-section-value">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </mat-card-content>
+                    </div>
+
+                    <!-- [Missing Role: {{project.missingRole}}] -->
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </mat-card>
+        <!-- Project Agreement Info Section End-->
+
+        <!-- Project Disposal Info Section Start-->
+        <mat-card>
+            <mat-accordion style="width: 100%;" multi>
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="font-weight: 500;font-size: medium;padding: 7px;">
+                        {{uiLabels.wastePickInformation}}
+                    </mat-expansion-panel-header>
+                    <mat-card-content>
+
+                        <div *ngFor="let item of project.wasteDisposalInfo">
+                            <div class="list-item-without-hover">
+
+                                <div class="three-section-list-row" style="margin-bottom: 10px;">
+                                    <div class="list-value-section" style="flex: 2;">
+                                        <div class="list-section-label">
+                                            {{uiLabels.wasteItem}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            {{item.wasteItemName}}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="list-value-section" style="flex: 3;">
+                                        <div class="list-section-label" style="flex:300px">
+                                            {{uiLabels.date}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            <mat-label>{{item.fromDate.substring(0, item.fromDate.length-8)}}</mat-label>
+                                            <span>&nbsp; ~ &nbsp;</span>
+                                            <mat-label>{{item.toDate.substring(0, item.toDate.length-8)}}</mat-label>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="three-section-list-row" style="margin-bottom: 10px;">
+                                    <div class="list-value-section" style="flex: 2;">
+                                        <div class="list-section-label">
+                                            {{uiLabels.pickLocation}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            {{item.pickLocation}}
+                                        </div>
+
+                                    </div>
+                                    <div class="list-value-section" style="flex: 3;">
+                                        <div class="list-section-label" style="flex:300px">
+                                            {{uiLabels.dropLocation}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            {{item.dropLocation}}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="three-section-list-row" style="margin-bottom: 10px;">
+
+                                    <div class="list-value-section" style="flex: 2;">
+                                        <div class="list-section-label">
+                                            {{uiLabels.pickQuantity}}({{item.unit}})
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            {{item.quantity}}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="list-value-section col" style="flex: 3;">
+                                        <div class="list-value-section" *ngIf="showTransportPrice()">
+
+                                            <div class="list-section-label" style="flex:300px">
+                                                <span>
+                                                    <mat-label *ngIf="project.dumperPartner && project.dumperPartner.assignRoles==transporterCompanyTitle">{{project.dumperPartner.companyName}}</mat-label>
+                                                    <mat-label *ngIf="project.transporterPartner && project.transporterPartner.assignRoles==transporterCompanyTitle">{{project.transporterPartner.companyName}}</mat-label>
+                                                    <mat-label *ngIf="project.processorPartner && project.processorPartner.assignRoles==transporterCompanyTitle">{{project.processorPartner.companyName}}</mat-label>
+                                                    {{uiLabels.bill}}
+                                                </span>
+
+                                            </div>
+
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value">
+                                                {{item.price * item.quantity}}
+                                            </div>
+
+                                        </div>
+
+                                        <div class="list-value-section" *ngIf="showProcessorPrice()">
+                                            <div class="list-section-label" style="flex:300px">
+                                                <span>
+                                                    <mat-label *ngIf="project.dumperPartner && project.dumperPartner.assignRoles==processorRole">{{project.dumperPartner.companyName}}</mat-label>
+                                                    <mat-label *ngIf="project.transporterPartner && project.transporterPartner.assignRoles==processorRole">{{project.transporterPartner.companyName}}</mat-label>
+                                                    <mat-label *ngIf="project.processorPartner && project.processorPartner.assignRoles==processorRole">{{project.processorPartner.companyName}}</mat-label>
+                                                    {{uiLabels.bill}}
+                                                </span>
+
+                                            </div>
+
+                                            <div class="list-section-separator">
+                                                :
+                                            </div>
+                                            <div class="list-section-value" *ngFor="let processItem of project.wasteProcessInfo | processFilter: item.wasteItemId">
+                                                {{processItem.price * item.quantity}}
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div style="display: none;" class="three-section-list-row" *ngFor="let processItem of project.wasteProcessInfo | processFilter: item.wasteItemId">
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.processDate}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            <mat-label>{{project.projectStartDate.substring(0, project.projectStartDate.length-8)}}</mat-label>
+                                            <span>&nbsp; ~ &nbsp;</span>
+                                            <mat-label>{{project.projectEndDate.substring(0, project.projectEndDate.length-8)}}</mat-label>
+                                        </div>
+
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+
+                                        </div>
+
+                                        <div class="list-section-separator">
+
+                                        </div>
+                                        <div class="list-section-value">
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </mat-card-content>
+
+                </mat-expansion-panel>
+
+            </mat-accordion>
+
+            <div class="three-section-list-row" style="margin-top: 15px;">
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        {{uiLabels.remarks}}
+                    </div>
+
+                    <div class="list-section-separator">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        <input [readonly]="isViewMode" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="project.remarks">
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator">
+
+                    </div>
+                    <div class="list-section-value">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </mat-card>
+
+        <!-- Project Disposal Info Section End-->
+
+
+
+        <!-- <mat-card>
+            <mat-accordion style="width: 100%;" multi>
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header style="font-weight: 500;font-size: medium;padding: 7px;">
+                        {{uiLabels.wasteProcessInformation}}
+                    </mat-expansion-panel-header>
+                    <mat-card-content>
+                        <div *ngFor="let item of project.wasteProcessInfo">
+                            <div class="list-item">
+
+                                <div class="three-section-list-row" style="margin-bottom: 10px;">
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.wasteItem}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            {{item.wasteItemName}}
+                                        </div>
+
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+
+                                        </div>
+
+                                        <div class="list-section-separator">
+
+                                        </div>
+                                        <div class="list-section-value">
+
+                                        </div>
+
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+
+                                        </div>
+
+                                        <div class="list-section-separator">
+
+                                        </div>
+                                        <div class="list-section-value">
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="three-section-list-row" style="margin-bottom: 10px;">
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.quantity}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            {{item.quantity}}
+                                        </div>
+
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.price}}/{{item.unit}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+                                            {{item.price}}
+
+                                        </div>
+
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.totalPrice}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+                                            :
+                                        </div>
+                                        <div class="list-section-value">
+
+                                            {{item.totalPrice}}
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="three-section-list-row">
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.date}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+
+                                        </div>
+                                        <div class="list-section-value">
+
+                                        </div>
+
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+
+                                            {{uiLabels.from}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+
+                                        </div>
+                                        <div class="list-section-value">
+                                            <app-date-time-input [modelObject]="project" [modelDateAttributeName]="'projectStartDate'"></app-date-time-input>
+                                        </div>
+
+                                    </div>
+                                    <div class="list-value-section">
+                                        <div class="list-section-label">
+                                            {{uiLabels.to}}
+                                        </div>
+
+                                        <div class="list-section-separator">
+
+                                        </div>
+                                        <div class="list-section-value">
+
+                                            <app-date-time-input [modelObject]="project" [modelDateAttributeName]="'projectEndDate'"></app-date-time-input>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </mat-card-content>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </mat-card> -->
+        <!-- <mat-card-actions align='end' style="margin-right: 10px;">
+            <button mat-raised-button color="primary" (click)="onClickSaveBtn()">
+                Save
+            </button>
+        </mat-card-actions> -->
+
+    </div>
+
+    <!-- --------------Project Form End-------------------------------- -->
+
+</div>

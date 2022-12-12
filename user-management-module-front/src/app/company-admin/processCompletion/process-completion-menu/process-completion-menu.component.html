@@ -1,0 +1,21 @@
+<div *ngIf="viewComponent">
+
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    <app-generated-menifesto-list *ngIf="manifestoListTabView" [selectedManifesto]="checkedManifesto" [manifestoInfoList]="manifestoInfoList" [selectTab]="selectTab" [fromProcessCompletion]="true"></app-generated-menifesto-list>
+    <app-add-disposal-date *ngIf="addDateTabView" [selectedManifestoList]="selectedManifestoList" [manifestoListView]="manifestoListView"></app-add-disposal-date>
+    <!-- <mat-tab-group [selectedIndex]="selectedIndex" (focusChange)="indexChange($event.index)">
+
+        <mat-tab label={{uiLabels.manifestoListTab}}>
+            <app-generated-menifesto-list [selectedManifesto]="checkedManifesto" [manifestoInfoList]="manifestoInfoList" [selectTab]="selectTab" [fromProcessCompletion]="true"></app-generated-menifesto-list>
+        </mat-tab>
+
+        <mat-tab label={{uiLabels.addDisposalDateTab}}>
+            <app-add-disposal-date [selectedManifestoList]="selectedManifestoList"></app-add-disposal-date>
+        </mat-tab>
+
+    </mat-tab-group> -->
+
+</div>

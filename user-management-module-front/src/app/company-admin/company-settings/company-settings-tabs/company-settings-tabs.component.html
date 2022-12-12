@@ -1,0 +1,56 @@
+<div *ngIf="viewComponent">
+
+    <mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="10px">
+            <div fxFlex="0 1 250px" fxLayout="column" fxLayoutAlign="center start">
+                <mat-label>
+                    <span *ngIf="isSystemAdmin">
+                        <app-lang-def-button [componentCode]="componentCode">
+                        </app-lang-def-button>
+                    </span>
+                    {{uiLabels.company}}
+                </mat-label>
+
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+                <mat-label>{{companyInfo.companyName}}</mat-label>
+            </div>
+        </div>
+        <div class="row right" style="flex:1; justify-content: flex-end;align-items: center;" fxLayoutGap="30px">
+            <button mat-raised-button class="list-button" (click)="addNewCompanyDiolog()">{{uiLabels.addCompany}}</button>
+            <button mat-raised-button class="list-button" (click)="addBulkSubscription()">{{uiLabels.addBulkSubsButton}}</button>
+        </div>
+    </mat-toolbar>
+
+    <mat-tab-group [selectedIndex]="selectedIndex" (focusChange)="indexChange($event.index)">
+        <mat-tab label={{uiLabels.companyInfoTab}}>
+            <app-company-info-tab [isDumperCompany]="isDumperCompany" [isProcessorCompany]="isProcessorCompany" [isTransporterCompany]="isTransporterCompany" [isViewMode]="isViewMode" [selectTab]="selectTab" [companyInfo]="companyInfo"></app-company-info-tab>
+        </mat-tab>
+
+        <mat-tab label={{uiLabels.accountInfoTab}}>
+            <app-account-info-tab [isViewMode]="isViewMode" [selectTab]="selectTab" [companyInfo]="companyInfo"></app-account-info-tab>
+        </mat-tab>
+
+        <mat-tab label={{uiLabels.branchInfoTab}}>
+            <app-branch-info-tab [isViewMode]="isViewMode" [selectTab]="selectTab" [companyInfo]="companyInfo"></app-branch-info-tab>
+        </mat-tab>
+
+        <mat-tab label={{uiLabels.vehicleInfoTab}} *ngIf="!isViewMode && isTransporterCompany">
+            <app-vehicle-info-tab [selectTab]="selectTab" [companyInfo]="companyInfo"></app-vehicle-info-tab>
+        </mat-tab>
+
+        <mat-tab label={{uiLabels.basePriceTab}}>
+            <app-base-price-tab [isViewMode]="isViewMode" [selectTab]="selectTab" [companyInfo]="companyInfo" [dxrWasteList]="dxrWasteInfoList" [companyWasteItemSetMethodeList]="companyWasteItemSetMethodeList" [isDumperCompany]="isDumperCompany" [isProcessorCompany]="isProcessorCompany" [isTransporterCompany]="isTransporterCompany"></app-base-price-tab>
+        </mat-tab>
+
+        <mat-tab label={{uiLabels.scaleSettingTab}} *ngIf="!isViewMode && isProcessorCompany">
+            <app-scale-setting-tab [selectTab]="selectTab" [companyInfo]="companyInfo"></app-scale-setting-tab>
+        </mat-tab>
+        <mat-tab label={{uiLabels.co2Tab}} *ngIf="!isViewMode">
+            <app-co2-tab [startDate]="startDate" [endDate]="endDate" [toSelectedYear]="toSelectedYear" [toSelectedMonth]="toSelectedMonth" [dumpingChartData]="dumpingChartData" [transporterChartData]="transporterChartData" [processingChartData]="processingChartData" [companyTotalCo2Quantity]="companyTotalCo2Quantity" [dumpingMonthWiseTotalWasteItemQuantity]="dumpingMonthWiseTotalWasteItemQuantity" [processingMonthWiseTotalWasteItemQuantity]="processingMonthWiseTotalWasteItemQuantity" [selectedYear]="selectedYear" [selectedMonth]="selectedMonth" [yearDropDownData]="yearDropDownData" [monthDropDownData]="monthDropDownData" [isDumperCompany]="isDumperCompany" [isProcessorCompany]="isProcessorCompany" [isTransporterCompany]="isTransporterCompany" [transporterMonthWiseCompanyVehicleFuelConsumption]="transporterMonthWiseCompanyVehicleFuelConsumption"></app-co2-tab>
+        </mat-tab>
+    </mat-tab-group>
+</div>

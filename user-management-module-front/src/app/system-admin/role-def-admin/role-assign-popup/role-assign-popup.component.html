@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    {{uiLabels.pageHeader}}
+</h2>
+<mat-dialog-content style="padding:0px 10px 0px 10px;">
+    <mat-card *ngFor="let item of roleAccessDefViewList" class="common-list-item" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(item)" style="margin-bottom: 5px;">
+        <mat-card-content>
+            <div fxLayout="row" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" fxLayoutAlign="start start">
+
+                <mat-checkbox id={{item.roleDefInfo.roleDefId}} [(ngModel)]="item.isSelected">
+
+                </mat-checkbox>
+
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <div id={{item.roleDefInfo.roleName}} fxFlex="0 1 200px" fxLayout="column" fxLayoutAlign="start end">
+                        <mat-label>{{item.roleDefInfo.roleName}}</mat-label>
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="start center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxLayout="column" fxFlex="90 1 auto" fxLayoutAlign="start start">
+
+                        <mat-radio-group *ngIf="!(isHandset$|async)" color="primary" aria-label="Select an option" [(ngModel)]="item.selectedAccess">
+
+                            <div fxLayout="row" fxFlex="5 1 auto" *ngFor="let eachAccess of item.accessList" style="margin-right: 60px;">
+                                <mat-radio-button id={{item.roleDefInfo.roleDefId+eachAccess.accessInfo.accessDefId}} value={{eachAccess.accessInfo.accessDefId}}>{{eachAccess.accessInfo.accessTitle}}</mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+
+
+
+
+                        <div *ngIf="(isHandset$|async)">
+                            <mat-radio-group color="primary" aria-label="Select an option" [(ngModel)]="item.selectedAccess" *ngFor="let eachAccess of item.accessList">
+
+                                <!-- <div fxLayout="row" fxFlex="5 1 auto" *ngFor="let eachAccess of item.accessList" style="margin-right: 60px;"> -->
+                                <mat-radio-button value={{eachAccess.accessInfo.accessDefId}}>{{eachAccess.accessInfo.accessTitle}}</mat-radio-button>
+                                <!-- </div> -->
+
+
+                            </mat-radio-group>
+                        </div>
+
+
+                        <!-- <div fxLayoutAlign="start center">
+                                                                    <label for="check" *ngIf="item.viewAccess!=''">{{item.accessDef.viewAccess}}</label>
+                                                                    <label for="check" *ngIf="item.accessDef.browseAccess!=''"><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>{{item.accessDef.browseAccess}}</label>
+                                                                    <label for="check" *ngIf="item.accessDef.editAccess!=''"><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>{{item.accessDef.editAccess}}</label>
+                                                                </div> -->
+                    </div>
+                    <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions class="action-button-right" align="end">
+    <button id="cancelBtn" mat-raised-button color="accent" mat-dialog-close>{{uiLabels.cancelBtn}}</button>
+    <button id="updateBtn" mat-raised-button color="primary" (click)="updateMenuRoleAccess()">{{uiLabels.updateBtn}}</button>
+</mat-dialog-actions>

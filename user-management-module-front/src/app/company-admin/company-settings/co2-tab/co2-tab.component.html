@@ -1,0 +1,766 @@
+<mat-card style="margin:15px">
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+
+    <div class="three-section-list-row">
+
+
+        <div class="list-value-section">
+            <div class="list-section-label">
+                <label style="font-weight: 500; margin-right: 10px;">{{uiLabels.from}} --></label>
+            </div>
+            <div class="list-section-label">
+                {{uiLabels.month}}
+            </div>
+
+            <div class="list-section-separator">
+                :
+            </div>
+            <div style="border:solid black 1px ;box-sizing: border-box; width: 150px;" fxLayout="start start">
+                <!-- <mat-select placeholder={{vehicleInfo.vehicleType}} matNativeControl style="padding-right: 25px;height: 25px;" (selectionChange)="selectionChangeForVehicleType($event)">
+                        <mat-option *ngFor="let item of vehicleTypeList" [value]="item">
+                            {{item.vehicleTypeName}}
+                        </mat-option>
+                    </mat-select> -->
+                <mat-select matNativeControl style="padding: 5px;height: 25px;" [(ngModel)]="selectedMonth" placeholder={{selectedMonth}} (selectionChange)="changeMonth($event)">
+                    <mat-option *ngFor="let item of monthDropDownData" [value]="item">
+                        <div>{{item}}</div>
+                    </mat-option>
+                </mat-select>
+            </div>
+
+        </div>
+        <div class="list-value-section">
+            <div class="list-section-label">
+                {{uiLabels.year}}
+            </div>
+
+            <div style="display: flex; justify-content: center; align-self: center;width: 20px;">
+                :
+            </div>
+            <div style="border:solid black 1px ;box-sizing: border-box;width: 150px;" fxLayout="start start">
+                <mat-select matNativeControl style="padding: 5px;height: 25px;" [(ngModel)]="selectedYear" (selectionChange)="changeYear($event)">
+                    <mat-option *ngFor="let item of yearDropDownData" [value]="item">
+                        <div>{{item}}</div>
+                    </mat-option>
+                </mat-select>
+            </div>
+
+        </div>
+        <div class="list-value-section">
+            <div class="list-section-label">
+
+            </div>
+
+            <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+
+            </div>
+            <div class="list-section-value">
+                <!-- <label style="font-weight: 500;">From</label> -->
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="three-section-list-row">
+
+        <div class="list-value-section">
+            <div class="list-section-label">
+
+                <label style="font-weight: 500; margin-right: 10px;">{{uiLabels.to}} --> </label>
+            </div>
+            <div class="list-section-label">
+
+                {{uiLabels.month}}
+            </div>
+
+            <div class="list-section-separator">
+                :
+            </div>
+            <div style="border:solid black 1px ;box-sizing: border-box; width: 150px;" fxLayout="start start">
+                <!-- <mat-select placeholder={{vehicleInfo.vehicleType}} matNativeControl style="padding-right: 25px;height: 25px;" (selectionChange)="selectionChangeForVehicleType($event)">
+                            <mat-option *ngFor="let item of vehicleTypeList" [value]="item">
+                                {{item.vehicleTypeName}}
+                            </mat-option>
+                        </mat-select> -->
+                <mat-select matNativeControl style="padding: 5px;height: 25px;" [(ngModel)]="toSelectedMonth" placeholder={{toSelectedMonth}} (selectionChange)="toChangeMonth($event)">
+                    <mat-option *ngFor="let item of monthDropDownData" [value]="item">
+                        <div>{{item}}</div>
+                    </mat-option>
+                </mat-select>
+            </div>
+
+        </div>
+        <div class="list-value-section">
+            <div class="list-section-label">
+                {{uiLabels.year}}
+            </div>
+
+            <div style="display: flex; justify-content: center; align-self: center;width: 20px;">
+                :
+            </div>
+            <div style="border:solid black 1px ;box-sizing: border-box;width: 150px;" fxLayout="start start">
+                <mat-select matNativeControl style="padding: 5px;height: 25px;" [(ngModel)]="toSelectedYear" (selectionChange)="toChangeYear($event)">
+                    <mat-option *ngFor="let item of yearDropDownData" [value]="item">
+                        <div>{{item}}</div>
+                    </mat-option>
+                </mat-select>
+            </div>
+
+        </div>
+        <div class="list-value-section">
+            <div class="list-section-label">
+
+            </div>
+
+            <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+
+            </div>
+            <div class="list-section-value">
+                <button mat-raised-button color="primary" (click)="onClickShowBtn()">{{uiLabels.show}}</button>
+            </div>
+
+        </div>
+
+    </div>
+    <div *ngIf="!isDateRangeCorrect">
+        <label style="color: red; margin-left: 300px;">{{uiLabels.ValidDateRange}}</label>
+    </div>
+</mat-card>
+<div *ngIf="viewComponent" fxLayout="column">
+
+    <label style="background-color: rgb(233, 233, 233);padding: 15px;font-size: 16px; font-weight: 500;">{{uiLabels.totalCO2EmissionFrom}} ({{fromDate}}) to ({{toDate}}) :</label>
+
+    <div class="list-item-without-hover">
+        <div class="three-section-list-row">
+            <div class="list-value-section">
+                <div class="list-section-label">
+                    <mat-label>{{uiLabels.totalCO2Quantity}} </mat-label>
+                </div>
+
+                <div class="list-section-separator">
+                    :
+                </div>
+                <div class="list-section-value">
+                    <mat-label>{{getTotalCo2Emission() | number:'1.0-6'}} gm</mat-label>
+                </div>
+
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+                    {{uiLabels.transporterCo2Quantity}}
+                </div>
+
+                <div class="list-section-separator">
+                    :
+                </div>
+                <div class="list-section-value">
+                    <mat-label>{{getTotalTransportEmission() | number:'1.0-6'}} gm</mat-label>
+                </div>
+
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+                    <mat-label> {{uiLabels.processCo2Quantity}} </mat-label>
+                </div>
+
+                <div class="list-section-separator">
+                    :
+                </div>
+                <div class="list-section-value">
+                    <mat-label>{{getTotalProcessingEmission() | number:'1.0-6'}} gm</mat-label>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <mat-radio-group [hidden]="true" [(ngModel)]="filter" style="margin-top: 20px;margin-left: 10px;margin-bottom: 10px;">
+
+        <mat-radio-button style="margin-right: 10px;" value={{projectWiseCo2Filter}}>{{uiLabels.projectWiseCO2Summary}}</mat-radio-button>
+        <!-- <mat-radio-button value={{operationWiseCo2Filter}}> {{uiLabels.operationWiseCO2Summary}}</mat-radio-button> -->
+
+    </mat-radio-group>
+</div>
+
+<div *ngIf="viewComponent">
+    <div class="col">
+        <label style="background-color: rgb(233, 233, 233);padding: 15px;font-size: 16px; font-weight: 500;margin: 10px 0px;">{{uiLabels.CO2EmissionFrom}} ({{fromDate}}) to ({{toDate}}) :</label>
+    </div>
+
+    <div *ngIf="filter==operationWiseCo2Filter">
+
+        <div class="list-item-without-hover">
+            <div class="three-section-list-row" *ngIf="isDumperCompany">
+                <div class="list-value-section">
+                    <div style="width: 200px;">
+
+                        {{uiLabels.dupmingCo2Quantity}}
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        {{companyTotalCo2Quantity.dumperCo2Quantity | number:'1.0-6'}} gm
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator">
+                        <!-- : -->
+                    </div>
+                    <div class="list-section-value">
+
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+
+                    </div>
+                    <div class="list-section-value">
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="three-section-list-row" *ngIf="isProcessorCompany">
+                <div class="list-value-section">
+                    <div style="width: 200px;">
+
+                        {{uiLabels.processCo2Quantity}}
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        {{companyTotalCo2Quantity.processorCo2Quantity | number:'1.0-6'}} gm
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator">
+
+                    </div>
+                    <div class="list-section-value">
+
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+
+                    </div>
+                    <div class="list-section-value">
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="three-section-list-row" *ngIf="isTransporterCompany">
+                <div class="list-value-section">
+                    <div style="width: 200px;">
+
+                        {{uiLabels.transporterCo2Quantity}}
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        {{companyTotalCo2Quantity.transPorterCo2Quantity | number:'1.0-6'}} gm
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator">
+                        <!-- : -->
+                    </div>
+                    <div class="list-section-value">
+                        <!-- {{companyTotalCo2Quantity.processorCo2Quantity  | number:'1.0-6'}} gm -->
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        <!-- {{uiLabels.transporterCo2Quantity}} -->
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                        <!-- : -->
+                    </div>
+                    <div class="list-section-value">
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div style="width: 200px;">
+
+
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+
+                    </div>
+                    <div class="list-section-value">
+
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator">
+                        <!-- : -->
+                    </div>
+                    <div class="list-section-value">
+                        <!-- {{companyTotalCo2Quantity.processorCo2Quantity  | number:'1.0-6'}} gm -->
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+                        <!-- {{uiLabels.transporterCo2Quantity}} -->
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                        <!-- : -->
+                    </div>
+                    <div class="list-section-value">
+                        <button mat-raised-button color="primary" style="margin-right: 100px;" (click)="onClickDetailBtn()">
+                            {{uiLabels.detailBtn}}
+                        </button>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- <div class="three-section-list-row">
+                <div class="list-value-section" style="font-weight: 500;">
+                    <div style="width: 200px;">
+                        {{uiLabels.totalCO2Quantity}}
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+                        :
+                    </div>
+                    <div class="list-section-value">
+                        {{companyTotalCo2Quantity.totalCo2Quantity | number:'1.0-6'}} gm
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator">
+
+                    </div>
+                    <div class="list-section-value">
+
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator" style="margin-left: 10px; margin-right: 10px;">
+
+                    </div>
+                    <div class="list-section-value">
+                        <button mat-raised-button color="primary" style="margin-right: 100px;" (click)="onClickDetailBtn()">
+                            {{uiLabels.detailBtn}}
+                        </button>
+                    </div>
+
+                </div>
+            </div> -->
+        </div>
+
+        <!-- <mat-card>
+        
+                <mat-card-header [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''" style="padding-bottom: 60px;">
+                    <mat-card-title>
+                        <mat-label>{{uiLabels.dumpingEmissionGraph}}</mat-label>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content style="margin-left: 80px;">
+        
+                    <google-chart [type]="dumpingChartData.type" [data]="dumpingChartData.data" [columns]="dumpingChartData.chartColumns" [width]="dumpingChartData.width" [height]="dumpingChartData.height">
+        
+                    </google-chart>
+        
+                </mat-card-content>
+        
+            </mat-card> -->
+
+
+        <mat-card>
+
+            <mat-card-header [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''" style="padding-bottom: 60px;">
+                <mat-card-title>
+                    <mat-label>{{uiLabels.processingEmissionGraph}}</mat-label>
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content style="margin-left: 80px;">
+
+                <google-chart [type]="processingChartData.type" [data]="processingChartData.data" [columns]="processingChartData.chartColumns" [width]="processingChartData.width" [height]="processingChartData.height">
+
+                </google-chart>
+
+            </mat-card-content>
+
+        </mat-card>
+
+        <mat-card>
+
+            <mat-card-header [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''" style="padding-bottom: 60px;">
+                <mat-card-title>
+                    <mat-label>{{uiLabels.transporterEmissionGraph}}</mat-label>
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content style="margin-left: 80px;">
+
+                <google-chart [type]="transporterChartData.type" [data]="transporterChartData.data" [columns]="transporterChartData.chartColumns" [width]="transporterChartData.width" [height]="transporterChartData.height">
+
+                </google-chart>
+
+            </mat-card-content>
+
+        </mat-card>
+
+        <!-- <mat-card-actions align="end">
+                <button mat-raised-button color="primary" style="margin-right: 100px;" (click)="onClickDetailBtn()">
+                    Detail
+                </button>
+    
+            </mat-card-actions> -->
+    </div>
+    <div *ngIf="filter==projectWiseCo2Filter">
+        <mat-accordion *ngFor="let item of  projectWiseCO2EmissionList, index as i" style="width: 100%;" multi>
+            <mat-expansion-panel [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;" [expanded]="i==0">
+                <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);">
+                    <div style="flex:1">
+
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.projectTitle}} </mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.projectInfo.projectTitle}}</mat-label>
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.projectDuration}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.projectInfo.projectStartDate}} to {{item.projectInfo.projectEndDate}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label> {{uiLabels.projectCO2Quantity}} </mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.dumperCo2Emission | number:'1.0-6'}} gm</mat-label>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </mat-expansion-panel-header>
+
+                <div class="list-item-without-hover">
+
+                    <div fxLayout="column">
+                        <div fxLayout="row" fxLayoutAlign="start start">
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>{{uiLabels.projectTitle}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+                                    <mat-label>{{item.projectInfo.projectTitle}}</mat-label>
+                                </div>
+                            </div>
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>{{uiLabels.projectCreationDate}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+                                    <mat-label>{{item.projectInfo.projectCreationDate}}</mat-label>
+                                </div>
+                            </div>
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 180px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label> &nbsp; </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>&nbsp;</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+
+                                </div>
+
+                            </div>
+                            <button mat-raised-button color="primary" (click)="onClickProjectDetailBtn(item)">
+                                {{uiLabels.detailBtn}}
+                            </button>
+
+
+
+                        </div>
+
+                        <!-- <div fxLayout="row" fxLayoutAlign="start start">
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>{{uiLabels.projectCreationDate}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+                                    <mat-label>{{item.projectInfo.projectCreationDate}}</mat-label>
+                                </div>
+                            </div>
+
+
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 180px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label> &nbsp; </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>&nbsp;</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto">
+                                    <mat-label>&nbsp;</mat-label>
+                                </div>
+
+                            </div>
+                            <button mat-raised-button color="primary" (click)="onClickProjectDetailBtn(item)">
+                                {{uiLabels.detailBtn}}
+                            </button>
+
+
+                        </div> -->
+
+                        <div fxLayout="row">
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>{{uiLabels.businessPartner}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 1 240px" fxLayout="column" fxLayoutAlign="center start">
+                                    <mat-label style="margin-right: 5px;">{{item.projectInfo.transporterPartner.companyName}}<span *ngIf="item.projectInfo.initiatorCompanyId==item.projectInfo.transporterPartner.companyInfoId"> ({{uiLabels.initiator}})</span></mat-label>
+                                </div>
+                            </div>
+                            <div fxFlex="1 1 40">
+                                <mat-chip-list>
+                                    <mat-chip *ngIf="item.projectInfo.transporterPartner.assignRoles==dumperCompanyTitle">{{uiLabels.dumper}}</mat-chip>
+                                    <mat-chip *ngIf="item.projectInfo.transporterPartner.assignRoles==transporterCompanyTitle">{{uiLabels.transporter}}</mat-chip>
+                                    <mat-chip *ngIf="item.projectInfo.transporterPartner.assignRoles==processorCompanyTitle">{{uiLabels.processor}}</mat-chip>
+                                </mat-chip-list>
+
+                            </div>
+
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 180px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label> {{uiLabels.dupmingCo2Quantity}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start">
+                                    <mat-label>{{item.dumperCo2Emission | number:'1.0-6'}} gm</mat-label>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div fxLayout="row" style="margin-top: 5px;">
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>&nbsp; </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>&nbsp;</mat-label>
+                                </div>
+                                <div fxFlex="0 1 240px" fxLayout="column" fxLayoutAlign="center start">
+                                    <mat-label style="margin-right: 5px;">{{item.projectInfo.dumperPartner.companyName}}<span *ngIf="item.projectInfo.initiatorCompanyId==item.projectInfo.dumperPartner.companyInfoId"> {{uiLabels.initiator}}</span></mat-label>
+                                </div>
+                            </div>
+                            <div fxFlex="1 1 40">
+                                <mat-chip-list>
+                                    <mat-chip *ngIf="item.projectInfo.dumperPartner.assignRoles==dumperCompanyTitle">{{uiLabels.dumper}}</mat-chip>
+                                    <mat-chip *ngIf="item.projectInfo.dumperPartner.assignRoles==transporterCompanyTitle">{{uiLabels.transporter}}</mat-chip>
+                                    <mat-chip *ngIf="item.projectInfo.dumperPartner.assignRoles==processorCompanyTitle">{{uiLabels.processor}}</mat-chip>
+                                </mat-chip-list>
+                            </div>
+
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 180px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label> {{uiLabels.processingCO2Quantity}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start">
+                                    <mat-label>{{item.processTotalQuantity | number:'1.0-6'}} gm</mat-label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div fxLayout="row" style="margin-top: 5px;">
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>&nbsp; </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>&nbsp;</mat-label>
+                                </div>
+                                <div fxFlex="0 1 240px" fxLayout="column" fxLayoutAlign="center start">
+                                    <mat-label style="margin-right: 5px;">{{item.projectInfo.processorPartner.companyName}}<span *ngIf="item.projectInfo.initiatorCompanyId==item.projectInfo.processorPartner.companyInfoId"> {{uiLabels.initiator}}</span></mat-label>
+                                </div>
+                            </div>
+
+                            <div fxFlex="1 1 40">
+                                <mat-chip-list>
+                                    <mat-chip *ngIf="item.projectInfo.processorPartner.assignRoles==dumperCompanyTitle">{{uiLabels.dumper}}</mat-chip>
+                                    <mat-chip *ngIf="item.projectInfo.processorPartner.assignRoles==transporterCompanyTitle">{{uiLabels.transporter}}</mat-chip>
+                                    <mat-chip *ngIf="item.projectInfo.processorPartner.assignRoles==processorCompanyTitle">{{uiLabels.processor}}</mat-chip>
+                                </mat-chip-list>
+                            </div>
+
+                            <div fxFlex="1 1 40">
+                                <div fxFlex="0 1 180px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label> {{uiLabels.transporterCO2Quantity}} </mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="90 1 auto" fxLayout="column" fxLayoutAlign="center start">
+                                    <mat-label>{{item.transporterCo2Emission | number:'1.0-6'}} gm</mat-label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+                <mat-card>
+
+                    <mat-card-header [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''" style="padding-bottom: 60px;">
+                        <mat-card-title>
+                            <mat-label>{{uiLabels.processingEmissionGraph}}</mat-label>
+                        </mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content style="margin-left: 80px;">
+                        <google-chart [type]="item.projectChart.type" [data]="item.projectChart.data" [columns]="item.projectChart.chartColumns" [width]="item.projectChart.width" [height]="item.projectChart.height"></google-chart>
+
+                    </mat-card-content>
+
+                </mat-card>
+
+                <mat-card>
+
+                    <mat-card-header [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''" style="padding-bottom: 60px;">
+                        <mat-card-title>
+                            <mat-label>{{uiLabels.transporterEmissionGraph}}</mat-label>
+
+                        </mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content style="margin-left: 80px;">
+                        <google-chart [type]="item.projectTranportChart.type" [data]="item.projectTranportChart.data" [columns]="item.projectTranportChart.chartColumns" [width]="item.projectTranportChart.width" [height]="item.projectTranportChart.height"></google-chart>
+
+                    </mat-card-content>
+
+                </mat-card>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+        <div *ngIf="projectWiseCO2EmissionList.length==0">
+            <h3>{{uiLabels.ProjectDataNotFound}}</h3>
+        </div>
+    </div>
+
+</div>

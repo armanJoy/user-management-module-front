@@ -1,0 +1,32 @@
+<div fxLayout="row" *ngIf="!isAdmin">
+    <mat-toolbar style="background-color: rgb(235, 235, 235);">
+        <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">{{uiLabels.faqTypeListHeader}}</mat-label>
+
+    </mat-toolbar>
+    <mat-divider>
+    </mat-divider>
+</div>
+<span *ngIf="isSystemAdmin">
+    <app-lang-def-button [componentCode]="componentCode">
+    </app-lang-def-button>
+</span>
+<div id="faqTypeList" fxLayout="row" *ngFor="let faqType of faqTypes, index as i" class="common-list-item faq-type-list" [ngStyle]="{'background-color': selectedItem==faqType ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(faqType)">
+    <div fxFlex="1 1 70%" fxFlex="center start">
+        <mat-label>{{faqType.faqType}}</mat-label>
+    </div>
+    <!-- <div fxFlex="1 1 40%">
+        <mat-label>{{faqType.faqTypeDescription}}</mat-label>
+    </div> -->
+    <div fxFlex="1 1 10%" fxFlex="center center">
+        <button id="detailsBtn-{{i}}" mat-raised-button class="simple-button" (click)="showFaqDetails(faqType)">{{uiLabels.faqCatDetailsButton}}</button>
+    </div>
+
+    <div fxFlex="1 1 10%" fxFlex="center center" *ngIf="isAdmin">
+        <button id="editBtn-{{i}}" mat-raised-button class="simple-button" (click)="editFaqType(faqType)">{{uiLabels.editBtn}}</button>
+    </div>
+
+    <div fxFlex="1 1 10%" fxFlex="center center" *ngIf="isAdmin">
+        <button id="removeButton-{{i}}" mat-raised-button class="simple-button" (click)="removeFaqType(faqType.faqTypeId)">{{uiLabels.removeButton}}</button>
+    </div>
+
+</div>

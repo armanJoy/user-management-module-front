@@ -1,0 +1,20 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav class="secondary-menu" style="background-color: rgb(224, 224, 241);" [position]="(isHandset$ | async) ? 'end' : 'start'" #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+        <mat-toolbar class="secondary-menu-head">{{uiLabels.faqTypeMenu}}</mat-toolbar>
+        <mat-nav-list *ngFor="let parentMenuItem of subMenuItems">
+            <mat-expansion-panel *ngIf="parentMenuItem.child" class="secondary-menu" [class.mat-elevation-z0]="true" dense>
+                <mat-expansion-panel-header>
+                    {{parentMenuItem.menuTitle}}
+                </mat-expansion-panel-header>
+                <mat-nav-list *ngFor="let childMenuItem of parentMenuItem.child" dense>
+                    <mat-list-item routerLink="#">{{childMenuItem.menuTitle}}</mat-list-item>
+                </mat-nav-list>
+            </mat-expansion-panel>
+            <mat-list-item routerLink="#" *ngIf="!parentMenuItem.child">{{parentMenuItem.menuTitle}}</mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

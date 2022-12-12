@@ -1,0 +1,102 @@
+[
+    {
+        "componentCode": "agreement-list-tab",
+        "componentName": "Agreement List Tab",
+        "labels": [
+            {
+                "key": "status",
+                "eng": "Status",
+                "jpn": "状態"
+            },
+            {
+                "key": "filterLabel",
+                "eng": "Filter",
+                "jpn": "Filter"
+            },
+            {
+                "key": "partnerApprovalStatus",
+                "eng": "Approval",
+                "jpn": "Approval"
+            },
+            {
+                "key": "creatorLabel",
+                "eng": "Creator",
+                "jpn": "Creator"
+            }
+        ],
+        "messages": [],
+        "notifications": []
+    },
+    {
+        "componentCode": "agreement-tab",
+        "componentName": "Agreement Tab",
+        "labels": [
+            {
+                "key": "status",
+                "eng": "Status",
+                "jpn": "状態"
+            }
+        ],
+        "messages": [],
+        "notifications": []
+    },
+    {
+        "componentCode": "agreement-action-confirm-popup",
+        "componentName": "Agreement Action Confirm Popup",
+        "labels": [
+            {
+                "key": "headerLabel",
+                "eng": "Action Confirmation",
+                "jpn": "Action Confirmation"
+            },
+            {
+                "key": "newStatusStatement",
+                "eng": "Agreement status will be changed to ",
+                "jpn": "Agreement status will be changed to "
+            },
+            {
+                "key": "confirmButton",
+                "eng": "Ok",
+                "jpn": "Ok"
+            },
+            {
+                "key": "cancelButton",
+                "eng": "Cancel",
+                "jpn": "Cancel"
+            },
+            {
+                "key": "currentStatusStatement",
+                "eng": "",
+                "jpn": ""
+            }
+        ],
+        "messages": [],
+        "notifications": []
+    },
+    {
+        "componentCode": "partner-list-tab",
+        "componentName": "Partner List Tab",
+        "labels": [
+            {
+                "key": "filterLabel",
+                "eng": "Filter",
+                "jpn": "Filter"
+            }
+        ],
+        "messages": [],
+        "notifications": []
+    },
+    {
+        "componentCode": "select-waste-popup",
+        "componentName": "",
+        "labels": [
+            {
+                "key": "wasteCategory",
+                "eng": "Waste Category",
+                "jpn": "Waste Category"
+            }
+        ],
+        "messages": [],
+        "notifications": []
+    }
+]

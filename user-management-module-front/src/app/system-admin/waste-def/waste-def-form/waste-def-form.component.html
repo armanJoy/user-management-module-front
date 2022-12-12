@@ -1,0 +1,126 @@
+<h2 mat-dialog-title *ngIf="newWasteItem.wasteId.length==0">
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    {{uiLabels.addPageHeader}}
+</h2>
+<h2 mat-dialog-title *ngIf="newWasteItem.wasteId.length!=0">
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    {{uiLabels.updatePageHeader}}
+</h2>
+<mat-dialog-content>
+    <!-- <mat-card>
+        <mat-card-content> -->
+    <div fxLayout="column" [ngClass]="!(isHandset$ | async) ? 'form-padding-popup' : 'form-padding-popup-mobile'" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteItemTitle}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input id="wasteItemTitle" matInput [(ngModel)]="newWasteItem.wasteTitle">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteItemUnit}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input id="wasteItemUnit" matInput [(ngModel)]="newWasteItem.unitDef">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteItemShape}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input id="wasteItemShape" matInput [(ngModel)]="newWasteItem.wasteShape">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteItemPackage}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input id="wasteItemPackage" matInput [(ngModel)]="newWasteItem.wastePackage">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.CO2CoefficientValue}} </mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input type="number" id="co2CoefficientValue" matInput [(ngModel)]="selecteWasteType.co2CoefficientValue" readonly>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxFlex="0 0 100px" fxLayout="column" fxLayoutAlign="center end">
+                <mat-label>{{uiLabels.wasteItemRemark}}</mat-label>
+            </div>
+            <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-label>:</mat-label>
+            </div>
+            <div fxFlex="90 1 auto">
+
+                <input id="wasteItemRemark" matInput [(ngModel)]="newWasteItem.remarks">
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+            </div>
+        </div>
+
+    </div>
+    <!-- </mat-card-content>
+
+    </mat-card> -->
+</mat-dialog-content>
+<mat-dialog-actions class="action-button-right" align="end">
+    <button id="cancelBtn" mat-raised-button color="accent" mat-dialog-close>{{uiLabels.cancelBtn}}</button>
+    <button id="addBtn" mat-raised-button color="primary" *ngIf="newWasteItem.wasteId.length==0" (click)="saveWasteItem()">{{uiLabels.addBtn}}</button>
+    <button id="updateBtn" mat-raised-button color="primary" *ngIf="newWasteItem.wasteId.length!=0" (click)="saveWasteItem()">{{uiLabels.updateBtn}}</button>
+</mat-dialog-actions>
+
+<!-- [mat-dialog-close]="newWasteCategory" -->

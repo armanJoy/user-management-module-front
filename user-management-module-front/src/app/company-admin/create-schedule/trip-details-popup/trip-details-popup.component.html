@@ -1,0 +1,173 @@
+<mat-card *ngIf="viewComponent">
+
+    <div class="three-section-list-row" style="margin-bottom: 10px;">
+        <div class="list-value-section">
+            <div>
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+            </div>
+            <div class="list-section-label">
+
+                {{uiLabels.vehicleName}}
+            </div>
+
+            <div class="list-section-separator">
+                :
+            </div>
+            <div class="list-section-value" style="font-weight: 500;">
+                {{data.vehicle}}
+            </div>
+
+        </div>
+        <div class="list-value-section">
+            <div class="list-section-label">
+                {{uiLabels.date}}
+            </div>
+
+            <div class="list-section-separator">
+                :
+            </div>
+            <div class="list-section-value" style="font-weight: 500;">
+                {{tripPlan.date}}
+            </div>
+
+        </div>
+        <div class="list-value-section">
+            <div class="list-section-label">
+
+            </div>
+
+            <div class="list-section-separator">
+
+            </div>
+            <div class="list-section-value">
+
+            </div>
+        </div>
+
+
+    </div>
+    <mat-dialog-content>
+
+        <mat-accordion *ngFor="let tripInfo of tripPlan.tripList" multi>
+            <mat-expansion-panel style="margin-top: 10px;" [expanded]="true">
+                <mat-expansion-panel-header style="padding: 5px ;background-color: rgb(233, 233, 233)">
+                    <div style="flex:1">
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.tripTime}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{tripInfo.startTimeView}} - {{tripInfo.endTimeView}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.driverName}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{tripInfo.driverName}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+
+                                </div>
+
+                                <div class="list-section-separator">
+
+                                </div>
+                                <div class="list-section-value" style="justify-content: flex-end;margin-right: 15px;">
+                                    <button mat-raised-button class="simple-button">{{uiLabels.pickList}}</button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </mat-expansion-panel-header>
+
+                <div *ngFor="let pickInfo of tripInfo.pickList,index as i">
+                    <div class="list-item">
+
+                        <div class="three-section-list-row wrap" style="margin-bottom: 10px;">
+
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.pickNo}}
+                                </div>
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{i+1}}
+                                </div>
+                            </div>
+
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.pickLocation}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{pickInfo.disposalInfo.pickLocation}}
+                                </div>
+                            </div>
+
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.pickQuantity}}
+                                </div>
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{pickInfo.quantity}}
+                                </div>
+                            </div>
+
+                            <!-- <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <button *ngIf="!pickInfo.loadStatus ||  pickInfo.loadStatus=='0'" id="removePick{{i}}" mat-raised-button class="list-button" (click)="removePick(pickInfo.pickId)">
+                                        {{uiLabels.removeButton}}
+                                    </button>
+                                </div>
+                                <div class="list-section-separator">
+
+                                </div>
+                                <div class="list-section-value">
+
+                                </div>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </mat-dialog-content>
+
+    <mat-card-actions align="end">
+        <button mat-raised-button color="accent" mat-dialog-close>{{uiLabels.closeBtn}}</button>
+    </mat-card-actions>
+
+</mat-card>

@@ -1,0 +1,288 @@
+<mat-card>
+    <mat-card-title><span *ngIf="isSystemAdmin">
+            <app-lang-def-button [componentCode]="componentCode">
+            </app-lang-def-button>
+        </span>
+        <label *ngIf="!isPopup">
+            {{uiLabels.vehicleTypeAdd}}
+        </label>
+
+        <label *ngIf="isPopup">
+            {{uiLabels.vehicleTypEdit}}
+
+        </label>
+    </mat-card-title>
+    <mat-card-content>
+        <div class="three-section-list-row">
+            <div class="list-value-section">
+                <div class="list-section-label">
+                    <mat-label>{{uiLabels.vehicleType}}</mat-label>
+                </div>
+                <div class="list-section-separator">
+                    :
+                </div>
+
+                <div class="list-section-value">
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" matInput [(ngModel)]="vehicleTypeInfo.vehicleTypeName">
+                </div>
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+                    <mat-label>{{uiLabels.code}}</mat-label>
+                </div>
+                <div class="list-section-separator">
+                    :
+                </div>
+
+                <div class="list-section-value">
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" matInput [(ngModel)]="vehicleTypeInfo.code">
+                </div>
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+
+                </div>
+                <div class="list-section-separator">
+
+                </div>
+
+                <div class="list-section-value">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="three-section-list-row">
+            <div class="list-value-section">
+                <div class="list-section-label">
+                    <mat-label>{{uiLabels.description}}</mat-label>
+                </div>
+                <div class="list-section-separator">
+                    :
+                </div>
+
+                <div class="list-section-value">
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-medium'" matInput [(ngModel)]="vehicleTypeInfo.description">
+                </div>
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+
+                </div>
+                <div class="list-section-separator">
+
+                </div>
+
+                <div fxLayout="column" class="list-section-value">
+
+                </div>
+            </div>
+            <div class="list-value-section">
+                <div class="list-section-label">
+
+                </div>
+                <div class="list-section-separator">
+
+                </div>
+
+                <div class="list-section-value">
+
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div fxFlex="0 1 150px" fxLayout="column" fxLayoutAlign="start end">
+
+                <mat-label>{{uiLabels.gasolineType}}</mat-label>
+            </div>
+            <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="start center">
+
+                <mat-label>:</mat-label>
+            </div>
+            <div fxLayout="column" fxFlex="90 1 auto" fxLayoutAlign="start start">
+                <div *ngFor="let catagory of gasolineTypeList,index as i" fxLayoutAlign="start center">
+
+                    <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" [(ngModel)]="catagory.isCheck" class="checkboxInput" style="width: 10px;" type="checkbox" name="check" />
+                    <label for="check"> {{catagory.gasolineTypeName}}</label>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="three-section-list-row">
+
+            <div class="list-value-section">
+                <div class="list-section-label">
+
+                </div>
+                <div class="list-section-separator">
+
+                </div>
+
+                <div class="list-section-value">
+
+                </div>
+            </div>
+
+            <div class="list-value-section">
+                <div class="list-section-label">
+
+                </div>
+                <div class="list-section-separator">
+
+                </div>
+
+                <div class="list-section-value">
+
+                </div>
+            </div>
+
+            <div class="list-action-section">
+                <div class="list-action-section-label">
+                    <button *ngIf="!isPopup" mat-raised-button class="list-button" color="primary" (click)="onClickAddBtn()">{{uiLabels.addBtn}}</button>
+
+
+                </div>
+
+                <div class="list-action-section-separator">
+
+                </div>
+
+                <div class="list-action-section-value">
+
+                </div>
+            </div>
+
+        </div>
+
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button *ngIf="isPopup" mat-raised-button class="list-button" color="accent" mat-dialog-close>{{uiLabels.closeBtn}}</button>
+        <button *ngIf="isPopup" mat-raised-button class="list-button" color="primary" (click)="onClickPopupEditBtn()">{{uiLabels.editBtn}}</button>
+
+    </mat-card-actions>
+
+</mat-card>
+<mat-card *ngIf="!isPopup">
+    <mat-accordion *ngFor="let item of vehicleTypeList, index as i" multi>
+        <mat-expansion-panel style="margin-top: 10px;">
+            <mat-expansion-panel-header style="height: 100%;padding: 7px;background-color:rgb(220, 240, 240);">
+
+                <div style="flex:1">
+
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <mat-label>{{uiLabels.vehicleType}}</mat-label>
+                            </div>
+
+                            <div class="list-section-separator">
+                                :
+                            </div>
+                            <div class="list-section-value">
+                                {{item.vehicleTypeName}}
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value">
+
+                            </div>
+
+                        </div>
+                        <div class="list-value-section">
+                            <div class="list-section-label">
+                                <button mat-raised-button class="list-button" (click)="onClickEditBtn(item)">{{uiLabels.editBtn}}</button>
+                            </div>
+
+                            <div class="list-section-separator">
+
+                            </div>
+                            <div class="list-section-value">
+                                <button id="removeButton{{i}}" mat-raised-button class="list-button" (click)="removeVehicleType(item.vehicleTypeId)">{{uiLabels.removeButton}}</button>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </mat-expansion-panel-header>
+
+            <div *ngFor="let gasoline of item.gasolinTypeList">
+                <div class="list-item" [ngStyle]="{'background-color': selectedItem==gasoline ? 'rgb(241, 240, 240)' : ''}" (click)="selectListItem(gasoline, item)">
+
+                    <div style="display: flex;flex-direction: row;">
+                        <div>
+                            <mat-icon *ngIf="gasoline.gasolineTypeId==item.gasolineTypeDefaultId" color="primary">check_box</mat-icon>
+                            <mat-icon *ngIf="gasoline.gasolineTypeId!=item.gasolineTypeDefaultId" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+                        </div>
+                        <div style="flex: 1;">
+
+                            <div class="three-section-list-row" style="margin-bottom: 10px;">
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        <mat-label>{{uiLabels.gasolineType}}</mat-label>
+                                    </div>
+
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        {{gasoline.gasolineTypeName}}
+                                    </div>
+
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        <mat-label>{{uiLabels.emissionUnit}}</mat-label>
+
+                                    </div>
+
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        {{gasoline.co2EmissionUnit}}
+                                    </div>
+
+                                </div>
+                                <div class="list-value-section">
+                                    <div class="list-section-label">
+                                        <mat-label>{{uiLabels.fuelUnit}}</mat-label>
+
+                                    </div>
+
+                                    <div class="list-section-separator">
+                                        :
+                                    </div>
+                                    <div class="list-section-value">
+                                        {{gasoline.co2FuelUnit}}
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-card>

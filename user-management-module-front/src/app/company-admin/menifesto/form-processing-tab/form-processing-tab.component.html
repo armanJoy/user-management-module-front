@@ -1,0 +1,127 @@
+<div *ngIf="viewComponent">
+
+    <div fxLayout="row">
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.listHeader}}
+            </mat-label>
+
+            <div fxFlex="0 1 auto" style="padding-right: 100px;" fxLayoutAlign="center end">
+                <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="onClickMenifestoListBtn()">{{uiLabels.menifestoList}}</button>
+                <button mat-raised-button class="list-button-medium" id="createManifesto" (click)="downLoadCSV()">
+                    {{uiLabels.ledgerUpdate}}
+                </button>
+            </div>
+
+        </mat-toolbar>
+        <mat-divider>
+        </mat-divider>
+    </div>
+
+    <!-- <mat-dialog-content> -->
+    <div style="padding-left: 20px;padding-top: 20px;">
+        <div class="example-container mat-elevation-z8">
+            <table #table mat-table [dataSource]="listOfTable">
+
+                <ng-container matColumnDef={{uiLabels.collectionDate}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.collectionDate}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.collectionDate}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.issuerName}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.issuerName}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.issuerName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.dateOfIssue}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.dateOfIssue}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.dateOfIssue}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.grandNumber}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.grandNumber}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.grandNumber}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.emisionSiteName}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.emisionSiteName}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.emisionSiteName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.emisionSiteLocation}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.emisionSiteLocation}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.emisionSiteLocation}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.wasteName}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.wasteName}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.wasteName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.recieveAmount}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.recieveAmount}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.recieveAmount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.containAsbestos}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.containAsbestos}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.containAsbestos}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.mercuryproducts}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.mercuryproducts}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.mercuryproducts}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.containMercuryDustetc}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.containMercuryDustetc}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.containMercuryDustetc}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.transportationEnddate}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.transportationEnddate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.transportationEnddate}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.transportationmethod}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.transportationmethod}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.transportationmethod}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.destinationName}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.destinationName}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.destinationName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.destinationLocation}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.destinationLocation}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.destinationLocation}} </td>
+                </ng-container>
+                <ng-container matColumnDef={{uiLabels.carryingAmount}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.carryingAmount}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element.carryingAmount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{uiLabels.remarks}}>
+                    <th mat-header-cell *matHeaderCellDef>{{uiLabels.remarks}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef={{this.uiLabels.action}}>
+                    <th mat-header-cell *matHeaderCellDef>{{this.uiLabels.action}}</th>
+                    <td mat-cell *matCellDef="let element, index as i"><button mat-raised-button class="list-button" (click)="onRemove(i, table)">{{this.uiLabels.removeButton}}</button></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- </mat-dialog-content> -->
+</div>

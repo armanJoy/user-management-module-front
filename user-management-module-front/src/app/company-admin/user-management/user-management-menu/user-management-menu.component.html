@@ -1,0 +1,13 @@
+<span *ngIf="isSystemAdmin">
+    <app-lang-def-button [componentCode]="componentCode">
+    </app-lang-def-button>
+</span>
+<mat-tab-group [selectedIndex]="selectedIndex" (focusChange)="informChange($event.index)" *ngIf="viewContent">
+
+    <mat-tab label={{uiLabels.userListTabHead}}>
+        <app-user-list-tab [search]="getCompanyUserList" [selectTab]="switchTab" [CompanyDetails]='companyInfo' [roleWiseMenuAccessList]="roleWiseMenuAcccessList" [DxrRoleListViewForSelectedUser]='roleList' [dxrRolelist]="dxrRolelist"></app-user-list-tab>
+    </mat-tab>
+    <mat-tab label={{uiLabels.defineRoleTabHead}}>
+        <app-define-role-tab [selectedUser]='selectedUser' [dxrRolelist]="dxrRolelist" [CompanyDetails]='companyInfo' [selectedUserRoleList]='selectedUserRoleList' [SelectctedUserInfo]='selectedUserInfo' [selectedUserRoleWiseMenuAccesList]='selectedUserRoleWiseMenuAccesList' [roleWiseMenuAccessList]="roleWiseMenuAcccessList"></app-define-role-tab>
+    </mat-tab>
+</mat-tab-group>

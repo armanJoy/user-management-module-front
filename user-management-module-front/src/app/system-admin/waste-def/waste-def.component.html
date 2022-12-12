@@ -1,0 +1,22 @@
+<span *ngIf="isSystemAdmin">
+    <app-lang-def-button [componentCode]="componentCode">
+    </app-lang-def-button>
+</span>
+<mat-tab-group [selectedIndex]="selectedIndex" (focusChange)="informChange($event.index)" *ngIf="viewContent">
+
+    <mat-tab label={{uiLabels.categoryTabHeader}}>
+        <app-add-category-tab [wasteCategoryList]="wasteCategoryList" [wasteTypeMainList]="wasteTypeList" [wasteItemMainList]="wasteItemList" [showWasteType]="showWasteType"></app-add-category-tab>
+    </mat-tab>
+    <mat-tab label={{uiLabels.wasteCategoryTabHeader}}>
+        <app-waste-category [wasteCategoryMainList]="wasteCategoryList" [wasteTypeMainList]="wasteTypeList" [wasteItemMainList]="wasteItemList" [wasteTypeList]="selectedCategoryWasteTypeList" [selectedCategory]="selectedCategory" [showWasteItem]="showWasteItem" [updateTypeMainList]="updateTypeMainList"></app-waste-category>
+    </mat-tab>
+    <mat-tab label={{uiLabels.wasteItemTabHeader}}>
+        <app-waste-item [wasteCategoryMainList]="wasteCategoryList" [wasteTypeMainList]="wasteTypeList" [wasteItemMainList]="wasteItemList" [switchToCo2Tab]="switchToCo2Tab" [wasteItemList]="selectedWasteCategoryWasteItemList" [updateWasteItemMainList]="updateWasteItemMainList" [selectedWasteType]="selectedWasteType" [switchToWasteCoefficientUpdateTab]="switchToWasteCoefficientUpdateTab"></app-waste-item>
+    </mat-tab>
+    <!-- <mat-tab label={{uiLabels.emissionMethodTabHeader}}>
+        <app-carbon-dioxide-tab [wasteItemInfo]="wasteItemInfo" [methodeList]="methodeList"></app-carbon-dioxide-tab>
+    </mat-tab> -->
+    <mat-tab label={{uiLabels.companyWasteCoefficientTabHeader}}>
+        <app-company-waste-coefficient [companyWasteCoefficient]="companyWasteCoefficient" [wasteItemInfo]="wasteItemInfo"></app-company-waste-coefficient>
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,17 @@
+{
+    "project": {
+        "version": "1",
+        "name": "angular-app"
+    },
+    "apps": [
+        {
+            "environmentSource": "environments/environment.ts",
+            "environments": {
+                "dev": "environments/environment.dev.ts",
+                "devrelease": "environments/environment.devrelease.ts",
+                "prod": "environments/environment.prod.ts",
+                "acc": "environments/environment.acc.ts"
+            }
+        }
+    ]
+}

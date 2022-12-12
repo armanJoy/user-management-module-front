@@ -1,0 +1,143 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title style="padding-bottom: 10px;">
+            <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>
+            {{uiLabels.formTitle}}
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+            <div fxLayout="row">
+                <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="center end">
+                    <mat-label>{{uiLabels.fullName}}</mat-label>
+                </div>
+                <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto">
+
+                    <input id="abcd123" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="userInfoUpdate.userName">
+
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="center end">
+                    <mat-label>{{uiLabels.address}}</mat-label>
+                </div>
+                <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto">
+
+                    <input id="personAddress" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="userInfoUpdate.userAddress">
+
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="center end">
+                    <mat-label>{{uiLabels.deptTitle}}</mat-label>
+                </div>
+                <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto">
+
+                    <input id="deptTitle" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="userInfoUpdate.departmentTitle">
+
+                </div>
+            </div>
+
+            <div fxLayout="row">
+                <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="start end">
+                    <mat-label>{{uiLabels.email}}</mat-label>
+                </div>
+                <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="start center">
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" *ngIf="!(isHandset$ | async)">
+
+                    <input id="emailAddress" class="input-small" matInput [(ngModel)]="userInfoUpdate.userEmail">
+                    <button id="loadByEmailBtn" class="input-small" style="height: 35px;" mat-raised-button class="simple-button" (click)="loadUserINfoByEmail()">
+                        <mat-icon>search</mat-icon>Search
+                    </button>
+
+                </div>
+
+                <div fxFlex="90 1 auto" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start center" *ngIf="(isHandset$ | async)">
+                    <input id="emailAddress" matInput [(ngModel)]="userInfoUpdate.userEmail">
+                    <button id="loadByEmailBtn" style="height: 35px;" mat-raised-button class="simple-button" (click)="loadUserINfoByEmail()">
+                        <mat-icon>search</mat-icon>Search
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div fxLayout="row">
+                <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="start end">
+                    <mat-label>{{uiLabels.mobile}}</mat-label>
+                </div>
+                <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="start center">
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" *ngIf="!(isHandset$ | async)">
+
+                    <input id="mobile" class="input-small" matInput [(ngModel)]="userInfoUpdate.userContact">
+                    <button id="loadByContactBtn" class="input-small" style="height: 35px;" mat-raised-button class="simple-button" (click)="loadUserINfoByContact()">
+                        <mat-icon>search</mat-icon>Search
+                    </button>
+                </div>
+
+                <div fxFlex="90 1 auto" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start center" *ngIf="(isHandset$ | async)">
+
+                    <input id="mobile" matInput [(ngModel)]="userInfoUpdate.userContact">
+                    <button id="loadByContactBtn" style="height: 35px;" mat-raised-button class="simple-button" (click)="loadUserINfoByContact()">
+                        <mat-icon>search</mat-icon>Search
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div fxLayout="row" *ngIf="(isHandset$ | async)">
+                <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="center end">
+
+                </div>
+                <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                </div>
+                <div fxFlex="90 1 auto" fxLayoutAlign="center center">
+
+                    <button id="createButton" mat-raised-button color="primary" style="width: 120px;margin-right: 25px;" (click)="createUser()" type="submit">{{uiLabels.createBtn}}</button>
+
+                    <button id="resentCodeButton" style="width: 120px;" mat-raised-button color="primary" (click)="resendAccessCode()" type="submit">Resend Code</button>
+
+                </div>
+            </div>
+
+            <div fxLayout="row" *ngIf="!(isHandset$ | async)">
+                <div fxFlex="0 1 130px" fxLayout="column" fxLayoutAlign="center end">
+
+                </div>
+                <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                </div>
+                <div fxFlex="90 1 auto" style="padding-left: 50px;">
+
+                    <button id="createButton" mat-raised-button color="primary" style="width: 120px;" (click)="createUser()" type="submit">{{uiLabels.createBtn}}</button>
+
+                    <button id="resentCodeButton" style="margin-left: 50px;width: 120px;" mat-raised-button color="primary" (click)="resendAccessCode()" type="submit">{{uiLabels.resenCodeBtn}}</button>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </mat-card-content>
+
+</mat-card>

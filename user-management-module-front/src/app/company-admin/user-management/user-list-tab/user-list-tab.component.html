@@ -1,0 +1,617 @@
+<div *ngIf="viewContent">
+
+    <div *ngIf="(isHandset$ | async)">
+
+        <mat-card style="background-color: rgb(236,236,236);">
+            <mat-card-title>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 1100px">
+                        <span *ngIf="isSystemAdmin">
+                            <app-lang-def-button [componentCode]="componentCode">
+                            </app-lang-def-button>
+                        </span>
+                        {{uiLabels.title}}
+                    </div>
+
+                    <div fxLayoutAlign="end end">
+                        <button align='end' mat-raised-button color="primary" class="my-class " (click)="addUserPopupOpen()">
+                            {{uiLabels.addUser}}
+                        </button>
+                    </div>
+                </div>
+
+            </mat-card-title>
+
+        </mat-card>
+        <app-search-pagination (searchByText)="searchByText()"></app-search-pagination>
+        <mat-card>
+            <u>
+                <label style="padding-left: 10px;padding-bottom: 100px;font-size:medium;font-weight: 500;">{{uiLabels.companyAdmin}} </label>
+            </u>
+        </mat-card>
+        <mat-accordion *ngFor="let item of CompanyDetails.users " style="width: 100%;" multi>
+            <mat-expansion-panel *ngIf="item.userCatagory==companyAdminCatagory" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;">
+
+
+                <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);">
+                    <div style="flex:1">
+
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.name}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value" style="font-weight: 500;">
+                                    <mat-label>{{item.userName}}</mat-label>
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.department}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.department}} / {{item.jobTitle}}</mat-label>
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.contactNo}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.userContactNoFormated}}</mat-label>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </mat-expansion-panel-header>
+
+
+                <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" style="margin-top: 10px;">
+
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                <mat-label>{{uiLabels.email}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                                <mat-label>{{item.userEmail}}</mat-label>
+                            </div>
+                        </div>
+                        <div fxFlex="1 1 60">
+                            <!-- <div fxLayout="row" fxLayoutAlign="start start"> -->
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                <mat-label>{{uiLabels.role}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 1 auto" fxLayout="column" fxLayoutAlign="start start">
+                                <div *ngFor="let value of item.userRoles, index as i" fxLayoutAlign="start start">
+                                    <div *ngIf="i==0">
+                                        {{value.roleName}}
+                                    </div>
+                                    <div *ngIf="i>0">
+                                        {{value.roleName}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- </div> -->
+                        </div>
+                        <!-- <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 145px" fxLayout="column" fxLayoutAlign="start start">
+                                <button id="{{item.userEmail}}+viewBtn" mat-raised-button class="list-button" (click)="SelectedUserInfoPopupOpenForView(item)">
+                                    {{uiLabels.viewBtn}}
+                                </button>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                            <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                        </div>
+
+                        <div fxFlex="1 1 auto">
+                            <button id="{{item.userEmail}}+editBtn" mat-raised-button class="list-button" (click)="addUserPopupOpen(item)">
+                                {{uiLabels.editBtn}}
+                            </button>
+
+                        </div> -->
+
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <div fxFlex="1 1 40">
+                            <div fxLayout="row" fxLayoutAlign="start start">
+                                <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>{{uiLabels.role}}</mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 1 auto" fxLayout="column" fxLayoutAlign="start start">
+                                    <div *ngFor="let value of item.userRoles, index as i" fxLayoutAlign="start start">
+                                        <div *ngIf="i==0">
+                                            {{value.roleName}}
+                                        </div>
+                                        <div *ngIf="i>0">
+                                            {{value.roleName}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                            <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                        </div>
+
+                        <div fxFlex="1 1 auto">
+                            <button id="{{item.userEmail}}+addRoleBtn" mat-raised-button class="list-button" (click)="changeTabForAddRoleOfSelectedUser(item)">
+                                {{uiLabels.addRoleBtn}}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-card>
+            <u>
+                <label style="padding-left: 10px;padding-bottom: 100px;font-size:medium;font-weight: 500">{{uiLabels.companyUser}} </label>
+            </u>
+        </mat-card>
+        <mat-accordion *ngFor="let item of CompanyDetails.users " style="width: 100%;" multi>
+            <mat-expansion-panel *ngIf="item.userCatagory==companyUserCatagory" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;">
+
+
+                <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);">
+                    <div style="flex:1">
+
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.name}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value" style="font-weight: 500;">
+                                    <mat-label>{{item.userName}}</mat-label>
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.department}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.department}} / {{item.jobTitle}}</mat-label>
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.contactNo}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.userContactNoFormated}}</mat-label>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </mat-expansion-panel-header>
+
+
+                <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" style="margin-top: 10px;">
+
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                <mat-label>{{uiLabels.email}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                                <mat-label>{{item.userEmail}}</mat-label>
+                            </div>
+                        </div>
+                        <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 145px" fxLayout="column" fxLayoutAlign="start start">
+                                <button id="{{item.userEmail}}+viewBtn" mat-raised-button class="list-button" (click)="SelectedUserInfoPopupOpenForView(item)">
+                                    {{uiLabels.viewBtn}}
+                                </button>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                            <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                        </div>
+
+                        <div fxFlex="1 1 auto">
+                            <button id="{{item.userEmail}}+editBtn" mat-raised-button class="list-button" (click)="addUserPopupOpen(item)">
+                                {{uiLabels.editBtn}}
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <div fxFlex="1 1 40">
+                            <div fxLayout="row" fxLayoutAlign="start start">
+                                <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                    <mat-label>{{uiLabels.role}}</mat-label>
+                                </div>
+                                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 1 auto" fxLayout="column" fxLayoutAlign="start start">
+                                    <div *ngFor="let value of item.userRoles, index as i" fxLayoutAlign="start start">
+                                        <div *ngIf="i==0">
+                                            {{value.roleName}}
+                                        </div>
+                                        <div *ngIf="i>0">
+                                            {{value.roleName}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                            <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                                <mat-label>&nbsp;</mat-label>
+                            </div>
+                        </div>
+
+                        <div fxFlex="1 1 auto">
+                            <button id="{{item.userEmail}}+addRoleBtn" mat-raised-button class="list-button" (click)="changeTabForAddRoleOfSelectedUser(item)">
+                                {{uiLabels.addRoleBtn}}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-label *ngIf="CompanyDetails.users.length<pageSize" style="padding: 10px;">{{dataEndsLabel}}</mat-label>
+
+    </div>
+
+    <div *ngIf="!(isHandset$ | async)">
+
+        <mat-card style="background-color: rgb(236,236,236);">
+            <mat-card-title>
+                <div fxLayout="row">
+                    <div fxFlex="0 1 1100px">
+                        <span *ngIf="isSystemAdmin">
+                            <app-lang-def-button [componentCode]="componentCode">
+                            </app-lang-def-button>
+                        </span>
+                        {{uiLabels.title}}
+                    </div>
+
+                    <div fxLayoutAlign="end end">
+                        <button id="AddBtn" align='end' mat-raised-button color="primary" class="my-class " (click)="addUserPopupOpen()">
+                            {{uiLabels.addUser}}
+                        </button>
+                    </div>
+                </div>
+
+            </mat-card-title>
+
+        </mat-card>
+
+        <app-search-pagination (searchByText)="searchByText()"></app-search-pagination>
+
+        <mat-card>
+            <u>
+                <label style="padding-left: 10px;padding-bottom: 100px;font-size:medium;font-weight: 500">{{uiLabels.companyAdmin}} </label>
+            </u>
+        </mat-card>
+
+        <mat-accordion *ngFor="let item of CompanyDetails.users, index as j" style="width: 100%;" multi>
+            <mat-expansion-panel *ngIf="item.userCatagory==companyAdminCatagory" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;">
+
+
+                <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);">
+                    <div style="flex:1">
+
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.name}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value" style="font-weight: 500;">
+                                    <mat-label>{{item.userName}}</mat-label>
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.department}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.department}} / {{item.jobTitle}}</mat-label>
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.contactNo}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.userContactNoFormated}}</mat-label>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </mat-expansion-panel-header>
+
+
+                <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" style="margin-top: 10px;">
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                <mat-label>{{uiLabels.email}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                                <mat-label>{{item.userEmail}}</mat-label>
+                            </div>
+                        </div>
+
+                        <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                <mat-label>{{uiLabels.role}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start start">
+                                <div *ngFor="let value of item.userRoles, index as i" fxLayoutAlign="start start">
+                                    <div *ngIf="i==0">
+                                        {{value.roleName}}
+                                    </div>
+                                    <div *ngIf="i>0">
+                                        , {{value.roleName}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div fxLayout="row" fxFlex="1 1 1" fxLayoutAlign="end center" fxLayoutGap="25px">
+
+                        <button id="{{item.userEmail}}+viewBtn" mat-raised-button class="list-button" (click)="SelectedUserInfoPopupOpenForView(item)">
+                            {{uiLabels.viewBtn}}
+                        </button>
+
+                        <button id="{{item.userEmail}}+editBtn" mat-raised-button class="list-button" (click)="addUserPopupOpen(item)">
+                            {{uiLabels.editBtn}}
+                        </button>
+
+                        <!-- <button id="removeUser{{j}}" mat-raised-button class="list-button" (click)="removeUser(item.userInfoId)">
+                            {{uiLabels.removeButton}}
+                        </button> -->
+
+                        <button id="{{item.userEmail}}+addRoleBtn" mat-raised-button class="list-button" (click)="changeTabForAddRoleOfSelectedUser(item)">
+                            {{uiLabels.addRoleBtn}}
+                        </button>
+
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-card>
+            <u>
+                <label style="padding-left: 10px;padding-bottom: 100px;font-size:medium;font-weight: 500">{{uiLabels.companyUser}} </label>
+            </u>
+        </mat-card>
+
+        <mat-accordion *ngFor="let item of CompanyDetails.users, index as j" style="width: 100%;" multi>
+            <mat-expansion-panel *ngIf="item.userCatagory==companyUserCatagory" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" style="margin-bottom: 5px;">
+
+
+                <mat-expansion-panel-header id="typeHeader" style="background-color:  rgb(190, 223, 223);">
+                    <div style="flex:1">
+
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.name}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value" style="font-weight: 500;">
+                                    <mat-label>{{item.userName}}</mat-label>
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.department}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.department}} / {{item.jobTitle}}</mat-label>
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <mat-label>{{uiLabels.contactNo}}</mat-label>
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label>{{item.userContactNoFormated}}</mat-label>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </mat-expansion-panel-header>
+
+
+                <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" style="margin-top: 10px;">
+
+
+                    <div fxLayout="row" fxLayoutAlign="start start">
+                        <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                <mat-label>{{uiLabels.email}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="95 1 auto" fxLayoutAlign="start center">
+                                <mat-label>{{item.userEmail}}</mat-label>
+                            </div>
+                        </div>
+
+                        <div fxFlex="1 1 40">
+                            <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                                <mat-label>{{uiLabels.role}}</mat-label>
+                            </div>
+                            <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                                <mat-label>:</mat-label>
+                            </div>
+                            <div fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start start">
+                                <div *ngFor="let value of item.userRoles, index as i" fxLayoutAlign="start start">
+                                    <div *ngIf="i==0">
+                                        {{value.roleName}}
+                                    </div>
+                                    <div *ngIf="i>0">
+                                        , {{value.roleName}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div fxLayout="row" fxFlex="1 1 1" fxLayoutAlign="end center" fxLayoutGap="25px">
+
+                        <button id="{{item.userEmail}}+viewBtn" mat-raised-button class="list-button" (click)="SelectedUserInfoPopupOpenForView(item)">
+                            {{uiLabels.viewBtn}}
+                        </button>
+
+                        <button id="{{item.userEmail}}+editBtn" mat-raised-button class="list-button" (click)="addUserPopupOpen(item)">
+                            {{uiLabels.editBtn}}
+                        </button>
+
+                        <button id="removeUser{{j}}" mat-raised-button class="list-button" (click)="removeUser(item.userInfoId)">
+                            {{uiLabels.removeButton}}
+                        </button>
+
+                        <button id="{{item.userEmail}}+addRoleBtn" mat-raised-button class="list-button" (click)="changeTabForAddRoleOfSelectedUser(item)">
+                            {{uiLabels.addRoleBtn}}
+                        </button>
+
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-label *ngIf="CompanyDetails.users.length<pageSize" style="padding: 10px;">{{dataEndsLabel}}</mat-label>
+
+    </div>
+</div>

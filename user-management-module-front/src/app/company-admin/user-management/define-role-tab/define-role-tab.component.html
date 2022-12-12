@@ -1,0 +1,207 @@
+<mat-card>
+    <mat-card-content>
+
+
+        <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="!(isHandset$ | async)">
+            <div fxLayout="row">
+                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="start start" style="margin-right: 15px">
+                    <span *ngIf="isSystemAdmin">
+                        <app-lang-def-button [componentCode]="componentCode">
+                        </app-lang-def-button>
+                    </span>
+                </div>
+                <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                    <mat-label>
+
+                        {{uiLabels.userName}}
+                    </mat-label>
+                </div>
+                <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="start start">
+
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto" fxLayoutAlign="start start">
+                    <mat-label>{{selectedUser.name}}</mat-label>
+                </div>
+                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+
+                </div>
+                <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="start start">
+                    <mat-label>{{uiLabels.email}}</mat-label>
+                </div>
+                <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="start start">
+
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto" fxLayoutAlign="start start">
+                    <mat-label>{{selectedUser.email}}</mat-label>
+
+
+                </div>
+                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+
+                </div>
+                <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="start start">
+                    <mat-label>{{uiLabels.contactNo}}</mat-label>
+                </div>
+                <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="start start">
+
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto" fxLayoutAlign="start start">
+                    <mat-label>{{selectedUser.contactNo}}</mat-label>
+
+
+                </div>
+                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+
+                </div>
+                <!-- <button id="setRoleBtn" mat-raised-button color="primary" (click)="setRolePopupOpen()">
+                    {{uiLabels.setRole}}
+                </button> -->
+            </div>
+
+        </div>
+
+        <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="(isHandset$ | async)">
+            <div fxLayout="row wrap">
+                <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="center end">
+                    <mat-label>{{uiLabels.userName}}</mat-label>
+                </div>
+                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto">
+                    <mat-label>{{selectedUser.name}}</mat-label>
+                </div>
+                <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="center center">
+
+                </div>
+
+            </div>
+            <div fxLayout="row wrap">
+                <div fxFlex="0 1 120px" fxLayout="column" fxLayoutAlign="end end">
+                    <mat-label>{{uiLabels.email}}</mat-label>
+                </div>
+                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto" fxLayoutAlign="end center">
+                    <mat-label>{{selectedUser.email}}</mat-label>
+                </div>
+                <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="center center">
+
+                </div>
+            </div>
+            <div fxLayout="row wrap">
+                <div fxFlex="0 1 80px" fxLayout="column" fxLayoutAlign="center end">
+                    <mat-label>{{uiLabels.contactNo}}</mat-label>
+                </div>
+                <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+
+                    <mat-label>:</mat-label>
+                </div>
+                <div fxFlex="90 1 auto">
+                    <mat-label>{{selectedUser.contactNo}}</mat-label>
+                </div>
+                <div fxFlex="0 1 10px" fxLayout="column" fxLayoutAlign="center center">
+
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="end end">
+                <!-- <button id="setRoleBtn" mat-raised-button color="primary" (click)="setRolePopupOpen()">
+                    {{uiLabels.setRole}}
+                </button> -->
+            </div>
+        </div>
+
+    </mat-card-content>
+</mat-card>
+
+<div>
+    <mat-accordion style="width: 100%;" multi>
+        <mat-expansion-panel *ngFor="let item of selectedUserRoleWiseMenuAccesList" class="common-list-item" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(item)" style="margin: 5px;padding-inline-end: 40px;">
+            <!-- <mat-expansion-panel *ngFor="let item of userMenuAccessViewList" class="common-list-item" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(item)" style="margin: 5px;padding-inline-end: 40px;"> -->
+            <mat-expansion-panel-header *ngIf="!(isHandset$ | async)">
+                <div fxLayout="row wrap" fxFlex>
+                    <div fxLayout="column" fxLayoutAlign="center start" fxFlex="1 1 40%">
+                        {{uiLabels.menu}} : {{item.menuTitle}}
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center start" fxFlex="1 1 20%">
+                        <div>
+                            {{uiLabels.role}} :
+                        </div>
+                        <div>
+
+                            {{item.activeAccess.roleInfo.roleName}}
+
+                        </div>
+
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center start" fxFlex="1 1 35%">
+                        <div>
+                            {{uiLabels.access}} :
+                        </div>
+                        <div>
+
+                            {{item.activeAccess.accessInfo.accessTitle}}
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel-header [collapsedHeight]="'100px'" [expandedHeight]="'100px'" *ngIf="(isHandset$ | async)">
+                <div fxLayout="column" fxFlex>
+                    <div fxLayoutAlign="start center" fxFlex="1 1 45%" style="margin-bottom: 10px;">
+                        {{uiLabels.menu}} : {{item.menuTitle}}
+                    </div>
+                    <div fxLayoutAlign="start center" fxFlex="1 1 100px" style="margin-bottom: 10px;">
+                        <div>
+                            {{uiLabels.role}} :
+                        </div>
+                        <div>
+
+                            {{item.activeAccess.roleInfo.roleName}}
+
+                        </div>
+
+                    </div>
+                    <div fxLayoutAlign="start center" fxFlex="1 1 45%">
+                        <div>
+                            {{uiLabels.access}} :
+                        </div>
+                        <div>
+
+                            {{item.activeAccess.accessInfo.accessTitle}}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </mat-expansion-panel-header>
+            <!-- <div fxLayout='column wrap' fxLayoutGap="10px">
+                <div>
+                    {{uiLabels.primaryMenu}} : {{item.primaryMenuNameEng}}
+                </div>
+                <div>
+                    {{uiLabels.secondaryMenu}} : {{item.secondaryMenuNameEng}}
+                </div>
+                <label style="font-size: medium;">
+                    <u>
+                        {{uiLabels.access}}
+                    </u>
+                </label>
+                <div *ngFor="let element of item.allActiveAccess">
+                    {{element.roleInfo.roleName}} : {{element.accessInfo.accessTitle}}
+                </div>
+            </div> -->
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,36 @@
+<div>
+    <mat-dialog-content style="height: 85%;">
+        <h2><span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>{{uiLabels.headerLabel}}</h2>
+        <div class="column">
+            <div *ngIf="data && data.dataForwardLinks.length>0">
+                <div>
+                    <p style="font-size:17px;font-weight: 500;">{{uiLabels.forwardLinkSectionLabel}}</p>
+                    <p style="font-size:17px;font-weight: 500;">{{uiLabels.totalForwardLink}} {{data.totalForwardLink}}</p>
+                </div>
+                <div class="column" *ngFor="let item of data.dataForwardLinks, index as i">
+                    <div class="three-section-list-row" style="margin-bottom: 10px;">
+                        <div class="list-value-section">
+                            <div class="list-section-value">
+                                <mat-label>{{i+1}}. {{uiLabels[item.itemDataType]}} - {{item.itemTitle}} </mat-label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <p style="font-size: 19px;font-weight:550">{{uiLabels.confirmationQuestion}}</p>
+            </div>
+        </div>
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" style="height: 15%;" fxLayoutGap="25px">
+        <button style="width: 100px;" mat-raised-button color="accent" mat-dialog-close>{{uiLabels.noLabel}}</button>
+        <button style="width: 100px;" mat-raised-button color="primary" mat-dialog-close="true">{{uiLabels.yesLabel}}</button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,52 @@
+<mat-card>
+
+    <span *ngIf="isSystemAdmin">
+        <app-lang-def-button [componentCode]="componentCode">
+        </app-lang-def-button>
+    </span>
+    <div style="background-color: rgb(194, 190, 190);height: 40px; font-weight: 500;margin-bottom: 10px;" fxLayoutAlign="center center">
+        <!-- Company CO<span style="font-size: small;margin-right: 5px;">2 </span>Details -->
+        <span *ngIf="!projectWiseView">{{uiLabels.companyCO2Details}}</span>
+        <span *ngIf="projectWiseView">{{uiLabels.projectCO2Details}}</span>
+    </div>
+    <!-- <label style="background-color: rgb(194, 190, 190);size: 15px;">
+        Company Co2 Details
+    </label> -->
+    <mat-dialog-content>
+        <mat-tab-group>
+            <!-- <mat-tab *ngIf="isDumperCompany && !projectWiseView" label={{uiLabels.dumpingOperation}}>
+                <app-dumping-operation-tab [startDate]="startDate" [endDate]="endDate" [companyTotalCo2Quantity]="companyTotalCo2Quantity" [selectedMonth]="selectedMonth" [selectedYear]="selectedYear" [dumpingMonthWiseTotalWasteItemQuantity]="dumpingMonthWiseTotalWasteItemQuantity">
+
+                </app-dumping-operation-tab>
+            </mat-tab>
+            <mat-tab *ngIf="isProcessorCompany" label={{uiLabels.processingOperation}}>
+                <app-processing-operation-tab [startDate]="startDate" [endDate]="endDate" [companyTotalCo2Quantity]="companyTotalCo2Quantity" [selectedMonth]="selectedMonth" [selectedYear]="selectedYear" [processingMonthWiseTotalWasteItemQuantity]="processingMonthWiseTotalWasteItemQuantity" [isProjectWiseCO2Emission]="isProjectWiseCO2Emission" [projectWiseCO2Emission]="projectWiseCO2Emission">
+                </app-processing-operation-tab>
+            </mat-tab>
+            <mat-tab *ngIf="isTransporterCompany && !projectWiseView" label={{uiLabels.transportingOperation}}>
+                <app-transporting-operation-tab [startDate]="startDate" [endDate]="endDate" [companyTotalCo2Quantity]="companyTotalCo2Quantity" [selectedMonth]="selectedMonth" [selectedYear]="selectedYear" [transporterMonthWiseCompanyVehicleFuelConsumption]="transporterMonthWiseCompanyVehicleFuelConsumption"></app-transporting-operation-tab>
+            </mat-tab> -->
+
+            <mat-tab label={{uiLabels.dumpingOperation}}>
+                <app-dumping-operation-tab [startDate]="startDate" [endDate]="endDate" [companyTotalCo2Quantity]="companyTotalCo2Quantity" [selectedMonth]="selectedMonth" [selectedYear]="selectedYear" [dumpingMonthWiseTotalWasteItemQuantity]="dumpingMonthWiseTotalWasteItemQuantity" [projectWiseCO2Emission]="projectWiseCO2Emission">
+
+                </app-dumping-operation-tab>
+            </mat-tab>
+            <mat-tab label={{uiLabels.processingOperation}}>
+                <app-processing-operation-tab [startDate]="startDate" [endDate]="endDate" [companyTotalCo2Quantity]="companyTotalCo2Quantity" [selectedMonth]="selectedMonth" [selectedYear]="selectedYear" [processingMonthWiseTotalWasteItemQuantity]="processingMonthWiseTotalWasteItemQuantity" [isProjectWiseCO2Emission]="isProjectWiseCO2Emission" [projectWiseCO2Emission]="projectWiseCO2Emission">
+                </app-processing-operation-tab>
+            </mat-tab>
+            <mat-tab label={{uiLabels.transportingOperation}}>
+                <app-transporting-operation-tab [startDate]="startDate" [endDate]="endDate" [companyTotalCo2Quantity]="companyTotalCo2Quantity" [selectedMonth]="selectedMonth" [selectedYear]="selectedYear" [transporterMonthWiseCompanyVehicleFuelConsumption]="transporterMonthWiseCompanyVehicleFuelConsumption" [projectWiseCO2Emission]="projectWiseCO2Emission">
+                </app-transporting-operation-tab>
+            </mat-tab>
+
+
+        </mat-tab-group>
+    </mat-dialog-content>
+</mat-card>
+<mat-card-actions align="end">
+    <button mat-raised-button color="accent" mat-dialog-close>
+        {{uiLabels.close}}
+    </button>
+</mat-card-actions>

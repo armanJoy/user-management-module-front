@@ -1,0 +1,24 @@
+<div *ngIf="viewComponet" class="column" style="display: flex;flex-direction: column;flex: 1;width: 100%;">
+    <div fxFlex="1 1 90" class="column" style="margin-bottom: 20px;">
+        <div fxFlex="0 1 170px" fxLayout="row" fxLayoutAlign="start start">
+            <mat-label>{{uiLabels.dateLabel}}</mat-label>
+        </div>
+        <div fxFlex="0 1 20px" fxLayout="row" fxLayoutAlign="start start">
+            <mat-label>:</mat-label>
+        </div>
+        <div fxFlex="90 1 auto" fxLayout="row" fxLayoutAlign="start start">
+            <app-date-time-input id="inspectionDate" [modelObject]="completeDate" [modelDateAttributeName]="'date'"></app-date-time-input>
+        </div>
+
+        <div fxFlex="90 1 auto" fxLayout="row" fxLayoutAlign="start start">
+            <button mat-raised-button class="list-button-medium" (click)="completeProcess()">
+                {{uiLabels.updateBtn}}
+            </button>
+        </div>
+
+    </div>
+
+    <div class="column" style="width: 100%;">
+        <app-manualmenifesto-tab [manifesto]="data" [flag]="true"></app-manualmenifesto-tab>
+    </div>
+</div>

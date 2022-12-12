@@ -1,0 +1,58 @@
+<!-- <button (click)="onClickBrowseBtn()">Browse</button> -->
+<span *ngIf="isSystemAdmin">
+    <app-lang-def-button [componentCode]="componentCode"></app-lang-def-button>
+</span>
+<mat-card>
+    <mat-card-content *ngFor="let item of userNotification " class="common-list-item" [ngStyle]="{'background-color': selectedItem==item ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(item)" style="margin: 5px;">
+        <div class="list-item">
+            <div class="three-section-list-row" style="margin-bottom: 10px;">
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator">
+
+                    </div>
+                    <div class="list-section-value" style="font-weight: 500;">
+                        <mat-label>{{item.notificationTypeName}}</mat-label>
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator">
+
+                    </div>
+                    <div class="list-section-value">
+                        <button>{{item.notificationNumberOftype}}</button>
+                        <!-- <mat-icon>{{item.notificationNumberOftype}}</mat-icon> -->
+                    </div>
+
+                </div>
+                <div class="list-value-section">
+                    <div class="list-section-label">
+
+                    </div>
+
+                    <div class="list-section-separator">
+
+                    </div>
+                    <div class="list-section-value">
+                        <button mat-raised-button class="list-button-light" (click)="onClickDetailBtn(item)">
+                            {{uiLabels.detail}}
+                        </button>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,169 @@
+<div *ngIf="viewContent">
+
+    <div fxLayout="row">
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.headerLabel}}
+            </mat-label>
+            <div fxLayoutAlign="end center" style="margin-right: 40px;">
+                <button id="addBranchBtn" mat-raised-button color="primary" (click)="addPartners()">{{uiLabels.addButton}}</button>
+            </div>
+        </mat-toolbar>
+    </div>
+
+    <div style="min-height: 200px;">
+        <mat-toolbar>{{uiLabels.selectedPartners}}</mat-toolbar>
+        <mat-label *ngIf="selectedPartnerList && selectedPartnerList.length<=0">{{uiLabels.noPartnerMsg}}</mat-label>
+        <div *ngFor="let item of selectedPartnerList">
+            <div class="list-item">
+                <div class="two-section-list-row">
+                    <div class="list-value-section-one" style="width: 125px;">
+                        <div class="list-section-label">
+                            <!-- <mat-checkbox [(ngModel)]="item.isSelected" style="padding-right: 15px;" (click)="updateSelectedItemList(item, $event)"> -->
+                            {{uiLabels.companyName}}
+
+                            <!-- </mat-checkbox> -->
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+
+                        <div class="list-section-value text-with-chip">
+                            {{item.companyName}}
+                            <mat-chip-list *ngIf="item.approvalStatus=='statusTemporaryUse'">
+                                <mat-chip>{{uiLabels.temporary}}</mat-chip>
+                            </mat-chip-list>
+                        </div>
+                    </div>
+
+                    <div class="list-value-section-two">
+                        <div class="list-section-label">
+                            {{uiLabels.businessCategory}}
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.businessCategoryView}}
+                        </div>
+
+                        <div class="list-section-value">
+                            <button mat-raised-button class="list-button" (click)="updateSelectedItemList(item, $event)">{{uiLabels.removeButton}}</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="two-section-list-row ">
+                    <div class="list-value-section-one ">
+                        <div class="list-section-label">
+                            {{uiLabels.companyAddress}}
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.addressView}}
+
+                        </div>
+                    </div>
+
+                    <div class="list-value-section-two">
+                        <div class="list-section-label">
+                            {{uiLabels.companyContactNo}}
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.contactView}}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+        <app-search-pagination (searchByText)="search()"></app-search-pagination>
+        <div *ngFor="let item of dxrCompanyViewList">
+
+            <div class="list-item">
+
+                <div class="two-section-list-row">
+
+
+                    <div class="list-value-section-one" style="width: 125px;">
+                        <div class="list-section-label">
+                            <mat-checkbox [(ngModel)]="item.isSelected" style="padding-right: 15px;" (click)="updateSelectedItemList(item, $event)">
+                                {{uiLabels.companyName}}
+                            </mat-checkbox>
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+
+                        <div class="list-section-value text-with-chip">
+                            {{item.companyName}}
+                            <mat-chip-list *ngIf="item.approvalStatus=='statusTemporaryUse'">
+                                <mat-chip>{{uiLabels.temporary}}</mat-chip>
+                            </mat-chip-list>
+                        </div>
+                    </div>
+
+                    <div class="list-value-section-two">
+                        <div class="list-section-label">
+                            {{uiLabels.businessCategory}}
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.businessCategoryView}}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="two-section-list-row ">
+                    <div class="list-value-section-one ">
+                        <div class="list-section-label">
+                            {{uiLabels.companyAddress}}
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.addressView}}
+
+                        </div>
+                    </div>
+
+                    <div class="list-value-section-two">
+                        <div class="list-section-label">
+                            {{uiLabels.companyContactNo}}
+                        </div>
+                        <div class="list-section-separator">
+                            :
+                        </div>
+                        <div class="list-section-value">
+                            {{item.contactView}}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

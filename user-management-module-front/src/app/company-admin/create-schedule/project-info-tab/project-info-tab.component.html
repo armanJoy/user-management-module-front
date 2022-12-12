@@ -1,0 +1,316 @@
+<div *ngIf="isViewContent">
+
+
+    <mat-card *ngIf="!isViewPopup">
+        <div [hidden]="hideTitleBar">
+            <span *ngIf="isSystemAdmin">
+                <app-lang-def-button [componentCode]="componentCode">
+                </app-lang-def-button>
+            </span>
+            <mat-toolbar style="margin-bottom: 10px;background-color: rgb(234, 234, 234);padding: 10px 0px;">
+
+                {{uiLabels.title}}
+                <div style="margin: 5px 20px 5px 15px;display: flex;justify-content: flex-end;flex: 1;">
+                    <button mat-raised-button color="primary" *ngIf="!isRedirecteView" (click)="onClickProjectListBtn()">{{uiLabels.projectList}}</button>
+                </div>
+            </mat-toolbar>
+        </div>
+        <mat-card-content>
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="!(isHandset$ | async)">
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <div fxFlex="1 1 40">
+                        <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.projectTitle}} </mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label>{{project.projectTitle}}</mat-label>
+                        </div>
+                    </div>
+                    <div fxFlex="1 1 40">
+                        <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.projectCreationDate}} </mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label>{{project.projectCreationDate}}</mat-label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <div fxFlex="1 1 40">
+                        <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.projectStartDate}} </mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label>{{project.projectStartDate.substring(0, (project.projectStartDate.length-8))}}</mat-label>
+                        </div>
+                    </div>
+                    <div fxFlex="1 1 40">
+                        <div fxFlex="0 1 140px" fxLayout="column" fxLayoutAlign="center end">
+                            <mat-label>{{uiLabels.projectEndDate}} </mat-label>
+                        </div>
+                        <div fxFlex="0 1 20px" fxLayout="column" fxLayoutAlign="center center">
+                            <mat-label>:</mat-label>
+                        </div>
+                        <div fxFlex="90 1 auto">
+                            <mat-label>{{project.projectEndDate.substring(0, (project.projectEndDate.length-8))}}</mat-label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+
+        <mat-accordion *ngFor="let item of project.wasteDisposalInfo" multi>
+            <mat-expansion-panel style="margin-top: 10px;">
+                <mat-expansion-panel-header style="height: 100%;padding: 7px;background-color:rgb(220, 240, 240);">
+
+                    <div style="flex:1">
+
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.wasteItem}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.wasteItemName}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.disposalId}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.disposalViewId}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    <!-- Drop Location -->
+                                </div>
+
+                                <div class="list-section-separator" *ngIf="!isViewPopup">
+                                    <button *ngIf="!checkValue" mat-raised-button class="list-button-light" (click)="onClickTripPlanButton(item)">{{uiLabels.tripPlanBtn}} </button>
+                                    <!-- : -->
+                                </div>
+                                <div class="list-section-value">
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.pickLocation}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.pickLocation}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.dropLocation}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.dropLocation}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.pickQuantity}} ({{item.unit}})
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.quantity}}
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="three-section-list-row">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.date}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+
+                                    {{uiLabels.from}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.fromDateView}}
+
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.to}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{item.toDateView}}
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </mat-expansion-panel-header>
+                <div *ngFor="let disposalPick of item.disposeWisePickList,index as i">
+                    <!-- <div style="flex:1"> -->
+                    <div class="list-item">
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.pickNo}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{i+1}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.date}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{disposalPick.tripInfo.pickUpDate}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.pickQuantity}}
+                                </div>
+
+                                <div class="list-section-separator">
+
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{disposalPick.quantity}}
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="three-section-list-row" style="margin-bottom: 10px;">
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.vehiclLicenseNo}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{disposalPick.tripInfo.vehicleLicenseNo}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.driverName}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    {{disposalPick.tripInfo.driverName}}
+                                </div>
+
+                            </div>
+                            <div class="list-value-section">
+                                <div class="list-section-label">
+                                    {{uiLabels.tripTime}}
+                                </div>
+
+                                <div class="list-section-separator">
+                                    :
+                                </div>
+                                <div class="list-section-value">
+                                    <mat-label *ngIf="disposalPick.tripInfo.startTime.includes(':')">{{disposalPick.tripInfo.startTime}} - {{disposalPick.tripInfo.endTime}}</mat-label>
+                                    <mat-label *ngIf="!disposalPick.tripInfo.startTime.includes(':')">{{disposalPick.tripInfo.startTime.substring(0,2)}}:{{disposalPick.tripInfo.startTime.substring(2)}} - {{disposalPick.tripInfo.endTime.substring(0,2)}}:{{disposalPick.tripInfo.endTime.substring(2)}}</mat-label>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>

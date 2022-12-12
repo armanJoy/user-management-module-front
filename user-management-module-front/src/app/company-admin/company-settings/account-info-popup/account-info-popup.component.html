@@ -1,0 +1,218 @@
+<mat-card style="border:solid rgb(224, 217, 217) 2px;">
+    <div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
+        <!-- <mat-card-header>
+            <mat-card-title style="padding-bottom: 10px;">{{uiLabels.addAccountInfo}}</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider> -->
+
+        <mat-card-content style="margin-top: 20px;">
+
+            <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="!(isHandset$ | async)">
+                <div fxLayout="row">
+                    <div fxFlex="0 0 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>
+                            <span *ngIf="isSystemAdmin">
+                                <app-lang-def-button [componentCode]="componentCode">
+                                </app-lang-def-button>
+                            </span>
+                            {{uiLabels.accountantName}}
+                        </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="accountantName" matInput placeholder="" [(ngModel)]="accountantInfo.accountantName">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.accountantEmail}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="accountantEmail" matInput placeholder="" [(ngModel)]="accountantInfo.accountantEmail">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.contactNo}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="contactNo" mask="00-0000-0000" placeholder="03-2222-2222" [(ngModel)]="accountantInfo.contactNo">
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.paymentMethd}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto" *ngFor="let payment of paymentModeViewList,index as i" fxLayoutAlign="start center">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id={{payment.name}} [(ngModel)]="payment.isCheck" class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [value]="payment.name" (change)="onCheckboxChange($event)" />
+                        <label for="check"> {{payment.label}}</label>
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+                <div fxLayout="row">
+                    <div fxFlex="0 0 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.invoiceCloseDate}} </mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <app-date-time-input id="inspectionDate" [modelObject]="accountantInfo" [modelDateAttributeName]="'invoiceClosingDate'"></app-date-time-input>
+
+                        <!-- <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="invoiceCloseDate" mask="00-00-00" placeholder="04-02-22" [(ngModel)]="accountantInfo.invoiceClosingDate"> -->
+
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row">
+                    <div fxFlex="0 0 150px" fxLayout="column" fxLayoutAlign="center end">
+                        <mat-label>{{uiLabels.invoicePaymentDate}}</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>:</mat-label>
+                    </div>
+                    <div fxFlex="90 1 auto">
+                        <app-date-time-input id="inspectionDate" [modelObject]="accountantInfo" [modelDateAttributeName]="'invoicePaymentDate'"></app-date-time-input>
+                        <!-- <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="invoicePaymentDate" matInput mask="00-00-00" placeholder="04-02-22" [(ngModel)]="accountantInfo.invoicePaymentDate"> -->
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+
+                    </div>
+                </div>
+
+                <div fxLayout="row" *ngIf="!(isHandset$ | async)">
+                    <div fxFlex="0 0 150px" fxLayout="column" fxLayoutAlign="center start">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+                    <div fxFlex="0 0 40px" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-label>&nbsp;</mat-label>
+                    </div>
+
+                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center center">
+                        <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.close}}</button>
+                    </div>
+                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center center">
+                        <button id="save" mat-raised-button color="primary" type="submit" (click)="addAccountant()">{{uiLabels.saveBtn}}</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div fxLayout="column" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'" *ngIf="(isHandset$ | async)">
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.accountantName}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="accountantName" matInput placeholder="" [(ngModel)]="accountantInfo.accountantName">
+                </div>
+
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.accountantEmail}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="accountantEmail" matInput placeholder="" [(ngModel)]="accountantInfo.accountantEmail">
+                </div>
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.contactNo}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+                    <input type="text" [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id="contactNo" mask="00-0000-0000" placeholder="03-2222-2222" [(ngModel)]="accountantInfo.contactNo">
+                </div>
+
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.paymentMethd}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxLayout="column" fxFlex="90 1 auto" fxLayoutAlign="start start">
+                    <div *ngFor="let payment of paymentModeViewList,index as i" fxLayoutAlign="start center">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" id={{payment.name}} [(ngModel)]="payment.isCheck" class="checkboxInput" style="width: 15px;" type="checkbox" name="check" [value]="payment.name" (change)="onCheckboxChange($event)" />
+                        <label for="check"> {{payment.label}}</label>
+                    </div>
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.invoiceCloseDate}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+
+                    <app-date-time-input id="inspectionDate" [modelObject]="accountantInfo" [modelDateAttributeName]="'invoiceClosingDate'"></app-date-time-input>
+
+                    <!-- <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="invoiceCloseDate" mask="00-00-00" placeholder="04-02-22" [(ngModel)]="accountantInfo.invoiceClosingDate"> -->
+
+                </div>
+
+                <div style="padding-top: 10px;">
+                    <u>
+                        <mat-label>{{uiLabels.invoicePaymentDate}}</mat-label>
+                    </u>
+                </div>
+
+                <div fxFlex="90 1 auto">
+
+                    <app-date-time-input id="inspectionDate" [modelObject]="accountantInfo" [modelDateAttributeName]="'invoicePaymentDate'"></app-date-time-input>
+
+                    <!-- <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="invoicePaymentDate" matInput mask="00-00-00" placeholder="04-02-22" [(ngModel)]="accountantInfo.invoicePaymentDate"> -->
+
+                </div>
+
+                <div fxLayout="column" *ngIf="(isHandset$ | async)" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+                    <div fxLayout="row" fxLayoutAlign="center center" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+                        <div fxFlex="0 0 80px" fxLayoutAlign="center center">
+                            <button id="close" mat-raised-button color="accent" mat-dialog-close="">{{uiLabels.close}}</button>
+                        </div>
+                        <div fxFlex="0 0 80px" fxLayoutAlign="center center">
+                            <button id="save" mat-raised-button color="primary" type="submit" (click)="addAccountant()">{{uiLabels.saveBtn}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </mat-card-content>
+    </div>
+</mat-card>

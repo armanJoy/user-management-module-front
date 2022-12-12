@@ -1,0 +1,175 @@
+<!-- <mat-dialog-content> -->
+<!-- <div class="popup-modal">
+    <div class="popup-wrapper" >
+        <div class="popup-controlPanel" draggable="true" (mousedown)="mousedown($event)" (drag)="dragging($event)"> -->
+<mat-card>
+    <div *ngFor="let item of componentList">
+        <mat-card-title *ngIf="item.componentCode==componentCode">{{item.componentName}}</mat-card-title>
+        <mat-dialog-content>
+            <div *ngIf="item.componentCode==componentCode">
+                <!-- <mat-accordion style="width: 100%;" multi> -->
+                <!-- <mat-expansion-panel-header> -->
+                <mat-card>
+                    <div fxLayout="row" style="margin-bottom: 10px;">
+                        <u>
+                            <h3>{{item.componentName}} Label</h3>
+                        </u>
+                        <button mat-raised-button color="primary" (click)="popupOpenForAddLabel(item.labels)" style="margin-left: 20px;">Add Label</button>
+                    </div>
+
+
+                    <div>
+                        <!-- <div fxLayout="row"> -->
+                        <div *ngFor="let label  of item.labels" style="margin-bottom: 10px;" fxLayout="row wrap" fxLayoutAlign="start start" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+                            <div fxFlex="0 0 45">
+                                <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>English</mat-label>
+                                </div>
+
+                                <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                    <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="label.eng">
+                                </div>
+
+                            </div>
+
+                            <div fxFlex="0 0 45" style="margin-left: 10px;">
+                                <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center end">
+                                    <mat-label>Japanese</mat-label>
+                                </div>
+
+                                <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                    <mat-label>:</mat-label>
+                                </div>
+                                <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                    <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="label.jpn">
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- </div> -->
+                    </div>
+
+
+                </mat-card>
+
+
+
+                <!-- </mat-expansion-panel-header> -->
+                <mat-card>
+                    <div fxLayout="row" style="margin-bottom: 10px;">
+                        <u>
+                            <h3>{{item.componentName}} Message</h3>
+                        </u>
+                        <button mat-raised-button color="primary" (click)="popupOpenForAddMessage(item.messages)" style="margin-left: 20px;">Add Message</button>
+                    </div>
+
+
+                    <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '20px' : '0px'" *ngFor="let label  of item.messages" style="margin-bottom: 10px;">
+                        <div fxLayout="row">
+                            <div fxLayout="row" fxLayoutAlign="start start" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+                                <div fxFlex="0 0 45">
+                                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center end">
+                                        <mat-label>English</mat-label>
+                                    </div>
+
+                                    <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                        <mat-label>:</mat-label>
+                                    </div>
+                                    <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="label.eng">
+                                    </div>
+
+                                </div>
+
+                                <div fxFlex="0 0 45" style="margin-left: 10px;">
+                                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center end">
+                                        <mat-label>Japanese</mat-label>
+                                    </div>
+
+                                    <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                        <mat-label>:</mat-label>
+                                    </div>
+                                    <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="label.jpn">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-card>
+
+
+                <mat-card>
+                    <div fxLayout="row" style="margin-bottom: 10px;">
+                        <u>
+                            <h3>{{item.componentName}} Notification</h3>
+                        </u>
+                        <button mat-raised-button color="primary" (click)="popupOpenForAddNotification(item.notifications)" style="margin-left: 20px;">Add Notification</button>
+                    </div>
+
+
+                    <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '20px' : '0px'" *ngFor="let label  of item.notifications" style="margin-bottom: 10px;">
+                        <div fxLayout="row">
+                            <div fxLayout="row" fxLayoutAlign="start start" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+                                <div fxFlex="0 0 45">
+                                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center end">
+                                        <mat-label>English</mat-label>
+                                    </div>
+
+                                    <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                        <mat-label>:</mat-label>
+                                    </div>
+                                    <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="label.eng">
+                                    </div>
+
+                                </div>
+
+                                <div fxFlex="0 0 45" style="margin-left: 10px;">
+                                    <div fxFlex="0 0 80px" fxLayout="column" fxLayoutAlign="center end">
+                                        <mat-label>Japanese</mat-label>
+                                    </div>
+
+                                    <div fxFlex="0 0 20px" fxLayout="column" fxLayoutAlign="center center">
+                                        <mat-label>:</mat-label>
+                                    </div>
+                                    <div fxFlex="0 0 85" fxLayoutAlign="start start">
+                                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="label.jpn">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-card>
+
+
+
+                <!-- </mat-accordion> -->
+            </div>
+        </mat-dialog-content>
+
+    </div>
+
+</mat-card>
+
+<mat-card>
+    <mat-card-actions align="end">
+        <button mat-raised-button color="accent" mat-dialog-close>Close</button>
+        <button mat-raised-button color="primary" (click)="saveIntoDatabase()" mat-dialog-close>Save</button>
+    </mat-card-actions>
+</mat-card>
+
+<!-- </div>
+        
+    </div>
+</div> -->

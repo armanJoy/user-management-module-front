@@ -1,0 +1,45 @@
+<div *ngIf="viewContent" style="height:60vh">
+    <div fxLayout="row">
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%" style="font-weight: 400;">
+                <span *ngIf="isSystemAdmin">
+                    <app-lang-def-button [componentCode]="componentCode">
+                    </app-lang-def-button>
+                </span>
+                {{uiLabels.currentCompanyLabel}}: <span style="font-weight: 500;">&nbsp;{{data.companyContext.companyName}}</span>
+            </mat-label>
+        </mat-toolbar>
+        <mat-divider>
+        </mat-divider>
+        <mat-toolbar style="background-color: rgb(235, 235, 235);">
+            <mat-label fxLayoutAlign="start center" fxFlex="1 1 100%" style="font-weight: 400;">{{uiLabels.switchToCompanyLabel}}: <span style="font-weight: 500;">&nbsp;{{selectedItem?.companyName}}</span></mat-label>
+        </mat-toolbar>
+        <mat-toolbar style="background-color: rgb(235, 235, 235);padding-right: 50px;" fxLayoutAlign="end center">
+            <button id="switchContextButton" mat-raised-button color="primary" style="width: 140px;" (click)="switchContext()">{{uiLabels.switchButton}}</button>
+        </mat-toolbar>
+
+    </div>
+    <div id="" fxLayout="row" *ngFor="let eachCompany of companyContextList" class="common-list-item simple-list" [ngStyle]="{'background-color': selectedItem==eachCompany ? 'rgb(224, 224, 241)' : ''}" (click)="selectListItem(eachCompany)">
+        <div fxLayout="row" fxFlex="1 1 80%" style="justify-content: flex-start; align-items: center;">
+
+
+            <mat-icon *ngIf="eachCompany.companyId==selectedItem.companyId" color="primary">check_box</mat-icon>
+            <mat-icon *ngIf="eachCompany.companyId!=selectedItem.companyId" style="color: rgb(56, 56, 56);">check_box_outline_blank</mat-icon>
+            <mat-label id={{eachCompany.companyName}} style="margin-left: 5px;display: flex;justify-content: flex-start;align-items: center;">
+                {{eachCompany.companyName}}
+                <mat-chip-list *ngIf="eachCompany.approvalStatus==statusTemporaryUse" style="margin-left: 15px;">
+                    <mat-chip>{{uiLabels.temporary}}</mat-chip>
+                </mat-chip-list>
+            </mat-label>
+
+        </div>
+
+    </div>
+
+</div>
+<div fxLayout="row">
+
+    <mat-toolbar style="background-color: rgb(255, 255, 255);padding-right: 50px;" fxLayoutAlign="end center">
+        <button id="{{selectedItem?.companyId + 'close'}}" mat-raised-button color="accent" style="width: 100px;" mat-dialog-close>{{uiLabels.closeButton}}</button>
+    </mat-toolbar>
+</div>
