@@ -1,27 +1,18 @@
 <div *ngIf="!viewContent" class="row" style="display: flex;justify-content:center;align-items: center;height: 100vh;">
-
     <img src="../assets/preloader.gif" style="width:70px">
-
 </div>
-
 <mat-sidenav-container class="sidenav-container component-container" (backdropClick)="close('backdrop')" *ngIf="true">
-
-
-
     <mat-sidenav *ngIf="(isHandset$ | async)" #drawer class="sidenav secondary-menu" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
         <div style="background-color: navy; color: white;height: 63px;padding-left: 16px;">
             <div class="col">
                 <div class="row left" style="margin-top: 15px;font-weight: 550;font-size: 24px;">
-                    {{uiLabels.primaryMenuHead}}
+                    {{primaryMenuHead}}
                 </div>
                 <div class="row left" style="font-size: 9px;margin-left: 30px;">
                     {{APP_VERSION}}
                 </div>
             </div>
-
-
         </div>
-
         <mat-nav-list class="secondary-menu" *ngFor="let parentMenuItem of menuList">
             <mat-expansion-panel *ngIf="parentMenuItem.child.length>0 && parentMenuItem.child[0].menuTypeId==primaryMenuTypeId" [class.mat-elevation-z0]="true" dense>
                 <mat-expansion-panel-header id={{parentMenuItem.menuId}}>
@@ -29,26 +20,21 @@
                 </mat-expansion-panel-header>
                 <mat-nav-list *ngFor="let childMenuItem of parentMenuItem.child" dense>
                     <mat-list-item id={{childMenuItem.menuId}} [ngClass]="selectedMenu==childMenuItem.menuTitle ? 'secondary-menu-selected' : ''" (click)="setSelectedMenuName(childMenuItem.menuTitle, childMenuItem.menuUrl,childMenuItem)">{{childMenuItem.menuTitle}}</mat-list-item>
-
                 </mat-nav-list>
             </mat-expansion-panel>
             <mat-list-item *ngIf="parentMenuItem.child.length==0 || ( parentMenuItem.child.length>0 && parentMenuItem.child[0].menuTypeId!=primaryMenuTypeId)" id={{parentMenuItem.menuId}} [ngClass]="selectedMenu==parentMenuItem.menuTitle ? 'secondary-menu-selected' : ''" (click)="setSelectedMenuName(parentMenuItem.menuTitle, parentMenuItem.menuUrl,parentMenuItem)">{{parentMenuItem.menuTitle}}</mat-list-item>
-
         </mat-nav-list>
     </mat-sidenav>
-
-
     <mat-sidenav-content *ngIf="!(isHandset$ | async)">
         <div>
             <div fxLayout="row">
                 <mat-toolbar style="background-color: navy; color: white;overflow: auto;">
                     <div style="margin-right: 50px;">
-                        <mat-label fxLayoutAlign="start center" style="margin-top: 5px;font-weight: 550;font-size: 24px;">{{uiLabels.primaryMenuHead}}</mat-label>
+                        <mat-label fxLayoutAlign="start center" style="margin-top: 5px;font-weight: 550;font-size: 24px;">{{primaryMenuHead}}</mat-label>
                         <mat-label fxLayoutAlign="end center" style="font-size: 9px;margin-top: -13px;">
                             {{APP_VERSION}}
                         </mat-label>
                     </div>
-                    <!-- <div *ngIf="!(isHandset$ | async)"> -->
                     <div *ngFor="let parentMenuItem of menuList">
                         <div *ngIf="parentMenuItem.child.length>0 && parentMenuItem.child[0].menuTypeId==primaryMenuTypeId">
                             <button id={{parentMenuItem.menuId}} [ngClass]="selectedMenu==parentMenuItem.menuTitle ? 'presentation-menu-selected' : ''" mat-button [matMenuTriggerFor]="afterMenu">{{parentMenuItem.menuTitle}}</button>
@@ -56,219 +42,61 @@
                                 <button mat-menu-item *ngFor="let childMenuItem of parentMenuItem.child" id={{childMenuItem.menuId}} (click)="setSelectedMenuName(childMenuItem.menuTitle, childMenuItem.menuUrl,childMenuItem, parentMenuItem.menuTitle)">{{childMenuItem.menuTitle}}</button>
                             </mat-menu>
                         </div>
-
                         <div *ngIf="parentMenuItem.child.length<=0">
                             <button id={{parentMenuItem.menuId}} [ngClass]="selectedMenu==parentMenuItem.menuTitle ? 'presentation-menu-selected' : ''" mat-button (click)="setSelectedMenuName(parentMenuItem.menuTitle, parentMenuItem.menuUrl,parentMenuItem)">{{parentMenuItem.menuTitle}}</button>
                         </div>
-
                     </div>
-                    <!-- </div> -->
-
-                    <!-- <button *ngIf="isHandset$ | async" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-                        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-                    </button> -->
-
                     <div fxLayout="column" fxLayoutAlign="center start" fxFlex="1 1 100%" *ngIf="isHandset$ | async">
                         <div>
-                            <mat-label fxLayoutAlign="start center" style="margin-top: 5px;font-weight: 550;font-size: 24px;">{{uiLabels.primaryMenuHead}}</mat-label>
+                            <mat-label fxLayoutAlign="start center" style="margin-top: 5px;font-weight: 550;font-size: 24px;">{{primaryMenuHead}}</mat-label>
                             <mat-label fxLayoutAlign="end center" style="font-size: 9px;margin-top: -13px;">
                                 {{APP_VERSION}}
                             </mat-label>
                         </div>
                     </div>
-                    <div fxFlex="0 0 2%" fxLayoutAlign="end center" fxLayoutGap="20px" style=" color: white;">
-                        <span *ngIf="isSystemAdmin">
-                            <app-lang-def-button [componentCode]="componentCode">
-                            </app-lang-def-button>
-                        </span>
-                    </div>
 
                     <div fxFlex="1 1 100%" fxLayoutAlign="end center" fxLayoutGap="20px" style=" color: white;">
-
-                        <!-- *ngIf="!isLogedIn" -->
-                        <button *ngIf="!isLogedIn" id="visitorLogin" class="simple-button" mat-raised-button [routerLink]="['visitor/login']">{{uiLabels.login}}</button>
-
-                        <!-- <button mat-button *ngIf="isLogedIn"> -->
-
-                        <button *ngIf="isLogedIn" id="companyInvitation" mat-raised-button class="list-button-light" (click)="openCompanyInvitationDiolog()">{{uiLabels.companyInvitation}}</button>
-
-                        <mat-icon style="font-size: 28px;" (click)="redirectToMobileApp()">mobile_screen_share</mat-icon>
-
-                        <button *ngIf="isLogedIn" id="visitorLogout" class="simple-button" mat-raised-button (click)="logoutFromCompany(true, null)">{{uiLabels.logout}}</button>
-
-                        <mat-icon *ngIf="isLogedIn && totalNotification>0" style="cursor: pointer;" matBadge={{totalNotification}} matBadgeColor="accent" (click)="onClickNotificationIcon()">
-                            notifications
-                        </mat-icon>
-                        <mat-icon *ngIf="isLogedIn && totalNotification<=0" style="cursor: pointer;" matBadgeColor="accent" (click)="onClickNotificationIcon()">notifications</mat-icon>
-
-                        <button *ngIf="isNotification && (isHandset$ | async)" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()">
+                        <button *ngIf="!isLogedIn" id="visitorLogin" class="simple-button" mat-raised-button [routerLink]="['visitor/login']">Login</button>
+                        <button *ngIf="isLogedIn" id="visitorLogout" class="simple-button" mat-raised-button (click)="logoutFromCompany(true, null)">Logout</button>
+                        <button *ngIf="(isHandset$ | async)" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()">
                             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                         </button>
-
-                        <mat-select id="profileDropdown" *ngIf="isLogedIn" [(ngModel)]="selectedProfileItem" [(value)]="selectedProfileItem" placeholder={{selectedProfileItem}} style="width: 120px; font-size: 15px; color: white;">
-                            <div *ngFor="let item of profileArray; index as i">
-                                <mat-option [value]="item.title" id="profileItem{{i}}" (click)="profileItemClick()">
-                                    {{item.title}}
-                                </mat-option>
-                            </div>
-                        </mat-select>
-
-                        <mat-select id="languageCheckbox" [(ngModel)]="selectedLanguage" [(value)]="selectedLanguage" placeholder={{selectedLanguage}} style="width: 50px; font-size: 15px; color: white;" (selectionChange)="changeLanguage()">
-                            <div *ngFor="let item of languageArray">
-                                <mat-option [value]="item" id={{item}}>
-                                    {{item}}
-                                </mat-option>
-                            </div>
-                        </mat-select>
-
                     </div>
-
                 </mat-toolbar>
-
             </div>
-
             <div>
-                <!-- position: fixed; top: 1; z-index: 9999; -->
                 <div style="width: 100%; margin-bottom: 51px;" fxLayout="row" fxLayoutAlign="start start">
-                    <!-- <div style="height: 90vh"></div> -->
                     <div style="width: 1000%;">
                         <router-outlet></router-outlet>
                     </div>
-
                 </div>
-
-                <div class="footer wrap" style="z-index: 1;" fxLayout="row" fxLayoutAlign="center center" *ngIf="!(isHandset$ | async)">
-                    <div style="padding-left: 100px; padding-right: 100px;">
-
-                        <label (click)="footerRoute(footerRoutes.COSTING)">{{uiLabels.costing}}</label>
-                    </div>
-                    <div>
-                        <label>|</label>
-                    </div>
-                    <!-- <div style="padding-left: 100px; padding-right: 100px;">
-                        <label (click)="footerRoute(footerRoutes.TERMS_OF_USE)">{{uiLabels.termsofUseTabHead}}</label>
-
-                    </div>
-                    <div>
-                        <label>|</label>
-                    </div> -->
-                    <div style="padding-left: 100px; padding-right: 100px;">
-
-                        <label (click)="footerRoute(footerRoutes.PRIVACY_POLICY)">{{uiLabels.privacyPolicyTabHead}}</label>
-                    </div>
-
-                </div>
-
             </div>
-
         </div>
-
     </mat-sidenav-content>
-
     <mat-sidenav-content *ngIf="(isHandset$ | async)" style="width: 100vw;">
         <div>
             <div fxLayout="row">
                 <mat-toolbar style="background-color: navy; color: white;overflow: auto;">
-
                     <button *ngIf="isHandset$ | async" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
                         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                     </button>
-
                     <div fxLayout="column" fxLayoutAlign="center start" fxFlex="1 1 100%" *ngIf="isHandset$ | async">
                         <div>
-                            <mat-label fxLayoutAlign="start center" style="margin-top: 5px;font-weight: 550;font-size: 24px;">{{uiLabels.primaryMenuHead}}</mat-label>
+                            <mat-label fxLayoutAlign="start center" style="margin-top: 5px;font-weight: 550;font-size: 24px;">{{primaryMenuHead}}</mat-label>
                             <mat-label fxLayoutAlign="end center" style="font-size: 9px;margin-top: -13px;">
                                 {{APP_VERSION}}
                             </mat-label>
                         </div>
                     </div>
-                    <div fxFlex="0 0 2%" fxLayoutAlign="end center" fxLayoutGap="20px" style=" color: white;">
-                        <span *ngIf="isSystemAdmin">
-                            <app-lang-def-button [componentCode]="componentCode">
-                            </app-lang-def-button>
-                        </span>
-                    </div>
                     <div fxFlex="1 1 100%" fxLayoutAlign="end center" fxLayoutGap="20px" style=" color: white;">
-                        <button class="simple-button" *ngIf="!isLogedIn" mat-raised-button [routerLink]="['visitor/login']" id="visitorLogin">{{uiLabels.login}}</button>
-                        <button id="visitorLogout" class="simple-button" style="margin: 0px 10px;" *ngIf="isLogedIn" mat-raised-button (click)="logoutFromCompany(true, null)">{{uiLabels.logout}}</button>
-                        <div *ngIf="isLogedIn" style="width: 20px;">
-                            <mat-icon *ngIf="totalNotification>0" matBadge={{totalNotification}} matBadgeColor="accent" (click)="onClickNotificationIcon()">
-                                notifications
-                            </mat-icon>
-                            <mat-icon *ngIf="totalNotification<=0" matBadgeColor="accent" (click)="onClickNotificationIcon()">notifications</mat-icon>
-
-                        </div>
-
-                        <!-- <mat-icon *ngIf="!isNotification" matBadge="5" matBadgeColor="accent" (click)="onClickNotificationIcon()" [routerLink]="['notification']">notifications</mat-icon> -->
-
-                        <button *ngIf="isNotification && (isHandset$ | async)" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()">
+                        <button class="simple-button" *ngIf="!isLogedIn" mat-raised-button [routerLink]="['visitor/login']" id="visitorLogin">Login</button>
+                        <button id="visitorLogout" class="simple-button" style="margin: 0px 10px;" *ngIf="isLogedIn" mat-raised-button (click)="logoutFromCompany(true, null)">Logout</button>
+                        <button *ngIf="(isHandset$ | async)" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()">
                             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                         </button>
-                        <mat-select id="profileDropdown" *ngIf="isLogedIn" [(ngModel)]="selectedProfileItem" [(value)]="selectedProfileItem" placeholder={{selectedProfileItem}} style="width: 150px; font-size: 15px; color: white;">
-                            <div *ngFor="let item of profileArray; index as i">
-                                <mat-option [value]="item.title" id="profileItem{{i}}" (click)="profileItemClick()">
-                                    {{item.title}}
-                                </mat-option>
-                            </div>
-                        </mat-select>
-
-                        <mat-select id="languageCheckbox" [(ngModel)]="selectedLanguage" [(value)]="selectedLanguage" placeholder={{selectedLanguage}} style="width: 100px; font-size: 15px; color: white;" (selectionChange)="changeLanguage()">
-                            <div *ngFor="let item of languageArray">
-                                <mat-option [value]="item" id={{item}}>
-                                    {{item}}
-                                </mat-option>
-                            </div>
-                        </mat-select>
                     </div>
-
                 </mat-toolbar>
-
             </div>
-
-            <div>
-                <div style="width: 100%; margin-bottom: 51px;" fxLayout="row" fxLayoutAlign="start start">
-                    <div style="width: 1000%;">
-                        <router-outlet></router-outlet>
-                    </div>
-
-                </div>
-
-                <div class="footer wrap" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="(isHandset$ | async)">
-
-
-                    <div style="padding-left: 10px; padding-right: 10px;">
-                        <label (click)="footerRoute(footerRoutes.COSTING)">
-                            {{uiLabels.costing}}
-                        </label>
-                    </div>
-                    <div>
-                        <label>|</label>
-                    </div>
-                    <!-- <div style="padding-left: 10px; padding-right: 10px;">
-                        <label (click)="footerRoute(footerRoutes.TERMS_OF_USE)">{{uiLabels.termsofUseTabHead}}</label>
-                    </div>
-                    <div>
-                        <label>|</label>
-                    </div> -->
-                    <div style="padding-left: 10px; padding-right: 10px;">
-
-                        <label (click)="footerRoute(footerRoutes.PRIVACY_POLICY)">{{uiLabels.privacyPolicyTabHead}}</label>
-                    </div>
-
-
-                </div>
-            </div>
-
         </div>
-
     </mat-sidenav-content>
-
-    <mat-sidenav #drawer position="end" opened role="navigation" *ngIf="isNotification&&totalNotification>0" style="width: 40%;height: 85%;margin-top: 65px;top: 0;">
-        <mat-nav-list>
-            <a>
-                <app-notification-menu [userNotification]="userNotification" [removeBrowseNotification]="removeBrowseNotification" [totalNotification]="totalNotification"></app-notification-menu>
-            </a>
-
-        </mat-nav-list>
-    </mat-sidenav>
 </mat-sidenav-container>

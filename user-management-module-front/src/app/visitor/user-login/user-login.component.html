@@ -6,39 +6,36 @@
     <div [ngClass]="!(isHandset$ | async) ? 'form-padding' : ''">
         <mat-card-header style="padding-bottom: 20px;">
             <label mat-dialog-title>
-                <span *ngIf="isSystemAdmin">
-                    <app-lang-def-button [componentCode]="componentCode">
-                    </app-lang-def-button>
-                </span>
-                {{uiLabels.pageHeader}}</label>
+                Login
+</label>
         </mat-card-header>
         <mat-card-content>
             <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
                 <div fxLayout="row">
                     <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
-                        <mat-label>{{uiLabels.userId}}</mat-label>
+                        <mat-label>Email</mat-label>
                     </div>
                     <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
                         <mat-label>:</mat-label>
                     </div>
                     <div fxFlex="90 1 auto">
-
-                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="userId" matInput [(ngModel)]="userIdentification.userId">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="userId" matInput [(ngModel)]="userIdentification.userId" [disabled]="firstStepAuthDone">
                     </div>
                     <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
 
                     </div>
                 </div>
+
                 <div fxLayout="row">
                     <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
-                        <mat-label>{{uiLabels.password}}</mat-label>
+                        <mat-label>Password</mat-label>
                     </div>
                     <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
                         <mat-label>:</mat-label>
                     </div>
                     <div fxFlex="90 1 auto">
 
-                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="UserPassword" matInput type="password" [(ngModel)]="userIdentification.userAuth">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="UserPassword" matInput type="password" [(ngModel)]="userIdentification.userAuth" [disabled]="firstStepAuthDone">
                     </div>
                     <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
 
@@ -61,16 +58,16 @@
                     </div>
                 </div>
 
-                <div fxLayout="row">
+		<div *ngIf="firstStepAuthDone" fxLayout="row" >
                     <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
-                        <mat-label></mat-label>
+                        <mat-label>OTP</mat-label>
                     </div>
                     <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
-                        <mat-label></mat-label>
+                        <mat-label>:</mat-label>
                     </div>
                     <div fxFlex="90 1 auto">
 
-                        <button id="loginBtn" mat-raised-button class="simple-button" (click)="login()">{{uiLabels.loginBtn}}</button>
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-small' : 'input-large'" id="otp" matInput type="text" [(ngModel)]="otp">
                     </div>
                     <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
 
@@ -79,29 +76,28 @@
 
                 <div fxLayout="row">
                     <div fxFlex="0 1 100px" fxLayout="column" fxLayoutAlign="center end">
-                        <mat-label></mat-label>
+                        
                     </div>
                     <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
                         <mat-label></mat-label>
                     </div>
                     <div fxFlex="90 1 auto">
+<button *ngIf="!firstStepAuthDone" id="loginBtn" mat-raised-button class="simple-button" (click)="login()">Login</button>
+			<u *ngIf="false && !firstStepAuthDone" style="margin-left:30px;cursor: pointer;" (click)="forgetPassOp()">Forget Password</u>
 
-                        <button id="addBtn" mat-raised-button class="simple-button" (click)="forgetPassOp()">{{uiLabels.forgetPassBtn}}</button>
+	<button *ngIf="firstStepAuthDone" mat-raised-button class="simple-button" (click)="confirmOtp()">Confirm</button>
+	<button *ngIf="firstStepAuthDone" [disabled]="!resendTimeOut" style="margin-left:30px;" mat-raised-button class="simple-button" (click)="sendOtp()">Resend</button>
+                        
                     </div>
                     <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">
 
                     </div>
                 </div>
+
+                
 
             </div>
         </mat-card-content>
     </div>
 
 </mat-card>
-<!-- </mat-dialog-content> -->
-<!-- <mat-dialog-actions class="action-button-right" align="end">
-
-    <button id="addBtn" mat-raised-button color="primary">{{uiLabels.loginBtn}}</button>
-</mat-dialog-actions> -->
-
-<!-- [mat-dialog-close]="newFaqType" -->

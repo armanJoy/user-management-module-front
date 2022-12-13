@@ -1,8 +1,0 @@
-.text-with-chip {
-    justify-content: flex-start;
-    align-items: center;
-}
-
-mat-chip-list {
-    margin-left: 10px;
-}

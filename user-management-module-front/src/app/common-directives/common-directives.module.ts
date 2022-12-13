@@ -24,40 +24,14 @@ import { MatRadioModule } from '@angular/material/radio';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { CommonDirectivesRoutingModule } from './common-directives-routing.module';
 import { CommonDirectivesComponent } from './common-directives.component';
-import { PrimaryMenuComponent } from './primary-menu/primary-menu.component';
-import { SecondaryMenuComponent } from './secondary-menu/secondary-menu.component';
-import { ValidationReportPopupComponent } from './validation-report-popup/validation-report-popup.component';
-import { TermAndConditionPopupComponent } from './term-and-condition-popup/term-and-condition-popup.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { DateTimeInputComponent } from './date-time-input/date-time-input.component';
-import { LangDefButtonComponent } from './lang-def-button/lang-def-button.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { PaginationComponent } from './pagination/pagination.component';
-import { SearchPaginationComponent } from './search-pagination/search-pagination.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ActionConfirmationPopupComponent } from './action-confirmation-popup/action-confirmation-popup.component';
-import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
-import { ProjectBasicInfoComponent } from './project-basic-info/project-basic-info.component';
-
 @NgModule({
     declarations: [
         CommonDirectivesComponent,
-        PrimaryMenuComponent,
-        SecondaryMenuComponent,
-        ValidationReportPopupComponent,
-        TermAndConditionPopupComponent,
-        DateTimeInputComponent,
-        LangDefButtonComponent,
-        PaginationComponent,
-        SearchPaginationComponent,
-        ActionConfirmationPopupComponent,
-        DeleteConfirmationComponent,
-        ProjectBasicInfoComponent,
     ],
     imports: [
-        DragDropModule,
         CommonModule,
         CommonDirectivesRoutingModule,
         FlexLayoutModule,
@@ -88,7 +62,6 @@ import { ProjectBasicInfoComponent } from './project-basic-info/project-basic-in
         MatChipsModule,
         MatCheckboxModule,
         NgxMaskModule.forRoot(),
-        ScrollingModule
     ],
     exports: [
         FlexLayoutModule,
@@ -117,12 +90,7 @@ import { ProjectBasicInfoComponent } from './project-basic-info/project-basic-in
         NgxMaskModule,
         MatDatepickerModule,
         MatChipsModule,
-        MatCheckboxModule,
-        DateTimeInputComponent,
-        LangDefButtonComponent,
-        SearchPaginationComponent,
-        DeleteConfirmationComponent,
-        ProjectBasicInfoComponent
+        MatCheckboxModule
     ],
     providers: [
         MatDialog,

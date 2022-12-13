@@ -57,7 +57,7 @@ export class UserLoginService {
     }
 
     setSessionCookie(userId: string, userAuth: string, companyId: string, langIndex: string, callBack: any) {
-
+        debugger
         setTimeout(() => {
             sessionStorage.clear();
             setTimeout(() => {
@@ -65,9 +65,8 @@ export class UserLoginService {
                 sessionStorage.setItem(AppConstant.AUTH_PASS_KEY, userAuth);
                 sessionStorage.setItem(AppConstant.SELECTED_COMPANY_ID_KEY, companyId);
                 sessionStorage.setItem(AppConstant.LANG_INDEX_KEY, langIndex);
-
+                console.log(sessionStorage.getItem(AppConstant.AUTH_ID_KEY), sessionStorage.getItem(AppConstant.AUTH_PASS_KEY))
                 // this.setLastCompanyIdCookie(userId, companyId);
-
                 callBack();
 
             }, 200)
@@ -76,53 +75,25 @@ export class UserLoginService {
     }
 
     setUserLoginCookie(userId: string, userAuth: string, defaultCompanyId: string, sessionCompanyId: string, langIndex: string, callBack: any) {
-        var existingCookie = this.cookieService.get(AppConstant.LOGGED_USER_COOKIE_KEY);
         setTimeout(() => {
-            // var existingUserCookieList: any[] = [];
-
-            // if (existingCookie) {
-            //     existingUserCookieList = JSON.parse(existingCookie);
-            // }
-
-            // if (!existingCookie.includes(userId)) {
-            //     const newUserCookie = {
-            //         userId: userId,
-            //         userAuth: userAuth,
-            //         defaultCompanyId: defaultCompanyId,
-            //         langIndex: langIndex
-            //     }
-
-            //     existingUserCookieList.unshift(newUserCookie);
-
-            //     this.utilService.setUserListCookie(existingUserCookieList);
-            // }
-
-            if (!this.utilService.getBrowserSessionIdCookie()) {
-                const browserSessionId: string = this.utilService.generateUniqueId();
-                this.utilService.setBrowserSessionIdCookie(browserSessionId);
-            }
-
-
-            // this.utilService.setUserIdCookie(userId);
-            // this.utilService.setUserAuthPassCookie(userAuth);
-            // this.utilService.setCompanyIdCookie(sessionCompanyId);
+            this.utilService.setUserIdCookie(userId);
+            this.utilService.setUserAuthPassCookie(userAuth);
+            this.utilService.setCompanyIdCookie(sessionCompanyId);
             this.setSessionCookie(userId, userAuth, sessionCompanyId, langIndex, () => {
                 callBack();
             });
-
-
         }, 200);
     }
 
     getInitialLoginUserCookie() {
-
+        debugger
         var initialLoginUser: any;
 
         var userId: string = this.utilService.getUserIdCookie();
         var userAuth: string = this.utilService.getUserAuthPassCookie();
         var companyId: string = this.utilService.getCompanyIdCookie();
 
-        if (userId && userAuth && companyId) {
+        if (userId && userAuth) {
             initialLoginUser = {
                 userId: userId,
                 userAuth: userAuth,

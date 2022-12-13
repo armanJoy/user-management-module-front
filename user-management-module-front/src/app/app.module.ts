@@ -29,25 +29,19 @@ import { UriService } from './services/visitor-services/uri.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonDirectivesModule } from './common-directives/common-directives.module';
 import { MatBadgeModule } from '@angular/material/badge';
-import { NotificationComponent } from './notification/notification.component';
 import { SocketioService } from './services/visitor-services/socketio.service';
-import { NotificationMenuComponent } from './notification/notification-menu/notification-menu.component';
-import { NotificationDetailComponent } from './notification/notification-detail/notification-detail.component';
 import { CompanyAdminModule } from './company-admin/company-admin.module';
 import { SystemAdminModule } from './system-admin/system-admin.module';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { MatMenuModule } from '@angular/material/menu';
+import { UserRegister } from './user-register/user.register.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        NotificationComponent,
-        NotificationMenuComponent,
-        NotificationDetailComponent,
-
+        UserRegister
     ],
     imports: [
-
         BrowserAnimationsModule,
         CommonModule,
         BrowserModule,
@@ -78,13 +72,6 @@ import { MatMenuModule } from '@angular/material/menu';
         SystemAdminModule,
         GoogleChartsModule,
         MatMenuModule
-
-        // CommonUtilModule,
-
-        // VisitorModule,
-        // VisitorRoutingModule,
-        // SystemAdminModule,
-        // SystemAdminRoutingModule,
     ],
     providers: [CookieService, UriService, LanguageService, MatSnackBar, MatDialog, SocketioService],
     bootstrap: [AppComponent]

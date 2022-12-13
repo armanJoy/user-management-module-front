@@ -44,6 +44,10 @@ export class UserLoginComponent implements OnInit {
         shareReplay()
     );
 
+    firstStepAuthDone: boolean = false;
+    otp: string = "";
+    resendTimeOut: boolean = false;
+
     login() {
         if (this.userIdentification && this.userIdentification.userId && this.userIdentification.userAuth) {
 
@@ -59,28 +63,38 @@ export class UserLoginComponent implements OnInit {
                 this.userLoginService.login(userIdentification).subscribe(data => {
 
                     if (data) {
-                        if (data == AppConstant.ONE_TIME_ACCESS_FLAG_TRUE) {
-                            this.redirectToFirstLogin();
 
-                        } else {
-                            this.userLoginService.saveUserSession(userIdentification.userId).subscribe(response => {
-                                if (response) {
+                        this.firstStepAuthDone = true;
+                        this.sendOtp();
 
-                                    var userAccess: any[] = data;
-                                    var defaultCompany: any = (userAccess.find(item => item.preference == true));
-                                    if (!defaultCompany) {
-                                        defaultCompany = userAccess[0];
-                                    }
+                        this.userLoginService.setUserLoginCookie(userIdentification.userId, userIdentification.userAuth, "", "", this.utilService.getSelectedLanguageIndex(), () => {
+                            // this.appComponent.prepareUserAccessAndMenu(data);
 
-                                    this.userLoginService.setUserLoginCookie(userIdentification.userId, userIdentification.userAuth, defaultCompany.companyId, defaultCompany.companyId, this.utilService.getSelectedLanguageIndex(), () => {
-                                        this.appComponent.prepareUserAccessAndMenu(data);
+                            //this.resetForm();
+                        });
 
-                                        this.resetForm();
-                                    });
-                                }
-                            });
+                        // if (data == AppConstant.ONE_TIME_ACCESS_FLAG_TRUE) {
+                        //     this.redirectToFirstLogin();
 
-                        }
+                        // } else {
+                        //     this.userLoginService.saveUserSession(userIdentification.userId).subscribe(response => {
+                        //         if (response) {
+
+                        //             var userAccess: any[] = data;
+                        //             var defaultCompany: any = (userAccess.find(item => item.preference == true));
+                        //             if (!defaultCompany) {
+                        //                 defaultCompany = userAccess[0];
+                        //             }
+
+                        //             this.userLoginService.setUserLoginCookie(userIdentification.userId, userIdentification.userAuth, defaultCompany.companyId, defaultCompany.companyId, this.utilService.getSelectedLanguageIndex(), () => {
+                        //                 // this.appComponent.prepareUserAccessAndMenu(data);
+
+                        //                 //this.resetForm();
+                        //             });
+                        //         }
+                        //     });
+
+                        // }
 
                     } else if (!data || data == '') {
                         this.userIdOrPasswordMatchFlag = AppConstant.USER_ID_OR_PASSWORD_NOT_MATCH_FLAG;
@@ -89,6 +103,20 @@ export class UserLoginComponent implements OnInit {
             }
 
         }
+    }
+
+    confirmOtp() {
+        this.firstStepAuthDone = false;
+        this.resendTimeOut = false;
+        this.resetForm();
+        //this.router.navigate(['/']);
+        this.appComponent.prepareUserAccessAndMenu(true);
+        this.redirectToHome()
+    }
+
+    sendOtp() {
+        this.resendTimeOut = false;
+        setTimeout(() => { this.resendTimeOut = true }, 30000);
     }
 
     redirectToFirstLogin() {

@@ -1,0 +1,74 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title style="padding-bottom: 10px;">
+            Registration Form
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div fxLayout="column" [fxLayoutGap]="(isHandset$ | async) ? '10px' : '20px'">
+
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div class="list-section-label">Name</div>
+                    <div class="list-section-separator">:</div>
+                    <div class="list-section-value">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="userInfoUpdate.userName">
+                    </div>
+                </div>
+            </div>
+
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div class="list-section-label">Address</div>
+                    <div class="list-section-separator">:</div>
+                    <div class="list-section-value">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="userInfoUpdate.userAddress">
+                    </div>
+                </div>
+            </div>
+
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div class="list-section-label">Designation</div>
+                    <div class="list-section-separator">:</div>
+                    <div class="list-section-value">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="userInfoUpdate.departmentTitle">
+                    </div>
+                </div>
+            </div>
+
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div class="list-section-label">Email</div>
+                    <div class="list-section-separator">:</div>
+                    <div class="list-section-value">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="userInfoUpdate.userEmail">
+                    </div>
+                </div>
+            </div>
+
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div class="list-section-label">Contact No</div>
+                    <div class="list-section-separator">:</div>
+                    <div class="list-section-value">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput [(ngModel)]="userInfoUpdate.userContact">
+                    </div>
+                </div>
+            </div>
+
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div class="list-section-label"></div>
+                    <div class="list-section-separator"></div>
+                    <div class="list-section-value">
+                        <button mat-raised-button color="primary" (click)="createUser()" type="submit">Register</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </mat-card-content>
+
+</mat-card>
