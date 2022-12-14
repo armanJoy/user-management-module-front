@@ -19,7 +19,6 @@ export interface UserSession {
 export interface UserIdentification {
     userId: string;
     userAuth: string;
-    oneTimeAccessFlag: string;
 }
 
 export interface ChangeUserIdentification {
@@ -38,6 +37,9 @@ export interface UserInfoUpdate {
     userContact: String;
     userCompanyId: String;
     userCategoryId: String;
+    newPassword: string;
+    confirmPassword: string;
+    pass: string;
 }
 
 export interface UserInfoFetch {

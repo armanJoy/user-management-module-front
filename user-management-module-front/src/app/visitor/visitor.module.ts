@@ -27,17 +27,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AppComponent } from '../app.component';
-import { FirstTimeLoginComponent } from './first-time-login/first-time-login.component';
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
     declarations: [
         VisitorComponent,
-        UserLoginComponent,
-        ChangePasswordComponent,
-        FirstTimeLoginComponent,
+        UserLoginComponent
     ],
     imports: [
         MatCheckboxModule,

@@ -59,6 +59,46 @@
 
             <div class="three-section-list-row">
                 <div class="list-value-section">
+                    <div class="list-section-label">Password</div>
+                    <div class="list-section-separator">:</div>
+                    <div class="list-section-value">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput type="password" [(ngModel)]="userInfoUpdate.newPassword" (input)="checkPasswordLength()">
+                    </div>
+                </div>
+            </div>
+            <div class="three-section-list-row warn-text" *ngIf="passwordLengthFlag && passwordLengthFlag==passwordLengthNotMatchedFlag">
+                <div class="list-value-section">
+                    <div class="list-section-label"></div>
+                    <div class="list-section-separator"></div>
+                    <div class="list-section-value">
+                        <mat-label>Password should have minimum 6 character</mat-label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="three-section-list-row">
+                <div class="list-value-section">
+                    <div class="list-section-label">Confirm Password</div>
+                    <div class="list-section-separator">:</div>
+                    <div class="list-section-value">
+                        <input [ngClass]="!(isHandset$ | async) ? 'input-medium' : 'input-large'" matInput type="password" [(ngModel)]="userInfoUpdate.confirmPassword" (input)="checkPasswordSimilarity()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="three-section-list-row warn-text" *ngIf="passwordLengthFlag==passwordLengthMatchedFlag && passwordMatchFlag==passwordNotMatchedFlag">
+                <div class="list-value-section">
+                    <div class="list-section-label"></div>
+                    <div class="list-section-separator"></div>
+                    <div class="list-section-value">
+                        <mat-label>Password doesn't match</mat-label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="three-section-list-row">
+                <div class="list-value-section">
                     <div class="list-section-label"></div>
                     <div class="list-section-separator"></div>
                     <div class="list-section-value">

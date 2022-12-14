@@ -57,7 +57,7 @@
 
                     <div fxFlex="1 1 100%" fxLayoutAlign="end center" fxLayoutGap="20px" style=" color: white;">
                         <button *ngIf="!isLogedIn" id="visitorLogin" class="simple-button" mat-raised-button [routerLink]="['visitor/login']">Login</button>
-                        <button *ngIf="isLogedIn" id="visitorLogout" class="simple-button" mat-raised-button (click)="logoutFromCompany(true, null)">Logout</button>
+                        <button *ngIf="isLogedIn" id="visitorLogout" class="simple-button" mat-raised-button (click)="logout()">Logout</button>
                         <button *ngIf="(isHandset$ | async)" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()">
                             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                         </button>
@@ -90,7 +90,7 @@
                     </div>
                     <div fxFlex="1 1 100%" fxLayoutAlign="end center" fxLayoutGap="20px" style=" color: white;">
                         <button class="simple-button" *ngIf="!isLogedIn" mat-raised-button [routerLink]="['visitor/login']" id="visitorLogin">Login</button>
-                        <button id="visitorLogout" class="simple-button" style="margin: 0px 10px;" *ngIf="isLogedIn" mat-raised-button (click)="logoutFromCompany(true, null)">Logout</button>
+                        <button id="visitorLogout" class="simple-button" style="margin: 0px 10px;" *ngIf="isLogedIn" mat-raised-button (click)="logout()">Logout</button>
                         <button *ngIf="(isHandset$ | async)" aria-label="Toggle sidenav" mat-icon-button (click)="toggle()">
                             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                         </button>

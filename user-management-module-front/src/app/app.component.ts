@@ -70,13 +70,12 @@ export class AppComponent implements OnInit {
             var userIdentification: UserIdentification = {
                 userId: authId,
                 userAuth: authPass,
-                oneTimeAccessFlag: ''
             }
 
             this.userLoginService.login(userIdentification).subscribe(data => {
 
                 if (data) {
-                    this.userLoginService.setUserLoginCookie(userIdentification.userId, userIdentification.userAuth, "", "", this.utilService.getSelectedLanguageIndex(), () => {
+                    this.userLoginService.setUserLoginCookie(userIdentification.userId, userIdentification.userAuth, () => {
                         this.prepareUserAccessAndMenu(true);
                     });
 
@@ -93,20 +92,10 @@ export class AppComponent implements OnInit {
 
     }
 
-    logoutFromCompany(fromLogoutAction: boolean, logoutCompanyId: any) {
-        var cookieCompanyId: string = this.utilService.getCompanyIdCookie();
+    logout() {
+        this.userLoginService.clearUserCookie(() => {
 
-        if (fromLogoutAction || (logoutCompanyId && cookieCompanyId == logoutCompanyId)) {
-
-            var logoutEventInfo: LogoutEventInfo = this.prepareLogoutEventInfo(AppConstant.COMPANY_LOGOUT);
-
-            this.clearSessionCookieAndUserAccess(cookieCompanyId, () => {
-
-                if (fromLogoutAction) {
-                    this.publishLogoutEvent(logoutEventInfo);
-                }
-            });
-        }
+        });
     }
 
     prepareLogoutEventInfo(logoutType: string): LogoutEventInfo {
@@ -122,13 +111,6 @@ export class AppComponent implements OnInit {
         }
 
         return logoutEventInfo;
-    }
-
-    clearSessionCookieAndUserAccess(removedCompanyId: string, callBack: any) {
-        this.userLoginService.clearSessionStorageCookie(removedCompanyId, () => {
-            callBack();
-            this.resetUserAccessAndMenu();
-        });
     }
 
     resetUserAccessAndMenu() {
@@ -151,14 +133,6 @@ export class AppComponent implements OnInit {
             var userId: any = this.utilService.getUserIdCookie();
 
         }
-    }
-
-    publishLogoutEvent(logoutEventInfo: LogoutEventInfo) {
-        this.userLoginService.publishLogoutEvent(logoutEventInfo).subscribe(response => {
-            if (response) {
-
-            }
-        });
     }
 
     prepareUserAccessAndMenu(state: boolean) {

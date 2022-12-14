@@ -20,13 +20,16 @@ export class UserRegister implements OnInit {
 
     userInfoUpdate: UserInfoUpdate = {
         userInfoId: '',
-        userName: '',
-        userAddress: '',
-        departmentTitle: '',
-        userEmail: '',
-        userContact: '',
-        userCompanyId: 'dxr00001',
-        userCategoryId: 'usercategory0001'
+        userName: 'Arman Reza',
+        userAddress: 'Dhaka',
+        departmentTitle: 'Software Engineer',
+        userEmail: 'email2arjoy@gmail.com',
+        userContact: '0123456789',
+        userCompanyId: '',
+        userCategoryId: AppConstant.USER_CATEGORY_GENERAL_USER,
+        newPassword: '',
+        confirmPassword: '',
+        pass: ''
     }
 
 
@@ -49,20 +52,54 @@ export class UserRegister implements OnInit {
     }
 
     createUser() {
-        if (this.userInfoUpdate) {
-            this.userInfoUpdate.userCategoryId = AppConstant.USER_CATEGORY_DXR_ADMIN;
-            this.userInfoUpdate.userCompanyId = AppConstant.DXR_COMPANY_ID;
+        debugger
+        var mailFormatCheckRegex = new RegExp(AppConstant.EMAIL_REGEX);
+        var validEmail = this.utilService.checkRegex(mailFormatCheckRegex, this.userInfoUpdate.userEmail);
+
+        if (this.userInfoUpdate && this.passwordMatchFlag == this.passwordMatchedFlag && validEmail) {
+            this.userInfoUpdate.userCategoryId = AppConstant.USER_CATEGORY_GENERAL_USER;
             this.userInfoUpdate.userInfoId = this.utilService.generateUniqueId();
 
-            this.superAdminService.createDxrAdminUser(this.userInfoUpdate).subscribe(data => {
-                if (data) {
+            var newUser: UserInfoUpdate = JSON.parse(JSON.stringify(this.userInfoUpdate));
+            const encPass = this.utilService.encrypt(newUser.newPassword);
 
+            newUser.pass = (encPass) ? encPass : "";
+
+            this.superAdminService.createDxrAdminUser(newUser).subscribe(data => {
+                if (data) {
+                    alert('Registration Complete');
+                    this.resetForm();
                 }
             })
 
-            alert('DXR Admin Created');
-            this.resetForm();
+        } else {
+            this.utilService.showSnackbar("Please provide valid information", 3000)
+        }
+    }
 
+    passwordMatchFlag = '';
+    passwordMatchedFlag = AppConstant.PASSWORD_MATCHED_FLAG;
+    passwordNotMatchedFlag = AppConstant.PASSWORD_NOT_MATCHED_FLAG;
+    checkPasswordSimilarity() {
+
+        if (this.userInfoUpdate.newPassword == this.userInfoUpdate.confirmPassword) {
+            this.passwordMatchFlag = AppConstant.PASSWORD_MATCHED_FLAG;
+
+        } else {
+            this.passwordMatchFlag = AppConstant.PASSWORD_NOT_MATCHED_FLAG;
+
+        }
+    }
+
+    passwordLengthFlag = '';
+    passwordLengthMatchedFlag = AppConstant.PASSWORD_LENGTH_MATCHED_FLAG;
+    passwordLengthNotMatchedFlag = AppConstant.PASSWORD_LENGTH_NOT_MATCHED_FLAG;
+
+    checkPasswordLength() {
+        if (this.userInfoUpdate.newPassword.length < 6) {
+            this.passwordLengthFlag = AppConstant.PASSWORD_LENGTH_NOT_MATCHED_FLAG;
+        } else {
+            this.passwordLengthFlag = AppConstant.PASSWORD_LENGTH_MATCHED_FLAG;
         }
     }
 
@@ -75,8 +112,11 @@ export class UserRegister implements OnInit {
             departmentTitle: '',
             userEmail: '',
             userContact: '',
-            userCompanyId: 'dxr00001',
-            userCategoryId: 'usercategory0001'
+            userCompanyId: '',
+            userCategoryId: AppConstant.USER_CATEGORY_GENERAL_USER,
+            newPassword: '',
+            confirmPassword: '',
+            pass: ''
         }
     }
 

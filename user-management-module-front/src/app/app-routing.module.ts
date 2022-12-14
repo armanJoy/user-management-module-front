@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { RouteAccessService } from './services/visitor-services/route-access.service';
 import { UserRegister } from './user-register/user.register.component';
 import { VisitorComponent } from './visitor/visitor.component'
 const routes: Routes = [
@@ -23,7 +22,6 @@ const routes: Routes = [
     },
     {
         path: 'system-admin',
-        canActivate: [RouteAccessService],
         loadChildren: () => import('./system-admin/system-admin.module').then(m => m.SystemAdminModule)
     },
     {
@@ -32,7 +30,6 @@ const routes: Routes = [
     },
     {
         path: 'company-admin',
-        canActivate: [RouteAccessService],
         loadChildren: () => import('./company-admin/company-admin.module').then(m => m.CompanyAdminModule)
     },
     {

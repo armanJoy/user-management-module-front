@@ -11,7 +11,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { UtilService } from 'src/app/services/visitor-services/util.service';
 
 @Component({
@@ -27,16 +26,13 @@ export class UserLoginComponent implements OnInit {
     userIdentification: UserIdentification = {
         userId: '',
         userAuth: '',
-        oneTimeAccessFlag: ''
     }
     userIdOrPasswordMatchFlag: string = '';
     componentCode!: string;
     isSystemAdmin: boolean = false;
 
     ngOnInit(): void {
-        this.isSystemAdmin = this.utilService.languageEditMode();
-        this.componentCode = AppConstant.COMP.USER_LOGIN;
-        this.uiLabels = this.languageService.getUiLabels(AppConstant.COMP.USER_LOGIN, AppConstant.UI_LABEL_TEXT);
+
     }
 
     isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).pipe(
@@ -67,7 +63,7 @@ export class UserLoginComponent implements OnInit {
                         this.firstStepAuthDone = true;
                         this.sendOtp();
 
-                        this.userLoginService.setUserLoginCookie(userIdentification.userId, userIdentification.userAuth, "", "", this.utilService.getSelectedLanguageIndex(), () => {
+                        this.userLoginService.setUserLoginCookie(userIdentification.userId, userIdentification.userAuth, () => {
                             // this.appComponent.prepareUserAccessAndMenu(data);
 
                             //this.resetForm();
@@ -119,27 +115,12 @@ export class UserLoginComponent implements OnInit {
         setTimeout(() => { this.resendTimeOut = true }, 30000);
     }
 
-    redirectToFirstLogin() {
-        this.router.navigate(['/visitor/first-login/' + this.userIdentification.userId]);
-    }
 
-    forgetPassOp() {
-        const forgetPassDialog = this.matDialog.open(ChangePasswordComponent, {
-            width: '700px',
-            height: '530px',
-            data: {
-                userId: this.userIdentification.userId,
-                fromProfile: false
-            },
-            disableClose: true
-        });
-    }
 
     resetForm() {
         this.userIdentification = {
             userId: '',
             userAuth: '',
-            oneTimeAccessFlag: ''
         }
     }
 

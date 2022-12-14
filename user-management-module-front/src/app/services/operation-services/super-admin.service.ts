@@ -13,7 +13,7 @@ export class SuperAdminService {
     constructor(private http: HttpClient, private uriService: UriService) { }
 
     createDxrAdminUser(userInfoUpdate: UserInfoUpdate): Observable<UserInfoUpdate> {
-        var url = '/user-management/create-dxr-admin';
+        var url = '/user-management/create-user';
 
         var response = this.uriService.callBackend(url, AppConstant.HTTP_POST, userInfoUpdate);
 

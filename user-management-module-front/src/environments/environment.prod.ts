@@ -1,9 +1,7 @@
 export const environment = {
     appVersion: "v-1.0.22.12.12",
     production: true,
-    serverUrl: "https://www.dxrreleases.com/web",
-    SOCKET_ENDPOINT: 'https://www.dxrreleases.com/socket',
-    MOBILE_APP_BASE_URL: 'https://dxr-mob-app.web.app/'
+    serverUrl: "https://www.dxrreleases.com/web"
 
 };
 

@@ -17,43 +17,20 @@ export class SystemAdminComponent implements OnInit {
 
     constructor(private breakpointObserver: BreakpointObserver, private matDialog: MatDialog, private languageService: LanguageService, private router: Router, private readonly route: ActivatedRoute, private socketioService: SocketioService) { }
 
-    hideSecondaryMenu = AppConstant.HIDE_SECONDARY_MENU;
+    hideSecondaryMenu = true;
     viewComponent = false;
     menuList: any = [];
     selectedMenu: String = '';
 
     ngOnInit(): void {
-        this.menuList = this.languageService.getSecondaryMenuList(AppConstant.MENU_ID.SYSTEM_ADMIN_MENU_ID);
-        if (this.menuList && this.menuList.length > 0) {
-            var flag: boolean = this.socketioService.isNotificationViewOrNot();
-            if (flag) {
-                var menu: string = this.socketioService.getNotificationMenu();
-                var index = -1;
-                for (var i = 0; i < this.menuList.length; i++) {
-                    if (this.menuList[i].menuId == menu) {
-                        index = i;
-                        break;
-                    }
-                }
-                this.selectedMenu = this.menuList[index].menuTitle;
-                // this.router.navigate([this.menuList[index].parentSegment, { outlets: { dxrSysAdminOutlet: [this.menuList[index].menuUrl] } }]);
 
-            }
-            else {
-                if (this.menuList && this.menuList.length > 0) {
-                    this.selectedMenu = this.menuList[0].menuTitle;
-                    this.router.navigate([this.menuList[0].parentSegment, { outlets: { dxrSysAdminOutlet: [this.menuList[0].menuUrl] } }]);
-                }
-
-            }
-        }
 
 
         this.viewComponent = true;
 
     }
 
-    uiLabels: any = this.languageService.getUiLabels(AppConstant.COMP.SYSTEM_ADMIN, AppConstant.UI_LABEL_TEXT);
+    uiLabels: any = {}
 
     isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).pipe(
         map(result => result.matches),
