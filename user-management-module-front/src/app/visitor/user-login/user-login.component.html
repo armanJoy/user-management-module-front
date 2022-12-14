@@ -85,7 +85,7 @@
                         <button *ngIf="!firstStepAuthDone" id="loginBtn" mat-raised-button class="simple-button" (click)="login()">Login</button>
 
                         <button *ngIf="firstStepAuthDone" mat-raised-button class="simple-button" (click)="confirmOtp()">Confirm</button>
-                        <button *ngIf="firstStepAuthDone" [disabled]="!resendTimeOut" style="margin-left:30px;" mat-raised-button class="simple-button" (click)="sendOtp()">Resend</button>
+                        <button *ngIf="firstStepAuthDone" [disabled]="!resendTimeOut" style="margin-left:30px;" mat-raised-button class="simple-button" (click)="resendOtp()">Resend</button>
 
                     </div>
                     <div fxFlex="0 1 40px" fxLayout="column" fxLayoutAlign="center center">

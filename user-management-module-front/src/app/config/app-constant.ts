@@ -56,8 +56,8 @@ export class AppConstant {
     //     isSelected: true
     // }
 
-    // public static TRUE_STATEMENT = "1";
-    // public static FALSE_STATEMENT = "0";
+    public static TRUE_STATEMENT = "1";
+    public static FALSE_STATEMENT = "0";
 
 
 

@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
                 userAuth: authPass,
             }
 
-            this.userLoginService.login(userIdentification).subscribe(data => {
+            this.userLoginService.loginUsingCookie(userIdentification).subscribe(data => {
 
                 if (data) {
                     this.userLoginService.setUserLoginCookie(userIdentification.userId, userIdentification.userAuth, () => {

@@ -95,11 +95,29 @@ export class UserLoginService {
     }
 
 
-    public login(userIdentification: UserIdentification): Observable<any> {
-        var url = '/user-management/login';
+    public initialLogin(userIdentification: UserIdentification): Observable<any> {
+        var url = '/user-management/init-login';
         var loginResponse: any;
         loginResponse = this.uriService.callBackend(url, AppConstant.HTTP_POST, userIdentification);
         return loginResponse;
+    }
+
+    public loginUsingCookie(userIdentification: UserIdentification): Observable<any> {
+        var url = '/user-management/cookie-login';
+        var loginResponse: any;
+        loginResponse = this.uriService.callBackend(url, AppConstant.HTTP_POST, userIdentification);
+        return loginResponse;
+    }
+
+    public confirmOtp(userMail: string, otp: string): Observable<any> {
+        var url = '/user-management/confirm-otp';
+
+        return this.uriService.callBackend(url, AppConstant.HTTP_POST, { userMail, otp });
+    }
+
+    public resendOtp(userMail: string): Observable<any> {
+        var url = '/user-management/resend-otp';
+        return this.uriService.callBackend(url, AppConstant.HTTP_POST, userMail);
     }
 
     // public getAccessInfo(userIdentification: UserIdentification): Observable<any> {

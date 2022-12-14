@@ -43,31 +43,25 @@ export class UserLoginComponent implements OnInit {
     firstStepAuthDone: boolean = false;
     otp: string = "";
     resendTimeOut: boolean = false;
-
+    encryptedPass: any = "";
     login() {
         if (this.userIdentification && this.userIdentification.userId && this.userIdentification.userAuth) {
 
             var userIdLowerCase = this.userIdentification.userId.toLowerCase();
             var userId = userIdLowerCase.trim();
             this.userIdentification.userId = userId
-            var encryptedPass = this.utilService.encrypt(this.userIdentification.userAuth);
-            if (encryptedPass && encryptedPass.length > 0) {
+            this.encryptedPass = this.utilService.encrypt(this.userIdentification.userAuth);
+            if (this.encryptedPass && this.encryptedPass.length > 0) {
 
                 var userIdentification: UserIdentification = Object.assign({}, this.userIdentification);
-                userIdentification.userAuth = encryptedPass;
+                userIdentification.userAuth = this.encryptedPass;
 
-                this.userLoginService.login(userIdentification).subscribe(data => {
+                this.userLoginService.initialLogin(userIdentification).subscribe(data => {
 
                     if (data) {
 
                         this.firstStepAuthDone = true;
-                        this.sendOtp();
-
-                        this.userLoginService.setUserLoginCookie(userIdentification.userId, userIdentification.userAuth, () => {
-                            // this.appComponent.prepareUserAccessAndMenu(data);
-
-                            //this.resetForm();
-                        });
+                        this.initiateOtpOp();
 
                         // if (data == AppConstant.ONE_TIME_ACCESS_FLAG_TRUE) {
                         //     this.redirectToFirstLogin();
@@ -102,20 +96,36 @@ export class UserLoginComponent implements OnInit {
     }
 
     confirmOtp() {
-        this.firstStepAuthDone = false;
-        this.resendTimeOut = false;
-        this.resetForm();
-        //this.router.navigate(['/']);
-        this.appComponent.prepareUserAccessAndMenu(true);
-        this.redirectToHome()
+        this.userLoginService.confirmOtp(this.userIdentification.userId, this.otp).subscribe(response => {
+            if (response) {
+                this.userLoginService.setUserLoginCookie(this.userIdentification.userId, this.encryptedPass, () => {
+                    this.firstStepAuthDone = false;
+                    this.resendTimeOut = false;
+                    this.resetForm();
+
+                    this.appComponent.prepareUserAccessAndMenu(true);
+                    this.redirectToHome();
+                });
+            } else {
+                this.utilService.showSnackbar("Invalid or expired OTP", 3000)
+            }
+        })
+
     }
 
-    sendOtp() {
+    initiateOtpOp() {
         this.resendTimeOut = false;
-        setTimeout(() => { this.resendTimeOut = true }, 30000);
+        setTimeout(() => { this.resendTimeOut = true }, 60000);
     }
 
+    resendOtp() {
+        this.userLoginService.resendOtp(this.userIdentification.userId).subscribe(response => {
+            if (response && response == AppConstant.TRUE_STATEMENT) {
+                this.initiateOtpOp();
+            }
+        })
 
+    }
 
     resetForm() {
         this.userIdentification = {
